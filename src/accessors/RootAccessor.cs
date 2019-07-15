@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitLabAPI
+namespace GitLabSharp
 {
-   public class Root
+   public class RootAccessor
    {
-      public Root(string host, string token)
+      public RootAccessor(string host, string token)
       {
          Host = host;
          Token = token;
@@ -16,12 +16,12 @@ namespace GitLabAPI
 
       public User CurrentUser()
       {
-         return new User(this);
+         throw new NotImplementedException();
       }
 
-      public Projects Projects()
+      public ProjectsAccessor Projects()
       {
-         return new Projects(this);
+         return new ProjectsAccessor(this);
       }
 
       public string Host { get; }
