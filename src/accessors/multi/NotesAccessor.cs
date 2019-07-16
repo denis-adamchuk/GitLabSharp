@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
@@ -37,7 +38,7 @@ namespace GitLabSharp
       /// </summary>
       public void CreateNew(string body)
       {
-         throw new NotImplementedException();
+         HttpClient.Post(BaseUrl + "?body=" + WebUtility.UrlEncode(body));
       }
    }
 }

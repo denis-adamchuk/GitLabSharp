@@ -29,7 +29,7 @@ namespace GitLabSharp
       /// </summary>
       public SingleMergeRequestAccessor Get(int mergeRequestId)
       {
-         return new SingleMergeRequestAccessor(HttpClient, "/" + mergeRequestId.ToString());
+         return new SingleMergeRequestAccessor(HttpClient, BaseUrl +  "/" + mergeRequestId.ToString());
       }
    }
 }

@@ -37,7 +37,7 @@ namespace GitLabSharp
       /// </summary>
       public void CreateNew(DiscussionParameters parameters)
       {
-         throw new NotImplementedException();
+         HttpClient.Post(BaseUrl + parameters.ToQueryString());
       }
    }
 }
