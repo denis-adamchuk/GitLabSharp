@@ -8,11 +8,6 @@ namespace GitLabSharp
 {
    public class Project
    {
-      public Project(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public int Id;
       public string NameWithNamespace;
    }

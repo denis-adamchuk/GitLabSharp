@@ -15,11 +15,6 @@ namespace GitLabSharp
 
    public struct DiscussionNote
    {
-      public DiscussionNote(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public int Id;
       public string Body;
       public System.DateTime CreatedAt;

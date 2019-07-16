@@ -16,11 +16,6 @@ namespace GitLabSharp
          Merged
       }
 
-      public MergeRequest(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public int Id;
       public string Title;
       public string Description;

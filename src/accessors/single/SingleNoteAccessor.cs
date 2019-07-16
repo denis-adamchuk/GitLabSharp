@@ -3,26 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Script.Serialization;
 
 namespace GitLabSharp
 {
-   public class ProjectsAccessor
+   public class SingleNoteAccessor : BaseLoader<Note>
    {
-      public ProjectsAccessor(RootAccessor root)
+      internal SingleNoteAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
-         Root = root;
       }
 
-      public List<Project> All()
-      {
-         throw new NotImplementedException();
-      }
-
-      public Project Get(string id)
+      public void Delete()
       {
          throw new NotImplementedException();
       }
 
-      private RootAccessor Root { get; }
+      public void Modify()
+      {
+         throw new NotImplementedException();
+      }
    }
 }

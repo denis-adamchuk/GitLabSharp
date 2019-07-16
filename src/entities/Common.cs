@@ -8,11 +8,6 @@ namespace GitLabSharp
 {
    public struct DiffRefs
    {
-      public DiffRefs(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public string BaseSHA;
       public string HeadSHA;
       public string StartSHA;
@@ -20,11 +15,6 @@ namespace GitLabSharp
 
    public struct Position
    {
-      public Position(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public string OldPath;
       public string NewPath;
       public string OldLine;

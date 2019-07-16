@@ -8,11 +8,6 @@ namespace GitLabSharp
 {
    public class User
    {
-      public User(dynamic json)
-      {
-         throw new NotImplementedException();
-      }
-
       public int Id;
       public string Name;
       public string Username;

@@ -8,11 +8,6 @@ namespace GitLabSharp
 {
    public class Note
    {
-      public Note(Dictionary<string, object> json)
-      {
-         throw new NotImplementedException();
-      }
-
       public int Id;
       public string Body;
       public System.DateTime CreatedAt;
