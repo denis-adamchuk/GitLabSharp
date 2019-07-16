@@ -7,37 +7,29 @@ using System.Web.Script.Serialization;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// Provides access to a list of merge requests
+   /// </summary>
    public class MergeRequestsAccessor : BaseLoader<List<MergeRequest>>
    {
       internal MergeRequestsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
-      public struct Filter
+      /// <summary>
+      /// Load full list of merge requests from Server and de-serialize it
+      /// </summary>
+      public List<MergeRequest> Details(Filter? filter)
       {
-         public enum StateFilter
-         {
-            Open,
-            Closed,
-            Merged,
-            All
-         }
-
-         public enum WorkInProgressFilter
-         {
-            Yes,
-            No,
-            All
-         }
-
-         string Labels;
-         StateFilter State;
-         WorkInProgressFilter WIP;
+         return DoLoad(BaseUrl);
       }
 
-      public SingleMergeRequestAccessor Single(int mergeRequestId)
+      /// <summary>
+      /// Get access to a single merge request by Id
+      /// </summary>
+      public SingleMergeRequestAccessor Get(int mergeRequestId)
       {
-         return new SingleMergeRequestAccessor(_httpClient, "/" + mergeRequestId.ToString());
+         return new SingleMergeRequestAccessor(HttpClient, "/" + mergeRequestId.ToString());
       }
    }
 }

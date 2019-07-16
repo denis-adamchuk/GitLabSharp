@@ -10,16 +10,16 @@ namespace GitLabSharp.src
    {
       public GitLab(string host, string token)
       {
-         _httpClient = new HttpClient(host, token);
-         _baseUrl = host + "/api/" + "v4";
+         HttpClient = new HttpClient(host, token);
+         BaseUrl = host + "/api/" + "v4";
       }
 
       public RootAccessor Root()
       {
-         return new RootAccessor(_httpClient, _baseUrl);
+         return new RootAccessor(HttpClient, BaseUrl);
       }
 
-      private HttpClient _httpClient;
-      private string _baseUrl;
+      private HttpClient HttpClient;
+      private string BaseUrl;
    }
 }

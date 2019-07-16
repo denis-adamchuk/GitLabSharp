@@ -7,16 +7,19 @@ using System.Web.Script.Serialization;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// Loads data from HttpClient and de-serializes it into T object instance
+   /// </summary>
    public class BaseLoader<T> : BaseAccessor
    {
       internal BaseLoader(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
-      public T Load()
+      protected T DoLoad(string url)
       {
          JavaScriptSerializer s = new JavaScriptSerializer();
-         return s.Deserialize<T>(_httpClient.Get(_baseUrl));
+         return s.Deserialize<T>(HttpClient.Get(url));
       }
    }
 }

@@ -7,18 +7,35 @@ using System.Web.Script.Serialization;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// Provides access to a list of discussions
+   /// </summary>
    public class DiscussionsAccessor : BaseLoader<List<Discussion>>
    {
       internal DiscussionsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
-      public SingleDiscussionAccessor Single(string discussionId)
+      /// <summary>
+      /// Load full list of discussions from Server and de-serialize it
+      /// </summary>
+      public List<Discussion> Details()
       {
-         return new SingleDiscussionAccessor(_httpClient, _baseUrl + "/" + discussionId);
+         return DoLoad(BaseUrl);
       }
 
-      public void New(DiscussionParameters parameters)
+      /// <summary>
+      /// Get access to a single discussion by Id
+      /// </summary>
+      public SingleDiscussionAccessor Get(string discussionId)
+      {
+         return new SingleDiscussionAccessor(HttpClient, BaseUrl + "/" + discussionId);
+      }
+      
+      /// <summary>
+      /// Create a new discussion with given parameters
+      /// </summary>
+      public void CreateNew(DiscussionParameters parameters)
       {
          throw new NotImplementedException();
       }

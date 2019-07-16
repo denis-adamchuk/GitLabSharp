@@ -23,6 +23,6 @@ namespace GitLabSharp
       public bool System;
       public bool Resolvable;
       public bool? Resolved;
-      public Position? Position; // notes with type DiffNote must have them (others must not)
+      public Position? Position; // notes with type DiffNote must have it (others must not)
    }
 }

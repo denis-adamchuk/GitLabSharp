@@ -45,11 +45,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\accessors\BaseAccessor.cs" />
     <Compile Include="src\accessors\BaseLoader.cs" />
+    <Compile Include="src\accessors\multi\Filters.cs" />
     <Compile Include="src\ApiRequestRunner.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
-    <Compile Include="src\accessors\single\CurrentUserAccessor.cs" />
+    <Compile Include="src\accessors\single\SingleUserAccessor.cs" />
     <Compile Include="src\accessors\single\SingleProjectAccessor.cs" />
     <Compile Include="src\entities\Common.cs" />
     <Compile Include="src\entities\Discussion.cs" />

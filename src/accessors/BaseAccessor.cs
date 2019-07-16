@@ -6,15 +6,18 @@ using System.Threading.Tasks;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// Base class for all Accessors
+   /// </summary>
    public class BaseAccessor
    {
       internal BaseAccessor(HttpClient client, string baseUrl)
       {
-         _httpClient = client;
-         _baseUrl = baseUrl;
+         HttpClient = client;
+         BaseUrl = baseUrl;
       }
 
-      internal HttpClient _httpClient;
-      protected string _baseUrl;
+      internal HttpClient HttpClient { get; }
+      protected string BaseUrl { get; }
    }
 }

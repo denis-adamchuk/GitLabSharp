@@ -7,18 +7,35 @@ using System.Web.Script.Serialization;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// Provides access to a list of notes
+   /// </summary>
    public class NotesAccessor : BaseLoader<List<Note>>
    {
       internal NotesAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
-      public SingleNoteAccessor Single(int noteId)
+      /// <summary>
+      /// Load full list of notes from Server and de-serialize it
+      /// </summary>
+      public List<Note> Details()
       {
-         return new SingleNoteAccessor(_httpClient, _baseUrl + "/" + noteId.ToString());
+         return DoLoad(BaseUrl);
       }
 
-      public void New(string body)
+      /// <summary>
+      /// Get access to a single note by Id
+      /// </summary>
+      public SingleNoteAccessor Single(int noteId)
+      {
+         return new SingleNoteAccessor(HttpClient, BaseUrl + "/" + noteId.ToString());
+      }
+
+      /// <summary>
+      /// Create a new note with given body
+      /// </summary>
+      public void CreateNew(string body)
       {
          throw new NotImplementedException();
       }

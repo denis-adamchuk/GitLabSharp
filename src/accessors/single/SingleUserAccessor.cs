@@ -8,18 +8,18 @@ using System.Web.Script.Serialization;
 namespace GitLabSharp
 {
    /// <summary>
-   /// Provides access to a single discussion
+   /// Provides access to information about user
    /// </summary>
-   public class SingleDiscussionAccessor : BaseLoader<Discussion>
+   public class SingleUserAccessor : BaseLoader<User>
    {
-      internal SingleDiscussionAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal SingleUserAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
       /// <summary>
-      /// Load information about this discussion instance from Server and de-serialize it
+      /// Loads information about user from Server and de-serializes it
       /// </summary>
-      Discussion Details()
+      User Details()
       {
          return DoLoad(BaseUrl);
       }
