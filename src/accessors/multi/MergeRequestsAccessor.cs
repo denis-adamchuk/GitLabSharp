@@ -19,9 +19,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of merge requests from Server and de-serialize it
       /// </summary>
-      public List<MergeRequest> Details(Filter? filter)
+      public List<MergeRequest> Details(MergeRequestsFilter filter)
       {
-         return DoLoad(BaseUrl);
+         return DoLoad(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>

@@ -35,9 +35,9 @@ namespace GitLabSharp
       /// <summary>
       /// Modify note
       /// </summary>
-      public void Modify()
+      public void Modify(NoteModificationParameters parameters)
       {
-         throw new NotImplementedException();
+         HttpClient.Put(BaseUrl + parameters.ToQueryString());
       }
    }
 }

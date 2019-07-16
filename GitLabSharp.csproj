@@ -46,7 +46,6 @@
     <Compile Include="src\accessors\BaseAccessor.cs" />
     <Compile Include="src\accessors\BaseLoader.cs" />
     <Compile Include="src\accessors\multi\Filters.cs" />
-    <Compile Include="src\ApiRequestRunner.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
@@ -59,7 +58,6 @@
     <Compile Include="src\accessors\multi\DiscussionsAccessor.cs" />
     <Compile Include="src\entities\MergeRequest.cs" />
     <Compile Include="src\accessors\multi\MergeRequestsAccessor.cs" />
-    <Compile Include="src\entities\DiscussionNote.cs" />
     <Compile Include="src\entities\Project.cs" />
     <Compile Include="src\accessors\multi\ProjectsAccessor.cs" />
     <Compile Include="src\accessors\RootAccessor.cs" />

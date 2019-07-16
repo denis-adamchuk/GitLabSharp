@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
+   /// </summary>
    public class MergeRequest
    {
       public enum State

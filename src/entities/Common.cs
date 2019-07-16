@@ -42,15 +42,4 @@ namespace GitLabSharp
          return result;
       }
    }
-
-   public struct DiscussionParameters
-   {
-      public string Body;
-      public Position? Position;
-
-      public string ToQueryString()
-      {
-         return "?body=" + Body + Position?.ToQueryString() ?? "";
-      }
-   }
 }

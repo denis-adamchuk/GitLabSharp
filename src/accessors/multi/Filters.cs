@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GitLabSharp
 {
-   public struct Filter
+   public struct MergeRequestsFilter
    {
       public enum StateFilter
       {
@@ -23,13 +23,38 @@ namespace GitLabSharp
          All
       }
 
-      string Labels;
-      StateFilter State;
-      WorkInProgressFilter WIP;
+      public string Labels;
+      public StateFilter State;
+      public WorkInProgressFilter WIP;
 
-      string ToQueryString()
+      public string ToQueryString()
       {
-         throw new NotImplementedException();
+         return "?scope=all"
+         + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
+         + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
+         + (Labels.Length > 0 ? "&labels=" : "");
+      }
+
+      private string stateFilterToString(StateFilter state)
+      {
+         switch (state)
+         {
+            case StateFilter.All: return "";
+            case StateFilter.Closed: return "closed";
+            case StateFilter.Merged: return "merged";
+            case StateFilter.Open: return "opened"; }
+         return "";
+      }
+
+      private string workInProgressToString(WorkInProgressFilter wip)
+      {
+         switch (wip)
+         {
+            case WorkInProgressFilter.All: return "";
+            case WorkInProgressFilter.No: return "no";
+            case WorkInProgressFilter.Yes: return "yes";
+         }
+         return "";         
       }
    }
 }
