@@ -29,7 +29,7 @@ namespace GitLabSharp
       /// </summary>
       public void Delete()
       {
-         throw new NotImplementedException();
+         HttpClient.Delete(BaseUrl);
       }
 
       /// <summary>

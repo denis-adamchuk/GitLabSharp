@@ -51,9 +51,11 @@ namespace GitLabSharp
       /// Add spent time to the merge request of this merge request
       /// </summary>
       /// <param name="timeSpan"></param>
-      public void AddSpentTime(TimeSpan timeSpan)
+      public void AddSpentTime(TimeSpan span)
       {
-         throw new NotImplementedException();
+         string duration = span.ToString("hh") + "h" + span.ToString("mm") + "m" + span.ToString("ss") + "s";
+         string url = BaseUrl + "/add_time_spent?duration=" + duration;
+         HttpClient.Post(url);
       }
    }
 }
