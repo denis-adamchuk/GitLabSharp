@@ -12,6 +12,17 @@ namespace GitLabSharp
       public int PageNumber;
    }
 
+   public class DiscussionsFilter
+   {
+      public PageFilter? PageFilter { get; set; }
+
+      public string ToQueryString()
+      {
+         return "?"
+            + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
+      }
+   }
+
    public class MergeRequestsFilter
    {
       public enum StateFilter

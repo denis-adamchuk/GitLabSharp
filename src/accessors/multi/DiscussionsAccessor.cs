@@ -22,9 +22,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Discussion> Load()
+      public List<Discussion> Load(DiscussionsFilter filter)
       {
-         return Get<List<Discussion>>(BaseUrl);
+         return Get<List<Discussion>>(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>
