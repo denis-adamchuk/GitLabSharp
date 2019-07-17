@@ -10,8 +10,11 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single note instance
    /// </summary>
-   public class SingleNoteAccessor : BaseLoader<Note>
+   public class SingleNoteAccessor : BaseAccessor<Note>
    {
+      /// <summary>
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes/1
+      /// </summary>
       internal SingleNoteAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }

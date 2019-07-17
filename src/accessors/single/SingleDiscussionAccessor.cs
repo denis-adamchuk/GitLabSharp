@@ -9,12 +9,15 @@ using System.Web.Script.Serialization;
 namespace GitLabSharp
 {
    /// <summary>
-   /// Provides access to a single discussion.
-   /// Does not provide access to individual notes within a discussion for their deletion or modification. 
-   /// For this purpose NotesAccessor can be easily used.
+   /// Provides access to a single discussion. GitLab's discussion includes all its discussion notes.
+   /// Note, this class does not provide access to individual notes within a discussion for their deletion or modification. 
+   /// NotesAccessor can be easily used for this purpose.
    /// </summary>
-   public class SingleDiscussionAccessor : BaseLoader<Discussion>
+   public class SingleDiscussionAccessor : BaseAccessor<Discussion>
    {
+      /// <summary>
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions/1
+      /// </summary>
       internal SingleDiscussionAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }

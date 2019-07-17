@@ -10,8 +10,11 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single project
    /// </summary>
-   public class SingleProjectAccessor : BaseLoader<Project>
+   public class SingleProjectAccessor : BaseAccessor<Project>
    {
+      /// <summary>
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/1
+      /// </summary>
       internal SingleProjectAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }

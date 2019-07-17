@@ -11,8 +11,11 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of notes
    /// </summary>
-   public class NotesAccessor : BaseLoader<List<Note>>
+   public class NotesAccessor : BaseAccessor<List<Note>>
    {
+      /// <summary>
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes
+      /// </summary>
       internal NotesAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
