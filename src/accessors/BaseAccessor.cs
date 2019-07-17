@@ -50,6 +50,27 @@ namespace GitLabSharp
          Client.Delete(url);
       }
 
+      /// <summary>
+      /// Execute Http GET request and return a value of X-Total response header
+      /// </summary>
+      internal int Count(string url)
+      {
+         Client.Get(url);
+
+         if (!Client.ResponseHeaders.AllKeys.Contains("X-Total"))
+         {
+            throw new ApplicationException("Cannot calculate count");
+         }
+
+         int count = 0;
+         if (!int.TryParse(Client.ResponseHeaders["X-Total"], out count))
+         {
+            throw new ApplicationException("Cannot calculate count");
+         }
+
+         return count;
+      }
+
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();
       internal HttpClient Client { get; }
       protected string BaseUrl { get; }

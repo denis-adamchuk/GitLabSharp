@@ -20,11 +20,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Get number of projects taking into account the filter
+      /// </summary>
+      public int Count(ProjectsFilter filter)
+      {
+         return Count(BaseUrl + filter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of projects from Server and de-serialize it
       /// </summary>
-      public List<Project> Load(ProjectsFilter filter)
+      public List<Project> Load(ProjectsFilter filter, PageFilter? pageFilter)
       {
-         return Get<List<Project>>(BaseUrl + filter.ToQueryString());
+         return Get<List<Project>>(BaseUrl + filter.ToQueryString() + pageFilter?.ToQueryString(false));
       }
 
       /// <summary>

@@ -19,11 +19,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Get number of versions
+      /// </summary>
+      public int Count()
+      {
+         return Count(BaseUrl);
+      }
+
+      /// <summary>
       /// Load full list of versions from Server and de-serialize it
       /// </summary>
-      public List<Version> Load()
+      public List<Version> Load(PageFilter? pageFilter)
       {
-         return Get<List<Version>>(BaseUrl);
+         return Get<List<Version>>(BaseUrl + pageFilter?.ToQueryString(true));
       }
    }
 }

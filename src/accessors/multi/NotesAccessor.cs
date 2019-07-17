@@ -23,9 +23,18 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of notes from Server and de-serialize it
       /// </summary>
-      public List<Note> Load()
+      public List<Note> Load(PageFilter? pageFilter)
       {
-         return Get<List<Note>>(BaseUrl);
+         return Get<List<Note>>(BaseUrl + pageFilter?.ToQueryString(true));
+      }
+
+      /// <summary>
+      /// Get number of notes
+      /// Note: PageFilter is ignored
+      /// </summary>
+      public int Count()
+      {
+         return Count(BaseUrl);
       }
 
       /// <summary>

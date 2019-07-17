@@ -22,9 +22,18 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Discussion> Load(DiscussionsFilter filter)
+      public List<Discussion> Load(PageFilter? pageFilter)
       {
-         return Get<List<Discussion>>(BaseUrl + filter.ToQueryString());
+         return Get<List<Discussion>>(BaseUrl + pageFilter?.ToQueryString(true));
+      }
+
+      /// <summary>
+      /// Get number of discussions
+      /// Note: PageFilter is ignored
+      /// </summary>
+      public int Count()
+      {
+         return Count(BaseUrl);
       }
 
       /// <summary>

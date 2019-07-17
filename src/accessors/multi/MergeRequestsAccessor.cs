@@ -22,9 +22,17 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of merge requests from Server and de-serialize it
       /// </summary>
-      public List<MergeRequest> Load(MergeRequestsFilter filter)
+      public List<MergeRequest> Load(MergeRequestsFilter filter, PageFilter? pageFilter)
       {
-         return Get<List<MergeRequest>>(BaseUrl + filter.ToQueryString());
+         return Get<List<MergeRequest>>(BaseUrl + filter.ToQueryString() + pageFilter?.ToQueryString(false));
+      }
+
+      /// <summary>
+      /// Get number of merge requests taking into account the filter
+      /// </summary>
+      public int Count(MergeRequestsFilter filter)
+      {
+         return Count(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>

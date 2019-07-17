@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GitLabSharp
 {
+   /// <summary>
+   /// A wrapper for WebClient class with separate methods for each of request type (GET/PUT/POST/DELETE)
+   /// </summary>
    internal class HttpClient
    {
       internal HttpClient(string host, string token)
@@ -40,6 +43,11 @@ namespace GitLabSharp
       {
          return _client.UploadString(url, "DELETE", "");
       }
+
+      /// <summary>
+      /// Collection of Headers for a response on the most recent Http request
+      /// </summary>
+      internal WebHeaderCollection ResponseHeaders => _client.ResponseHeaders;
 
       private readonly WebClient _client;
    }

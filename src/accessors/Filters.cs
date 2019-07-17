@@ -10,16 +10,10 @@ namespace GitLabSharp
    {
       public int PerPage;
       public int PageNumber;
-   }
 
-   public class DiscussionsFilter
-   {
-      public PageFilter? PageFilter { get; set; }
-
-      public string ToQueryString()
+      public string ToQueryString(bool start)
       {
-         return "?"
-            + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
+         return (start ? "?" : "&") + ("page=" + PageNumber.ToString() + "&per_page=" + PerPage.ToString());
       }
    }
 
@@ -43,15 +37,13 @@ namespace GitLabSharp
       public string Labels { get; set; } = String.Empty;
       public WorkInProgressFilter WIP { get; set; } = WorkInProgressFilter.Yes;
       public StateFilter State { get; set; } = StateFilter.Open;
-      public PageFilter? PageFilter { get; set; }
 
       public string ToQueryString()
       {
          return "?scope=all"
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
-         + (Labels != null && Labels.Length > 0 ? "&labels=" : "")
-         + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
+         + (Labels != null && Labels.Length > 0 ? "&labels=" : "");
       }
 
       private string stateFilterToString(StateFilter state)
@@ -81,14 +73,12 @@ namespace GitLabSharp
    {
       public bool PublicOnly { get; set; } = true;
       public bool WithMergeRequestsEnabled { get; set; } = true;
-      public PageFilter? PageFilter { get; set; }
 
       public string ToQueryString()
       {
          return "?simple=true"
             + (PublicOnly ? "&visibility=public" : "")
-            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "")
-            + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
+            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "");
       }
    }
 }
