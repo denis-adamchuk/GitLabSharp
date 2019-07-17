@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of projects
    /// </summary>
-   public class ProjectsAccessor : BaseAccessor<List<Project>>
+   public class ProjectsAccessor : BaseLoader<List<Project>>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects

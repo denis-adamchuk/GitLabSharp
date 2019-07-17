@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of discussions
    /// </summary>
-   public class DiscussionsAccessor : BaseAccessor<List<Discussion>>
+   public class DiscussionsAccessor : BaseLoader<List<Discussion>>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions

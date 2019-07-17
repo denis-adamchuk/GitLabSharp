@@ -13,7 +13,7 @@ namespace GitLabSharp
    /// Note, this class does not provide access to individual notes within a discussion for their deletion or modification. 
    /// NotesAccessor can be easily used for this purpose.
    /// </summary>
-   public class SingleDiscussionAccessor : BaseAccessor<Discussion>
+   public class SingleDiscussionAccessor : BaseLoader<Discussion>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions/1

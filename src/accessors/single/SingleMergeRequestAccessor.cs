@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single merge request instance
    /// </summary>
-   public class SingleMergeRequestAccessor : BaseAccessor<MergeRequest>
+   public class SingleMergeRequestAccessor : BaseLoader<MergeRequest>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests/1

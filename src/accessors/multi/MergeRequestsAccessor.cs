@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of merge requests
    /// </summary>
-   public class MergeRequestsAccessor : BaseAccessor<List<MergeRequest>>
+   public class MergeRequestsAccessor : BaseLoader<List<MergeRequest>>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests

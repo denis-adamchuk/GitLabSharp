@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to information about user
    /// </summary>
-   public class SingleUserAccessor : BaseAccessor<User>
+   public class SingleUserAccessor : BaseLoader<User>
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/users/1
