@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of versions
    /// </summary>
-   public class VersionsAccessor : BaseLoader<List<Version>>
+   public class VersionsAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/versions
@@ -23,7 +23,7 @@ namespace GitLabSharp
       /// </summary>
       public List<Version> Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<List<Version>>(BaseUrl);
       }
    }
 }

@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single note instance
    /// </summary>
-   public class SingleNoteAccessor : BaseLoader<Note>
+   public class SingleNoteAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes/1
@@ -24,7 +24,7 @@ namespace GitLabSharp
       /// </summary>
       public Note Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<Note>(BaseUrl);
       }
 
       /// <summary>
@@ -32,15 +32,15 @@ namespace GitLabSharp
       /// </summary>
       public void Delete()
       {
-         HttpClient.Delete(BaseUrl);
+         Delete(BaseUrl);
       }
 
       /// <summary>
       /// Modify note
       /// </summary>
-      public void Modify(NoteModificationParameters parameters)
+      public Note Modify(ModifyNoteParameters parameters)
       {
-         HttpClient.Put(BaseUrl + parameters.ToQueryString());
+         return Put<Note>(BaseUrl + parameters.ToQueryString());
       }
    }
 }

@@ -13,7 +13,7 @@ namespace GitLabSharp
    /// Note, this class does not provide access to individual notes within a discussion for their deletion or modification. 
    /// NotesAccessor can be easily used for this purpose.
    /// </summary>
-   public class SingleDiscussionAccessor : BaseLoader<Discussion>
+   public class SingleDiscussionAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions/1
@@ -27,24 +27,23 @@ namespace GitLabSharp
       /// </summary>
       public Discussion Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<Discussion>(BaseUrl);
       }
 
       /// <summary>
-      /// Resolve a discussion thread
+      /// Resolve/un-resolve a discussion thread
       /// </summary>
-      /// <param name="resolve">true - resolve, false - unresolve</param>
-      public void Resolve(bool resolve)
+      public Discussion Resolve(ResolveNoteParameters parameters)
       {
-         HttpClient.Put(BaseUrl + "?resolved=" + resolve.ToString());
+         return Put<Discussion>(BaseUrl + parameters.ToQueryString());
       }
 
       /// <summary>
       /// Create a new note within this discussion
       /// </summary>
-      public void CreateNewNote(string body)
+      public DiscussionNote CreateNewNote(CreateNewNoteParameters parameters)
       {
-         HttpClient.Post(BaseUrl + "?body=" + WebUtility.UrlEncode(body));
+         return Post<DiscussionNote>(BaseUrl + "/notes" + parameters.ToQueryString());
       }
    }
 }

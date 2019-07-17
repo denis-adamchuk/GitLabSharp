@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of projects
    /// </summary>
-   public class ProjectsAccessor : BaseLoader<List<Project>>
+   public class ProjectsAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects
@@ -24,7 +24,7 @@ namespace GitLabSharp
       /// </summary>
       public List<Project> Load(ProjectsFilter filter)
       {
-         return DoLoad(BaseUrl + filter.ToQueryString());
+         return Get<List<Project>>(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>
@@ -32,7 +32,7 @@ namespace GitLabSharp
       /// </summary>
       public SingleProjectAccessor Get(string projectId)
       {
-         return new SingleProjectAccessor(HttpClient, BaseUrl + "/" + WebUtility.UrlEncode(projectId));
+         return new SingleProjectAccessor(Client, BaseUrl + "/" + WebUtility.UrlEncode(projectId));
       }
    }
 }

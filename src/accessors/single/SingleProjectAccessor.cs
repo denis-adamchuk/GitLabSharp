@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single project
    /// </summary>
-   public class SingleProjectAccessor : BaseLoader<Project>
+   public class SingleProjectAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/1
@@ -20,8 +20,16 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Loads information about project from Server and de-serializes it
+      /// </summary>
+      public Project Load()
+      {
+         return Get<Project>(BaseUrl);
+      }
+
+      /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
-      public MergeRequestsAccessor MergeRequests => new MergeRequestsAccessor(HttpClient, BaseUrl + "/merge_requests");
+      public MergeRequestsAccessor MergeRequests => new MergeRequestsAccessor(Client, BaseUrl + "/merge_requests");
    }
 }

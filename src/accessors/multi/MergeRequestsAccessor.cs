@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of merge requests
    /// </summary>
-   public class MergeRequestsAccessor : BaseLoader<List<MergeRequest>>
+   public class MergeRequestsAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests
@@ -24,7 +24,7 @@ namespace GitLabSharp
       /// </summary>
       public List<MergeRequest> Load(MergeRequestsFilter filter)
       {
-         return DoLoad(BaseUrl + filter.ToQueryString());
+         return Get<List<MergeRequest>>(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>
@@ -32,7 +32,7 @@ namespace GitLabSharp
       /// </summary>
       public SingleMergeRequestAccessor Get(int mergeRequestId)
       {
-         return new SingleMergeRequestAccessor(HttpClient, BaseUrl +  "/" + mergeRequestId.ToString());
+         return new SingleMergeRequestAccessor(Client, BaseUrl +  "/" + mergeRequestId.ToString());
       }
    }
 }

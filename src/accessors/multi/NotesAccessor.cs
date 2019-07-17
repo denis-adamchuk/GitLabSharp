@@ -11,7 +11,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of notes
    /// </summary>
-   public class NotesAccessor : BaseLoader<List<Note>>
+   public class NotesAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes
@@ -25,7 +25,7 @@ namespace GitLabSharp
       /// </summary>
       public List<Note> Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<List<Note>>(BaseUrl);
       }
 
       /// <summary>
@@ -33,15 +33,15 @@ namespace GitLabSharp
       /// </summary>
       public SingleNoteAccessor Get(int noteId)
       {
-         return new SingleNoteAccessor(HttpClient, BaseUrl + "/" + noteId.ToString());
+         return new SingleNoteAccessor(Client, BaseUrl + "/" + noteId.ToString());
       }
 
       /// <summary>
       /// Create a new note with given body
       /// </summary>
-      public void CreateNew(string body)
+      public Note CreateNew(CreateNewNoteParameters parameters)
       {
-         HttpClient.Post(BaseUrl + "?body=" + WebUtility.UrlEncode(body));
+         return Post<Note>(BaseUrl + parameters.ToQueryString());
       }
    }
 }

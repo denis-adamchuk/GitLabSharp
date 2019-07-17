@@ -9,6 +9,16 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
    /// </summary>
+   public struct DiffRefs
+   {
+      public string Base_SHA;
+      public string Head_SHA;
+      public string Start_SHA;
+   }
+
+   /// <summary>
+   /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
+   /// </summary>
    public class MergeRequest
    {
       public int Id;
@@ -22,5 +32,16 @@ namespace GitLabSharp
       public bool Work_In_Progress;
       public User Author;
       public DiffRefs Diff_Refs;
+   }
+
+   /// <summary>
+   /// https://docs.gitlab.com/ce/api/merge_requests.html#add-spent-time-for-a-merge-request
+   /// </summary>
+   public struct SpentTime
+   {
+      public string Human_Time_Estimate;
+      public string Human_Total_Time_Spent;
+      public int Time_Estimate;
+      public int Total_Time_Spent;
    }
 }

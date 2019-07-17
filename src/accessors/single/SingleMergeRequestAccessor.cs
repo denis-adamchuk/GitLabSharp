@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single merge request instance
    /// </summary>
-   public class SingleMergeRequestAccessor : BaseLoader<MergeRequest>
+   public class SingleMergeRequestAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests/1
@@ -23,32 +23,30 @@ namespace GitLabSharp
       /// </summary>
       public MergeRequest Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<MergeRequest>(BaseUrl);
       }
 
       /// <summary>
       /// Get access to a list of versions of this merge request
       /// </summary>
-      public VersionsAccessor Versions => new VersionsAccessor(HttpClient, BaseUrl + "/versions");
+      public VersionsAccessor Versions => new VersionsAccessor(Client, BaseUrl + "/versions");
 
       /// <summary>
       /// Get access to a list of discussions of this merge request
       /// </summary>
-      public DiscussionsAccessor Discussions => new DiscussionsAccessor(HttpClient, BaseUrl + "/discussions");
+      public DiscussionsAccessor Discussions => new DiscussionsAccessor(Client, BaseUrl + "/discussions");
 
       /// <summary>
       /// Get access to a list of notes of this merge request
       /// </summary>
-      public NotesAccessor Notes => new NotesAccessor(HttpClient, BaseUrl + "/notes");
+      public NotesAccessor Notes => new NotesAccessor(Client, BaseUrl + "/notes");
 
       /// <summary>
       /// Add spent time to the merge request of this merge request
       /// </summary>
-      public void AddSpentTime(TimeSpan span)
+      public SpentTime AddSpentTime(AddSpentTimeParameters parameters)
       {
-         string duration = span.ToString("hh") + "h" + span.ToString("mm") + "m" + span.ToString("ss") + "s";
-         string url = BaseUrl + "/add_time_spent?duration=" + duration;
-         HttpClient.Post(url);
+         return Post<SpentTime>(BaseUrl + parameters.ToQueryString());
       }
    }
 }

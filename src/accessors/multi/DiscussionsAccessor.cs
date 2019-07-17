@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of discussions
    /// </summary>
-   public class DiscussionsAccessor : BaseLoader<List<Discussion>>
+   public class DiscussionsAccessor : BaseAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions
@@ -24,7 +24,7 @@ namespace GitLabSharp
       /// </summary>
       public List<Discussion> Load()
       {
-         return DoLoad(BaseUrl);
+         return Get<List<Discussion>>(BaseUrl);
       }
 
       /// <summary>
@@ -32,15 +32,15 @@ namespace GitLabSharp
       /// </summary>
       public SingleDiscussionAccessor Get(string discussionId)
       {
-         return new SingleDiscussionAccessor(HttpClient, BaseUrl + "/" + discussionId);
+         return new SingleDiscussionAccessor(Client, BaseUrl + "/" + discussionId);
       }
       
       /// <summary>
       /// Create a new discussion with given parameters
       /// </summary>
-      public void CreateNew(DiscussionParameters parameters)
+      public Discussion CreateNew(NewDiscussionParameters parameters)
       {
-         HttpClient.Post(BaseUrl + parameters.ToQueryString());
+         return Post<Discussion>(BaseUrl + parameters.ToQueryString());
       }
    }
 }

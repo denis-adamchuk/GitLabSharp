@@ -8,15 +8,27 @@ namespace GitLabSharp
 {
    public class GitLab
    {
+      /// <summary>
+      /// Provides access to GitLab API requests
+      /// </summary>
       public GitLab(string host, string token)
       {
-         HttpClient = new HttpClient(host, token);
+         Client = new HttpClient(host, token);
          BaseUrl = host + "/api/" + "v4";
       }
 
-      public RootAccessor Root => new RootAccessor(HttpClient, BaseUrl);
+      /// <summary>
+      /// Get access to information about current user
+      /// </summary>
+      public SingleUserAccessor CurrentUser => new SingleUserAccessor(Client, BaseUrl + "/user");
 
-      private HttpClient HttpClient;
+      /// <summary>
+      /// Get access to list of projects hosted at this server
+      /// </summary>
+      /// <returns></returns>
+      public ProjectsAccessor Projects => new ProjectsAccessor(Client, BaseUrl + "/projects");
+
+      private HttpClient Client;
       private string BaseUrl;
    }
 }
