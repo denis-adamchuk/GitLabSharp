@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace GitLabSharp
 {
-   public struct MergeRequestsFilter
+   public struct PageFilter
+   {
+      public int PerPage;
+      public int PageNumber;
+   }
+
+   public class MergeRequestsFilter
    {
       public enum StateFilter
       {
@@ -23,16 +29,18 @@ namespace GitLabSharp
          All
       }
 
-      public string Labels;
-      public StateFilter State;
-      public WorkInProgressFilter WIP;
+      public string Labels { get; set; } = String.Empty;
+      public WorkInProgressFilter WIP { get; set; } = WorkInProgressFilter.Yes;
+      public StateFilter State { get; set; } = StateFilter.Open;
+      public PageFilter? PageFilter { get; set; }
 
       public string ToQueryString()
       {
          return "?scope=all"
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
-         + (Labels.Length > 0 ? "&labels=" : "");
+         + (Labels != null && Labels.Length > 0 ? "&labels=" : "")
+         + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
       }
 
       private string stateFilterToString(StateFilter state)
@@ -55,6 +63,21 @@ namespace GitLabSharp
             case WorkInProgressFilter.Yes: return "yes";
          }
          return "";         
+      }
+   }
+
+   public class ProjectsFilter
+   {
+      public bool PublicOnly { get; set; } = true;
+      public bool WithMergeRequestsEnabled { get; set; } = true;
+      public PageFilter? PageFilter { get; set; }
+
+      public string ToQueryString()
+      {
+         return "?simple=true"
+            + (PublicOnly ? "&visibility=public" : "")
+            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "")
+            + (PageFilter.HasValue ? "&page=" + PageFilter?.PageNumber + "&per_page=" + PageFilter?.PerPage : "");
       }
    }
 }

@@ -22,7 +22,7 @@ namespace GitLabSharp
       /// <summary>
       /// Loads information about user from Server and de-serializes it
       /// </summary>
-      public User Details()
+      public User Load()
       {
          return DoLoad(BaseUrl);
       }

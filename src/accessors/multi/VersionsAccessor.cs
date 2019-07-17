@@ -21,7 +21,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of versions from Server and de-serialize it
       /// </summary>
-      public List<Version> Details()
+      public List<Version> Load()
       {
          return DoLoad(BaseUrl);
       }

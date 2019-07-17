@@ -18,18 +18,12 @@ namespace GitLabSharp
       /// <summary>
       /// Get access to information about current user
       /// </summary>
-      public SingleUserAccessor CurrentUser()
-      {
-         return new SingleUserAccessor(HttpClient, BaseUrl + "/user");
-      }
+      public SingleUserAccessor CurrentUser => new SingleUserAccessor(HttpClient, BaseUrl + "/user");
 
       /// <summary>
       /// Get access to list of projects hosted at this server
       /// </summary>
       /// <returns></returns>
-      public ProjectsAccessor Projects()
-      {
-         return new ProjectsAccessor(HttpClient, BaseUrl + "/projects");
-      }
+      public ProjectsAccessor Projects => new ProjectsAccessor(HttpClient, BaseUrl + "/projects");
    }
 }

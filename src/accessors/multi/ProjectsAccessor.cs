@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,17 +22,17 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of projects from Server and de-serialize it
       /// </summary>
-      public List<Project> Details()
+      public List<Project> Load(ProjectsFilter filter)
       {
-         return DoLoad(BaseUrl);
+         return DoLoad(BaseUrl + filter.ToQueryString());
       }
 
       /// <summary>
       /// Get access to a single project
       /// </summary>
-      public SingleProjectAccessor Single(string projectId)
+      public SingleProjectAccessor Get(string projectId)
       {
-         return new SingleProjectAccessor(HttpClient, BaseUrl + "/" + projectId);
+         return new SingleProjectAccessor(HttpClient, BaseUrl + "/" + WebUtility.UrlEncode(projectId));
       }
    }
 }

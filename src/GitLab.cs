@@ -14,10 +14,7 @@ namespace GitLabSharp
          BaseUrl = host + "/api/" + "v4";
       }
 
-      public RootAccessor Root()
-      {
-         return new RootAccessor(HttpClient, BaseUrl);
-      }
+      public RootAccessor Root => new RootAccessor(HttpClient, BaseUrl);
 
       private HttpClient HttpClient;
       private string BaseUrl;

@@ -11,24 +11,16 @@ namespace GitLabSharp
    /// </summary>
    public class MergeRequest
    {
-      public enum State
-      {
-         Opened,
-         Closed,
-         Locked,
-         Merged
-      }
-
       public int Id;
       public string Title;
       public string Description;
-      public string SourceBranch;
-      public string TargetBranch;
-      public State MRState;
+      public string Source_Branch;
+      public string Target_Branch;
+      public string State;
       public List<string> Labels;
-      public string WebUrl;
-      public bool WorkInProgress;
+      public string Web_Url;
+      public bool Work_In_Progress;
       public User Author;
-      public DiffRefs Refs;
+      public DiffRefs Diff_Refs;
    }
 }

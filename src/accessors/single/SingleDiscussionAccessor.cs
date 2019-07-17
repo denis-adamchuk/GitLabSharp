@@ -25,7 +25,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this discussion instance from Server and de-serialize it
       /// </summary>
-      public Discussion Details()
+      public Discussion Load()
       {
          return DoLoad(BaseUrl);
       }

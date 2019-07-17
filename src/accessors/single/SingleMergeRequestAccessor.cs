@@ -21,7 +21,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this merge request from Server and de-serialize it
       /// </summary>
-      public MergeRequest Details()
+      public MergeRequest Load()
       {
          return DoLoad(BaseUrl);
       }
@@ -29,31 +29,21 @@ namespace GitLabSharp
       /// <summary>
       /// Get access to a list of versions of this merge request
       /// </summary>
-      public VersionsAccessor Versions()
-      {
-         return new VersionsAccessor(HttpClient, BaseUrl + "/versions");
-      }
+      public VersionsAccessor Versions => new VersionsAccessor(HttpClient, BaseUrl + "/versions");
 
       /// <summary>
       /// Get access to a list of discussions of this merge request
       /// </summary>
-      public DiscussionsAccessor Discussions()
-      {
-         return new DiscussionsAccessor(HttpClient, BaseUrl + "/discussions");
-      }
+      public DiscussionsAccessor Discussions => new DiscussionsAccessor(HttpClient, BaseUrl + "/discussions");
 
       /// <summary>
       /// Get access to a list of notes of this merge request
       /// </summary>
-      public NotesAccessor Notes()
-      {
-         return new NotesAccessor(HttpClient, BaseUrl + "/notes");
-      }
+      public NotesAccessor Notes => new NotesAccessor(HttpClient, BaseUrl + "/notes");
 
       /// <summary>
       /// Add spent time to the merge request of this merge request
       /// </summary>
-      /// <param name="timeSpan"></param>
       public void AddSpentTime(TimeSpan span)
       {
          string duration = span.ToString("hh") + "h" + span.ToString("mm") + "m" + span.ToString("ss") + "s";

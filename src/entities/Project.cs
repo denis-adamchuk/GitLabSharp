@@ -12,6 +12,6 @@ namespace GitLabSharp
    public class Project
    {
       public int Id;
-      public string NameWithNamespace;
+      public string Path_With_Namespace;
    }
 }

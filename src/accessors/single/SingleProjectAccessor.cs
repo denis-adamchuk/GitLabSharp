@@ -22,9 +22,6 @@ namespace GitLabSharp
       /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
-      public MergeRequestsAccessor MergeRequests()
-      {
-         return new MergeRequestsAccessor(HttpClient, BaseUrl + "/merge_requests");
-      }
+      public MergeRequestsAccessor MergeRequests => new MergeRequestsAccessor(HttpClient, BaseUrl + "/merge_requests");
    }
 }

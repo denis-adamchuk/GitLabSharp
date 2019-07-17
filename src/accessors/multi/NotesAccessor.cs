@@ -23,7 +23,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of notes from Server and de-serialize it
       /// </summary>
-      public List<Note> Details()
+      public List<Note> Load()
       {
          return DoLoad(BaseUrl);
       }
@@ -31,7 +31,7 @@ namespace GitLabSharp
       /// <summary>
       /// Get access to a single note by Id
       /// </summary>
-      public SingleNoteAccessor Single(int noteId)
+      public SingleNoteAccessor Get(int noteId)
       {
          return new SingleNoteAccessor(HttpClient, BaseUrl + "/" + noteId.ToString());
       }

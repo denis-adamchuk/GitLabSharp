@@ -45,7 +45,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\accessors\BaseAccessor.cs" />
     <Compile Include="src\accessors\BaseLoader.cs" />
-    <Compile Include="src\accessors\multi\Filters.cs" />
+    <Compile Include="src\accessors\Filters.cs" />
+    <Compile Include="src\accessors\Parameters.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />

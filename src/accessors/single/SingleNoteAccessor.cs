@@ -22,7 +22,7 @@ namespace GitLabSharp
       /// <summary>
       /// Loads information about note from Server and de-serializes it
       /// </summary>
-      public Note Details()
+      public Note Load()
       {
          return DoLoad(BaseUrl);
       }

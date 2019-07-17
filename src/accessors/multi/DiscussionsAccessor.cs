@@ -22,7 +22,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Discussion> Details()
+      public List<Discussion> Load()
       {
          return DoLoad(BaseUrl);
       }

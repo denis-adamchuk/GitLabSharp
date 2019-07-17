@@ -12,8 +12,10 @@ namespace GitLabSharp
    public class Version
    {
       public int Id;
-      public DiffRefs Refs;
-      public System.DateTime CreatedAt;
+      public string Base_Commit_SHA;
+      public string Head_Commit_SHA;
+      public string Start_Commit_SHA;
+      public DateTime Created_At;
    }
 }
 

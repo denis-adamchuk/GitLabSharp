@@ -18,13 +18,17 @@ namespace GitLabSharp
    }
 
    /// <summary>
-   /// Type of a note that belongs to a discussion
+   /// https://docs.gitlab.com/ce/api/discussions.html#list-project-merge-request-discussion-items
    /// </summary>
-   public enum DiscussionNoteType
+   public struct Position
    {
-      Default,
-      DiffNote,
-      DiscussionNote
+      public string Old_Path;
+      public string New_Path;
+      public string Old_Line;
+      public string New_Line;
+      public string Base_SHA;
+      public string Head_SHA;
+      public string Start_SHA;
    }
 
    /// <summary>
@@ -35,27 +39,12 @@ namespace GitLabSharp
    {
       public int Id;
       public string Body;
-      public System.DateTime CreatedAt;
+      public DateTime Created_At;
       public User Author;
-      public DiscussionNoteType Type;
+      public string Type;
       public bool System;
       public bool Resolvable;
-      public bool? Resolved;
-      public Position? Position; // notes with type DiffNote must have it (others must not)
-   }
-
-   /// <summary>
-   /// Used to create new discussions
-   /// https://docs.gitlab.com/ce/api/discussions.html#create-new-merge-request-thread
-   /// </summary>
-   public struct DiscussionParameters
-   {
-      public string Body;
-      public Position? Position;
-
-      public string ToQueryString()
-      {
-         return "?body=" + WebUtility.UrlEncode(Body) + Position?.ToQueryString() ?? "";
-      }
+      public bool Resolved;
+      public Position Position; // notes with type DiffNote must have it (others must not)
    }
 }
