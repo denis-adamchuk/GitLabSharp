@@ -25,7 +25,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this discussion instance from Server and de-serialize it
       /// </summary>
-      Discussion Details()
+      public Discussion Details()
       {
          return DoLoad(BaseUrl);
       }
@@ -34,7 +34,7 @@ namespace GitLabSharp
       /// Resolve a discussion thread
       /// </summary>
       /// <param name="resolve">true - resolve, false - unresolve</param>
-      void Resolve(bool resolve)
+      public void Resolve(bool resolve)
       {
          HttpClient.Put(BaseUrl + "?resolved=" + resolve.ToString());
       }
@@ -42,7 +42,7 @@ namespace GitLabSharp
       /// <summary>
       /// Create a new note within this discussion
       /// </summary>
-      void CreateNewNote(string body)
+      public void CreateNewNote(string body)
       {
          HttpClient.Post(BaseUrl + "?body=" + WebUtility.UrlEncode(body));
       }

@@ -21,7 +21,7 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this merge request from Server and de-serialize it
       /// </summary>
-      MergeRequest Details()
+      public MergeRequest Details()
       {
          return DoLoad(BaseUrl);
       }
