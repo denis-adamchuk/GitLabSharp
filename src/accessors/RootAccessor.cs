@@ -20,7 +20,7 @@ namespace GitLabSharp
       /// </summary>
       public SingleUserAccessor CurrentUser()
       {
-         return new SingleUserAccessor(HttpClient, BaseUrl + "user");
+         return new SingleUserAccessor(HttpClient, BaseUrl + "/user");
       }
 
       /// <summary>
