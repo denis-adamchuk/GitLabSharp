@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/notes.html#get-single-merge-request-note
    /// </summary>
-   public class Note
+   public struct Note
    {
       public int Id;
       public string Body;

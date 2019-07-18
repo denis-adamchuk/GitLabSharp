@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-a-single-mr-diff-version
    /// </summary>
-   public class Version
+   public struct Version
    {
       public int Id;
       public string Base_Commit_SHA;

@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/discussions.html#get-single-merge-request-discussion-item
    /// </summary>
-   public class Discussion
+   public struct Discussion
    {
       public string Id;
       public List<DiscussionNote> Notes;

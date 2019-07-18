@@ -9,7 +9,7 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/users.html#single-user
    /// </summary>
-   public class User
+   public struct User
    {
       public int Id;
       public string Name;
