@@ -19,7 +19,7 @@ namespace GitLabSharp
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
    /// </summary>
-   public class MergeRequest
+   public struct MergeRequest
    {
       public int Id;
       public string Title;

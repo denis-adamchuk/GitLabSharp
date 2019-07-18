@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of merge requests
    /// </summary>
-   public class MergeRequestsAccessor : BaseAccessor
+   public class MergeRequestsAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests
@@ -20,11 +20,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Load full list of merge requests from Server and de-serialize it
+      /// Load a single page from a full list of merge requests from Server and de-serialize it
       /// </summary>
-      public List<MergeRequest> Load(MergeRequestsFilter filter, PageFilter? pageFilter)
+      public List<MergeRequest> Load(MergeRequestsFilter filter, PageFilter pageFilter)
       {
-         return Get<List<MergeRequest>>(BaseUrl + filter.ToQueryString() + pageFilter?.ToQueryString(false));
+         return Get<List<MergeRequest>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
+      /// Load full list of discussions from Server and de-serialize it
+      /// </summary>
+      public List<Discussion> LoadAll(MergeRequestsFilter filter)
+      {
+         return GetAll<List<Discussion>, Discussion>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>
@@ -32,7 +40,7 @@ namespace GitLabSharp
       /// </summary>
       public int Count(MergeRequestsFilter filter)
       {
-         return Count(BaseUrl + filter.ToQueryString());
+         return Count(BaseUrl + "?" + filter.ToQueryString());
       }
 
       /// <summary>

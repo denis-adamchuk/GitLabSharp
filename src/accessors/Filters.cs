@@ -11,9 +11,9 @@ namespace GitLabSharp
       public int PerPage;
       public int PageNumber;
 
-      public string ToQueryString(bool start)
+      public string ToQueryString()
       {
-         return (start ? "?" : "&") + ("page=" + PageNumber.ToString() + "&per_page=" + PerPage.ToString());
+         return "page=" + PageNumber.ToString() + "&per_page=" + PerPage.ToString();
       }
    }
 
@@ -40,7 +40,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "?scope=all"
+         return "scope=all"
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
          + (Labels != null && Labels.Length > 0 ? "&labels=" : "");
@@ -76,7 +76,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "?simple=true"
+         return "simple=true"
             + (PublicOnly ? "&visibility=public" : "")
             + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "");
       }

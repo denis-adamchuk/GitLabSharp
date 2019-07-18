@@ -24,7 +24,7 @@ namespace GitLabSharp
       public string ToQueryString()
       {
          string result = String.Empty;
-         result += "&" + WebUtility.UrlEncode("position[position_type]") + "=text";
+         result += WebUtility.UrlEncode("position[position_type]") + "=text";
          result += "&" + WebUtility.UrlEncode("position[old_path]") + "=" + WebUtility.UrlEncode(OldPath);
          result += "&" + WebUtility.UrlEncode("position[new_path]") + "=" + WebUtility.UrlEncode(NewPath);
          result += "&" + WebUtility.UrlEncode("position[base_sha]") + "=" + BaseSHA;
@@ -53,7 +53,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "?body=" + WebUtility.UrlEncode(Body) + Position?.ToQueryString() ?? "";
+         return "body=" + WebUtility.UrlEncode(Body) + Position?.ToQueryString() ?? "";
       }
    }
 
@@ -67,7 +67,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "?body=" + WebUtility.UrlEncode(Body);
+         return "body=" + WebUtility.UrlEncode(Body);
       }
    }
 
@@ -80,7 +80,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "?resolved=" + Resolve.ToString();
+         return "resolved=" + Resolve.ToString();
       }
    }
 
@@ -107,9 +107,9 @@ namespace GitLabSharp
          switch (Type)
          {
             case ModifyNoteParameters.ModificationType.Body:
-               return "?body=" + WebUtility.UrlEncode(Body);
+               return "body=" + WebUtility.UrlEncode(Body);
             case ModifyNoteParameters.ModificationType.Resolved:
-               return "?resolved=" + Resolved.ToString();
+               return "resolved=" + Resolved.ToString();
          }
          return "";
       }
@@ -125,7 +125,7 @@ namespace GitLabSharp
       public string ToQueryString()
       {
          string duration = Span.ToString("hh") + "h" + Span.ToString("mm") + "m" + Span.ToString("ss") + "s";
-         return "/add_spent_time?duration=" + duration;
+         return "duration=" + duration;
       }
    }
 }

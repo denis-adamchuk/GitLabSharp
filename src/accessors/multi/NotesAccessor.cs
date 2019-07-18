@@ -11,7 +11,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of notes
    /// </summary>
-   public class NotesAccessor : BaseAccessor
+   public class NotesAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes
@@ -21,11 +21,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Load full list of notes from Server and de-serialize it
+      /// Load a single page from a full list of notes from Server and de-serialize it
       /// </summary>
-      public List<Note> Load(PageFilter? pageFilter)
+      public List<Note> Load(PageFilter pageFilter)
       {
-         return Get<List<Note>>(BaseUrl + pageFilter?.ToQueryString(true));
+         return Get<List<Note>>(BaseUrl + "?" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
+      /// Load full list of discussions from Server and de-serialize it
+      /// </summary>
+      public List<Note> LoadAll()
+      {
+         return GetAll<List<Note>, Note>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -50,7 +58,7 @@ namespace GitLabSharp
       /// </summary>
       public Note CreateNew(CreateNewNoteParameters parameters)
       {
-         return Post<Note>(BaseUrl + parameters.ToQueryString());
+         return Post<Note>(BaseUrl + "?" + parameters.ToQueryString());
       }
    }
 }

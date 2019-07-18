@@ -46,7 +46,7 @@ namespace GitLabSharp
       /// </summary>
       public SpentTime AddSpentTime(AddSpentTimeParameters parameters)
       {
-         return Post<SpentTime>(BaseUrl + parameters.ToQueryString());
+         return Post<SpentTime>(BaseUrl + "/add_spent_time?" + parameters.ToQueryString());
       }
    }
 }

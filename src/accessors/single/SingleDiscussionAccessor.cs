@@ -35,7 +35,7 @@ namespace GitLabSharp
       /// </summary>
       public Discussion Resolve(ResolveNoteParameters parameters)
       {
-         return Put<Discussion>(BaseUrl + parameters.ToQueryString());
+         return Put<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
 
       /// <summary>
@@ -43,7 +43,7 @@ namespace GitLabSharp
       /// </summary>
       public DiscussionNote CreateNewNote(CreateNewNoteParameters parameters)
       {
-         return Post<DiscussionNote>(BaseUrl + "/notes" + parameters.ToQueryString());
+         return Post<DiscussionNote>(BaseUrl + "/notes?" + parameters.ToQueryString());
       }
    }
 }

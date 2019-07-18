@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of projects
    /// </summary>
-   public class ProjectsAccessor : BaseAccessor
+   public class ProjectsAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects
@@ -20,19 +20,27 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load a single page from a full list of projects from Server and de-serialize it
+      /// </summary>
+      public List<Project> Load(ProjectsFilter filter, PageFilter pageFilter)
+      {
+         return Get<List<Project>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
+      /// Load full list of discussions from Server and de-serialize it
+      /// </summary>
+      public List<Project> LoadAll(ProjectsFilter filter)
+      {
+         return GetAll<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
+      }
+
+      /// <summary>
       /// Get number of projects taking into account the filter
       /// </summary>
       public int Count(ProjectsFilter filter)
       {
-         return Count(BaseUrl + filter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of projects from Server and de-serialize it
-      /// </summary>
-      public List<Project> Load(ProjectsFilter filter, PageFilter? pageFilter)
-      {
-         return Get<List<Project>>(BaseUrl + filter.ToQueryString() + pageFilter?.ToQueryString(false));
+         return Count(BaseUrl + "?" + filter.ToQueryString());
       }
 
       /// <summary>

@@ -40,7 +40,7 @@ namespace GitLabSharp
       /// </summary>
       public Note Modify(ModifyNoteParameters parameters)
       {
-         return Put<Note>(BaseUrl + parameters.ToQueryString());
+         return Put<Note>(BaseUrl + "?" + parameters.ToQueryString());
       }
    }
 }

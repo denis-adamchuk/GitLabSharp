@@ -10,7 +10,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of discussions
    /// </summary>
-   public class DiscussionsAccessor : BaseAccessor
+   public class DiscussionsAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions
@@ -20,11 +20,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load a single page from a full list of discussions from Server and de-serialize it
+      /// </summary>
+      public List<Discussion> Load(PageFilter pageFilter)
+      {
+         return Get<List<Discussion>>(BaseUrl + "?" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Discussion> Load(PageFilter? pageFilter)
+      public List<Discussion> LoadAll()
       {
-         return Get<List<Discussion>>(BaseUrl + pageFilter?.ToQueryString(true));
+         return GetAll<List<Discussion>, Discussion>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -49,7 +57,7 @@ namespace GitLabSharp
       /// </summary>
       public Discussion CreateNew(NewDiscussionParameters parameters)
       {
-         return Post<Discussion>(BaseUrl + parameters.ToQueryString());
+         return Post<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
    }
 }
