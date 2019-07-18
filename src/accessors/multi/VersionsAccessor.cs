@@ -29,9 +29,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Project> LoadAll()
+      public List<Version> LoadAll()
       {
-         return GetAll<List<Project>, Project>(BaseUrl + "?");
+         return GetAll<List<Version>, Version>(BaseUrl + "?");
       }
 
       /// <summary>

@@ -30,9 +30,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Discussion> LoadAll(MergeRequestsFilter filter)
+      public List<MergeRequest> LoadAll(MergeRequestsFilter filter)
       {
-         return GetAll<List<Discussion>, Discussion>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAll<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>
