@@ -72,9 +72,9 @@ namespace GitLabSharp
    }
 
    /// <summary>
-   /// Used to resolve/un-resolve resolvable notes
+   /// Used to resolve/un-resolve discussion threads
    /// </summary>
-   public class ResolveNoteParameters
+   public class ResolveThreadParameters
    {
       public bool Resolve { get; set; }
 
@@ -86,11 +86,23 @@ namespace GitLabSharp
 
    /// <summary>
    /// Used to modify notes
-   /// Warning: 'Resolved' field makes sense for notes that belong to discussions only
-   /// https://docs.gitlab.com/ce/api/discussions.html#modify-an-existing-merge-request-thread-note
    /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note 
    /// </summary>
    public class ModifyNoteParameters
+   {
+      public string Body { get; set; }
+
+      public string ToQueryString()
+      {
+         return "body=" + WebUtility.UrlEncode(Body);
+      }
+   }
+
+   /// <summary>
+   /// Used to modify discussion notes
+   /// https://docs.gitlab.com/ce/api/discussions.html#modify-an-existing-merge-request-thread-note
+   /// </summary>
+   public class ModifyDiscussionNoteParameters
    {
       public enum ModificationType
       {
@@ -106,9 +118,9 @@ namespace GitLabSharp
       {
          switch (Type)
          {
-            case ModifyNoteParameters.ModificationType.Body:
+            case ModificationType.Body:
                return "body=" + WebUtility.UrlEncode(Body);
-            case ModifyNoteParameters.ModificationType.Resolved:
+            case ModificationType.Resolved:
                return "resolved=" + Resolved.ToString().ToLower();
          }
          return "";
