@@ -53,7 +53,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "body=" + WebUtility.UrlEncode(Body) + Position?.ToQueryString() ?? "";
+         return "body=" + WebUtility.UrlEncode(Body) + (Position?.ToQueryString() ?? "");
       }
    }
 
