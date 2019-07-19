@@ -80,7 +80,7 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "resolved=" + Resolve.ToString();
+         return "resolved=" + Resolve.ToString().ToLower();
       }
    }
 
@@ -109,7 +109,7 @@ namespace GitLabSharp
             case ModifyNoteParameters.ModificationType.Body:
                return "body=" + WebUtility.UrlEncode(Body);
             case ModifyNoteParameters.ModificationType.Resolved:
-               return "resolved=" + Resolved.ToString();
+               return "resolved=" + Resolved.ToString().ToLower();
          }
          return "";
       }
