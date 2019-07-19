@@ -22,6 +22,7 @@ namespace GitLabSharp
    public struct MergeRequest
    {
       public int Id;
+      public int IId;
       public string Title;
       public string Description;
       public string Source_Branch;
