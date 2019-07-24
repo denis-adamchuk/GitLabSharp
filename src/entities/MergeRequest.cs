@@ -33,6 +33,9 @@ namespace GitLabSharp
       public bool Work_In_Progress;
       public User Author;
       public DiffRefs Diff_Refs;
+      public DateTime Created_At;
+      public DateTime Updated_At;
+      public int Project_Id;
    }
 
    /// <summary>
