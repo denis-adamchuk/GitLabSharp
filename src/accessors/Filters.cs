@@ -65,7 +65,7 @@ namespace GitLabSharp
             case WorkInProgressFilter.No: return "no";
             case WorkInProgressFilter.Yes: return "yes";
          }
-         return "";         
+         return "";
       }
    }
 

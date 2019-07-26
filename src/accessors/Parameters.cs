@@ -53,7 +53,8 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "body=" + WebUtility.UrlEncode(Body) + "&" + (Position?.ToQueryString() ?? "");
+         string body = Body.Replace("\r", "");
+         return "body=" + WebUtility.UrlEncode(body) + "&" + (Position?.ToQueryString() ?? "");
       }
    }
 
@@ -67,7 +68,8 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "body=" + WebUtility.UrlEncode(Body);
+         string body = Body.Replace("\r", "");
+         return "body=" + WebUtility.UrlEncode(body);
       }
    }
 
@@ -94,7 +96,8 @@ namespace GitLabSharp
 
       public string ToQueryString()
       {
-         return "body=" + WebUtility.UrlEncode(Body);
+         string body = Body.Replace("\r", "");
+         return "body=" + WebUtility.UrlEncode(body);
       }
    }
 
@@ -119,7 +122,10 @@ namespace GitLabSharp
          switch (Type)
          {
             case ModificationType.Body:
-               return "body=" + WebUtility.UrlEncode(Body);
+               {
+                  string body = Body.Replace("\r", "");
+                  return "body=" + WebUtility.UrlEncode(body);
+               }
             case ModificationType.Resolved:
                return "resolved=" + Resolved.ToString().ToLower();
          }

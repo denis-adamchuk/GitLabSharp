@@ -14,7 +14,7 @@ namespace GitLabSharp
    {
       public string Id;
       public List<DiscussionNote> Notes;
-      public bool IndividualNote;
+      public bool Individual_Note;
    }
 
    /// <summary>
