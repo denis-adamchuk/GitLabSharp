@@ -24,13 +24,13 @@ namespace GitLabSharp
 
          if (!Client.ResponseHeaders.AllKeys.Contains("X-Total"))
          {
-            throw new ApplicationException("Cannot calculate count");
+            throw new GitLabSharpException(url, "Cannot calculate count, X-Total key is missing");
          }
 
          int count = 0;
          if (!int.TryParse(Client.ResponseHeaders["X-Total"], out count))
          {
-            throw new ApplicationException("Cannot calculate count");
+            throw new GitLabSharpException(url, "Cannot calculate count, X-Total key has invalid value");
          }
 
          return count;
