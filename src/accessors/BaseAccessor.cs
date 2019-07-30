@@ -24,14 +24,14 @@ namespace GitLabSharp
    /// </summary>
    public class GitLabRequestException : Exception
    {
-      public GitLabRequestException(string url, string method, System.Net.HttpStatusCode code)
+      public GitLabRequestException(string url, string method, System.Net.WebException webException)
          : base(String.Format("GitLab returned error code {0} on requesting URL \"{1}\" with method {2}",
-            code.ToString(), url, method))
+            ((System.Net.HttpWebResponse)webException.Response).StatusCode.ToString(), url, method))
       {
-         Code = code;
+         WebException = webException;
       }
 
-      public System.Net.HttpStatusCode Code { get; }
+      public System.Net.WebException WebException { get; }
    }
 
    /// <summary>
@@ -108,8 +108,7 @@ namespace GitLabSharp
          }
          catch (System.Net.WebException ex)
          {
-            var exResponse = ((System.Net.HttpWebResponse)ex.Response);
-            throw new GitLabRequestException(url, method, exResponse.StatusCode);
+            throw new GitLabRequestException(url, method, ex);
          }
          return response;
       }
