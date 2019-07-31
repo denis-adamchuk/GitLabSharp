@@ -20,7 +20,7 @@ namespace GitLabSharp
       /// </summary>
       internal int Count(string url)
       {
-         Client.Get(url);
+         safeRequest(url, "GET");
 
          if (!Client.ResponseHeaders.AllKeys.Contains("X-Total"))
          {

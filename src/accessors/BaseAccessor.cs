@@ -25,8 +25,7 @@ namespace GitLabSharp
    public class GitLabRequestException : Exception
    {
       public GitLabRequestException(string url, string method, System.Net.WebException webException)
-         : base(String.Format("GitLab returned error code {0} on requesting URL \"{1}\" with method {2}",
-            ((System.Net.HttpWebResponse)webException.Response).StatusCode.ToString(), url, method))
+         : base(String.Format("GitLab returned error on requesting URL \"{0}\" with method {1}", url, method))
       {
          WebException = webException;
       }
@@ -80,7 +79,7 @@ namespace GitLabSharp
       /// <summary>
       /// Executes a request but converts System.Net.WebException into GitLabSharpException
       /// </summary>
-      private string safeRequest(string url, string method)
+      protected string safeRequest(string url, string method)
       {
          string response = String.Empty;
          try
