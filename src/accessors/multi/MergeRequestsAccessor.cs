@@ -28,11 +28,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it
+      /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
       public List<MergeRequest> LoadAll(MergeRequestsFilter filter)
       {
          return GetAll<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
+      }
+
+      /// <summary>
+      /// Load full list of discussions from Server and de-serialize it (async)
+      /// </summary>
+      async public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
+      {
+         return await GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>

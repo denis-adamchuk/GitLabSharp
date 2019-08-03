@@ -36,6 +36,14 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load full list of discussions from Server and de-serialize it (async)
+      /// </summary>
+      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter)
+      {
+         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
+      }
+
+      /// <summary>
       /// Get number of projects taking into account the filter
       /// </summary>
       public int Count(ProjectsFilter filter)

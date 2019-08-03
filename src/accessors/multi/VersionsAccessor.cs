@@ -27,11 +27,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it
+      /// Load full list of versions from Server and de-serialize it
       /// </summary>
       public List<Version> LoadAll()
       {
          return GetAll<List<Version>, Version>(BaseUrl + "?");
+      }
+
+      /// <summary>
+      /// Load full list of versions from Server and de-serialize it (async)
+      /// </summary>
+      public Task<List<Version>> LoadAllTaskAsync()
+      {
+         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?");
       }
 
       /// <summary>

@@ -26,5 +26,13 @@ namespace GitLabSharp
       {
          return Get<User>(BaseUrl);
       }
+      
+      /// <summary>
+      /// Loads information about user from Server and de-serializes it
+      /// </summary>
+      public Task<User> LoadTaskAsync()
+      {
+         return GetTaskAsync<User>(BaseUrl);
+      }
    }
 }

@@ -53,11 +53,27 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
+      /// </summary>
+      async internal Task<T> GetTaskAsync<T>(string url)
+      {
+         return Serializer.Deserialize<T>(await requestTaskAsync(url, "GET"));
+      }
+
+      /// <summary>
       /// Execute Http POST request and de-serialize a response into a new T object instance
       /// </summary>
       internal T Post<T>(string url)
       {
          return Serializer.Deserialize<T>(safeRequest(url, "POST"));
+      }
+
+      /// <summary>
+      /// Execute Http POST request asynchronously and de-serialize a response into a new T object instance
+      /// </summary>
+      async internal Task<T> PostTaskAsync<T>(string url)
+      {
+         return Serializer.Deserialize<T>(await requestTaskAsync(url, "POST"));
       }
 
       /// <summary>
@@ -69,12 +85,30 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Execute Http PUT request asynchronously and de-serialize a response into a new T object instance
+      /// </summary>
+      async internal Task<T> PutTaskAsync<T>(string url)
+      {
+         return Serializer.Deserialize<T>(await requestTaskAsync(url, "PUT"));
+      }
+
+      /// <summary>
       /// Execute Http DELETE request
       /// </summary>
       internal void Delete(string url)
       {
          safeRequest(url, "DELETE");
       }
+
+      /// <summary>
+      /// Execute Http DELETE request asynchronously
+      /// </summary>
+      async internal Task DeleteTaskAsync(string url)
+      {
+         await requestTaskAsync(url, "DELETE");
+      }
+
+      // TODO Get rid of copy/paste below
 
       /// <summary>
       /// Executes a request but converts System.Net.WebException into GitLabSharpException
@@ -110,6 +144,34 @@ namespace GitLabSharp
             throw new GitLabRequestException(url, method, ex);
          }
          return response;
+      }
+
+      /// <summary>
+      /// Executes a request but converts System.Net.WebException into GitLabSharpException
+      /// </summary>
+      protected Task<string> requestTaskAsync(string url, string method)
+      {
+         if (method == "GET")
+         {
+            return Client.GetTaskAsync(url);
+         }
+         else if (method == "POST")
+         {
+            return Client.PostTaskAsync(url);
+         }
+         else if (method == "PUT")
+         {
+            return Client.PutTaskAsync(url);
+         }
+         else if (method == "DELETE")
+         {
+            return Client.DeleteTaskAsync(url);
+         }
+         else
+         {
+            Debug.Assert(false);
+         }
+         return null;
       }
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();

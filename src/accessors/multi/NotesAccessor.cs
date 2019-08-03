@@ -29,11 +29,19 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it
+      /// Load full list of notes from Server and de-serialize it
       /// </summary>
       public List<Note> LoadAll()
       {
          return GetAll<List<Note>, Note>(BaseUrl + "?");
+      }
+
+      /// <summary>
+      /// Load full list of notes from Server and de-serialize it (async)
+      /// </summary>
+      public Task<List<Note>> LoadAllTaskAsync()
+      {
+         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -60,5 +68,14 @@ namespace GitLabSharp
       {
          return Post<Note>(BaseUrl + "?" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Create a new note with given body (async)
+      /// </summary>
+      public Task<Note> CreateNewTaskAsync(CreateNewNoteParameters parameters)
+      {
+         return PostTaskAsync<Note>(BaseUrl + "?" + parameters.ToQueryString());
+      }
    }
 }
+

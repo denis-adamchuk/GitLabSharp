@@ -36,6 +36,14 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Delete note
+      /// </summary>
+      public Task DeleteTaskAsync()
+      {
+         return base.DeleteTaskAsync(BaseUrl);
+      }
+
+      /// <summary>
       /// Modify note
       /// </summary>
       public Note Modify(ModifyNoteParameters parameters)

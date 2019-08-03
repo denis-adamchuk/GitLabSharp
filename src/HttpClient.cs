@@ -29,9 +29,19 @@ namespace GitLabSharp
          return _client.DownloadString(url);
       }
 
+      internal Task<string> GetTaskAsync(string url)
+      {
+         return _client.DownloadStringTaskAsync(url);
+      }
+
       internal string Post(string url)
       {
          return _client.UploadString(url, "POST", "");
+      }
+
+      internal Task<string> PostTaskAsync(string url)
+      {
+         return _client.UploadStringTaskAsync(url, "POST", "");
       }
 
       internal string Put(string url)
@@ -39,9 +49,19 @@ namespace GitLabSharp
          return _client.UploadString(url, "PUT", "");
       }
 
+      internal Task<string> PutTaskAsync(string url)
+      {
+         return _client.UploadStringTaskAsync(url, "PUT", "");
+      }
+
       internal string Delete(string url)
       {
          return _client.UploadString(url, "DELETE", "");
+      }
+
+      internal Task<string> DeleteTaskAsync(string url)
+      {
+         return _client.UploadStringTaskAsync(url, "DELETE", "");
       }
 
       /// <summary>

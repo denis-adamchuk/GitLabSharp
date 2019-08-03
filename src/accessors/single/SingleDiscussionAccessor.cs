@@ -31,11 +31,27 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load information about this discussion instance from Server and de-serialize it
+      /// </summary>
+      public Task<Discussion> LoadTaskAsync()
+      {
+         return GetTaskAsync<Discussion>(BaseUrl);
+      }
+
+      /// <summary>
       /// Resolve/un-resolve a discussion thread
       /// </summary>
       public Discussion Resolve(ResolveThreadParameters parameters)
       {
          return Put<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
+      }
+
+      /// <summary>
+      /// Resolve/un-resolve a discussion thread
+      /// </summary>
+      public Task<Discussion> ResolveTaskAsync(ResolveThreadParameters parameters)
+      {
+         return PutTaskAsync<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
 
       /// <summary>
@@ -47,11 +63,28 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Create a new note within this discussion
+      /// </summary>
+      public Task<DiscussionNote> CreateNewNoteTaskAsync(CreateNewNoteParameters parameters)
+      {
+         return PostTaskAsync<DiscussionNote>(BaseUrl + "/notes?" + parameters.ToQueryString());
+      }
+
+      /// <summary>
       /// Modify discussion note
       /// </summary>
       public DiscussionNote ModifyNote(int noteId, ModifyDiscussionNoteParameters parameters)
       {
          return Put<DiscussionNote>(BaseUrl + "/notes/" + noteId.ToString() + "?" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Modify discussion note
+      /// </summary>
+      public Task<DiscussionNote> ModifyNoteTaskAsync(int noteId, ModifyDiscussionNoteParameters parameters)
+      {
+         return PutTaskAsync<DiscussionNote>(BaseUrl + "/notes/" + noteId.ToString() + "?" + parameters.ToQueryString());
+      }
    }
 }
+

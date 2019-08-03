@@ -27,6 +27,14 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load information about this merge request from Server and de-serialize it
+      /// </summary>
+      public Task<MergeRequest> LoadTaskAsync()
+      {
+         return GetTaskAsync<MergeRequest>(BaseUrl);
+      }
+
+      /// <summary>
       /// Get access to a list of versions of this merge request
       /// </summary>
       public VersionsAccessor Versions => new VersionsAccessor(Client, BaseUrl + "/versions");
@@ -47,6 +55,14 @@ namespace GitLabSharp
       public SpentTime AddSpentTime(AddSpentTimeParameters parameters)
       {
          return Post<SpentTime>(BaseUrl + "/add_spent_time?" + parameters.ToQueryString());
+      }
+
+      /// <summary>
+      /// Add spent time to the merge request of this merge request
+      /// </summary>
+      public Task<SpentTime> AddSpentTimeAsync(AddSpentTimeParameters parameters)
+      {
+         return PostTaskAsync<SpentTime>(BaseUrl + "/add_spent_time?" + parameters.ToQueryString());
       }
    }
 }

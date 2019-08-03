@@ -36,6 +36,14 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load full list of discussions from Server and de-serialize it
+      /// </summary>
+      public Task<List<Discussion>> LoadAllTaskAsync()
+      {
+         return GetAllTaskAsync<List<Discussion>, Discussion>(BaseUrl + "?");
+      }
+
+      /// <summary>
       /// Get number of discussions
       /// Note: PageFilter is ignored
       /// </summary>
