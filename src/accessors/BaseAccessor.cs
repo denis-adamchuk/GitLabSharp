@@ -57,7 +57,7 @@ namespace GitLabSharp
       /// </summary>
       async internal Task<T> GetTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await requestTaskAsync(url, "GET"));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET"));
       }
 
       /// <summary>
@@ -73,7 +73,7 @@ namespace GitLabSharp
       /// </summary>
       async internal Task<T> PostTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await requestTaskAsync(url, "POST"));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "POST"));
       }
 
       /// <summary>
@@ -89,7 +89,7 @@ namespace GitLabSharp
       /// </summary>
       async internal Task<T> PutTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await requestTaskAsync(url, "PUT"));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "PUT"));
       }
 
       /// <summary>
@@ -103,12 +103,10 @@ namespace GitLabSharp
       /// <summary>
       /// Execute Http DELETE request asynchronously
       /// </summary>
-      async internal Task DeleteTaskAsync(string url)
+      internal Task DeleteTaskAsync(string url)
       {
-         await requestTaskAsync(url, "DELETE");
+         return safeRequestTaskAsync(url, "DELETE");
       }
-
-      // TODO Get rid of copy/paste below
 
       /// <summary>
       /// Executes a request but converts System.Net.WebException into GitLabSharpException
@@ -147,31 +145,39 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Executes a request but converts System.Net.WebException into GitLabSharpException
+      /// Executes an asynchronous request but converts System.Net.WebException into GitLabSharpException
       /// </summary>
-      protected Task<string> requestTaskAsync(string url, string method)
+      async protected Task<string> safeRequestTaskAsync(string url, string method)
       {
-         if (method == "GET")
+         string response = String.Empty;
+         try
          {
-            return Client.GetTaskAsync(url);
+            if (method == "GET")
+            {
+               response = await Client.GetTaskAsync(url);
+            }
+            else if (method == "POST")
+            {
+               response = await Client.PostTaskAsync(url);
+            }
+            else if (method == "PUT")
+            {
+               response  = await Client.PutTaskAsync(url);
+            }
+            else if (method == "DELETE")
+            {
+               response = await Client.DeleteTaskAsync(url);
+            }
+            else
+            {
+               Debug.Assert(false);
+            }
          }
-         else if (method == "POST")
+         catch (System.Net.WebException ex)
          {
-            return Client.PostTaskAsync(url);
+            throw new GitLabRequestException(url, method, ex);
          }
-         else if (method == "PUT")
-         {
-            return Client.PutTaskAsync(url);
-         }
-         else if (method == "DELETE")
-         {
-            return Client.DeleteTaskAsync(url);
-         }
-         else
-         {
-            Debug.Assert(false);
-         }
-         return null;
+         return response;
       }
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();

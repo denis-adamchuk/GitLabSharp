@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -43,7 +44,7 @@ namespace GitLabSharp
       /// </summary>
       async internal Task<int> CountTaskAsync(string url)
       {
-         await requestTaskAsync(url, "GET");
+         await safeRequestTaskAsync(url, "GET");
 
          if (!Client.ResponseHeaders.AllKeys.Contains("X-Total"))
          {
@@ -95,7 +96,6 @@ namespace GitLabSharp
          {
             PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
             TList chunk = await GetTaskAsync<TList>(url + pageFilter.ToQueryString());
-            System.Diagnostics.Debug.WriteLine("received response for request");
             result.AddRange(chunk);
          }
 
