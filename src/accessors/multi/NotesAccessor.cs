@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -39,9 +40,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of notes from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Note>> LoadAllTaskAsync()
+      public Task<List<Note>> LoadAllTaskAsync(CancellationToken ct)
       {
-         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?");
+         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?", ct);
       }
 
       /// <summary>

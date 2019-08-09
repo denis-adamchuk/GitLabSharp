@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -29,9 +30,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this merge request from Server and de-serialize it
       /// </summary>
-      public Task<MergeRequest> LoadTaskAsync()
+      public Task<MergeRequest> LoadTaskAsync(CancellationToken ct)
       {
-         return GetTaskAsync<MergeRequest>(BaseUrl);
+         return GetTaskAsync<MergeRequest>(BaseUrl, ct);
       }
 
       /// <summary>

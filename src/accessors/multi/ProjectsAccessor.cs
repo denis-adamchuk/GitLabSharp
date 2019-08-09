@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -38,9 +39,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter)
+      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter, CancellationToken ct)
       {
-         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&", ct);
       }
 
       /// <summary>

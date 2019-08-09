@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -37,9 +38,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of versions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Version>> LoadAllTaskAsync()
+      public Task<List<Version>> LoadAllTaskAsync(CancellationToken ct)
       {
-         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?");
+         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?", ct);
       }
 
       /// <summary>

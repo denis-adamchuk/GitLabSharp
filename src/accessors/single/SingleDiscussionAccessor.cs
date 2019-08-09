@@ -35,7 +35,7 @@ namespace GitLabSharp
       /// </summary>
       public Task<Discussion> LoadTaskAsync()
       {
-         return GetTaskAsync<Discussion>(BaseUrl);
+         return GetTaskAsync<Discussion>(BaseUrl, null);
       }
 
       /// <summary>

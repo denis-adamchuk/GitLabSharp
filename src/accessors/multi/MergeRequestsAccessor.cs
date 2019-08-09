@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -38,9 +39,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      async public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
+      async public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter, CancellationToken ct)
       {
-         return await GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return await GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&", ct);
       }
 
       /// <summary>

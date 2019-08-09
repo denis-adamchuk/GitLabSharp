@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -29,8 +30,9 @@ namespace GitLabSharp
          return _client.DownloadString(url);
       }
 
-      internal Task<string> GetTaskAsync(string url)
+      internal Task<string> GetTaskAsync(string url, CancellationToken ct)
       {
+         ct.Register(_client.CancelAsync);
          return _client.DownloadStringTaskAsync(url);
       }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
@@ -55,9 +56,9 @@ namespace GitLabSharp
       /// <summary>
       /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
       /// </summary>
-      async internal Task<T> GetTaskAsync<T>(string url)
+      async internal Task<T> GetTaskAsync<T>(string url, CancellationToken? ct = null)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET"));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET", ct));
       }
 
       /// <summary>
@@ -147,14 +148,14 @@ namespace GitLabSharp
       /// <summary>
       /// Executes an asynchronous request but converts System.Net.WebException into GitLabSharpException
       /// </summary>
-      async protected Task<string> safeRequestTaskAsync(string url, string method)
+      async protected Task<string> safeRequestTaskAsync(string url, string method, CancellationToken? ct = null)
       {
          string response = String.Empty;
          try
          {
             if (method == "GET")
             {
-               response = await Client.GetTaskAsync(url);
+               response = await Client.GetTaskAsync(url, ct.Value);
             }
             else if (method == "POST")
             {
