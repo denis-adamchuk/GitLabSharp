@@ -11,7 +11,7 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a single discussion. GitLab's discussion includes all its discussion notes.
    /// Note, this class does not provide access to individual notes within a discussion for their deletion or modification. 
-   /// NotesAccessor can be easily used for this purpose.
+   /// NoteAccessor can be easily used for this purpose.
    /// </summary>
    public class SingleDiscussionAccessor : BaseAccessor
    {

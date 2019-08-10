@@ -31,6 +31,7 @@ namespace GitLabSharp
       async internal Task<int> CountTaskAsync(string url)
       {
          await safeRequestTaskAsync(url, "GET");
+         Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          return calculateCount(url);
       }
 
@@ -59,13 +60,13 @@ namespace GitLabSharp
       /// <summary>
       /// Execute multiple Http GET requests and merge results in a single list
       /// </summary>
-      async internal Task<TList> GetAllTaskAsync<TList, TItem>(string url, CancellationToken ct) where TList : List<TItem>, new()
+      async internal Task<TList> GetAllTaskAsync<TList, TItem>(string url) where TList : List<TItem>, new()
       {
          TList result = new TList();
 
          Task<int> countTask = CountTaskAsync(url);
          int total = await countTask;
-         ct.ThrowIfCancellationRequested();
+         Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
 
          int perPage = 100;
          int pages = total / perPage + (total % perPage > 0 ? 1 : 0);
@@ -74,7 +75,7 @@ namespace GitLabSharp
             PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
             TList chunk = await GetTaskAsync<TList>(url + pageFilter.ToQueryString(), ct);
             result.AddRange(chunk);
-            ct.ThrowIfCancellationRequested();
+            Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          }
 
          return result;

@@ -11,12 +11,12 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of merge requests
    /// </summary>
-   public class MergeRequestsAccessor : BaseMultiAccessor
+   public class MergeRequestAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/4/merge_requests
       /// </summary>
-      internal MergeRequestsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal MergeRequestAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
@@ -39,9 +39,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      async public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter, CancellationToken ct)
+      async public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
       {
-         return await GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&", ct);
+         return await GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>

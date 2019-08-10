@@ -14,7 +14,7 @@ namespace GitLabSharp
    /// </summary>
    public class GitLabSharpException : Exception
    {
-      public GitLabSharpException(string url, string error)
+      internal GitLabSharpException(string url, string error)
          : base(String.Format("Error occurred with URL \"{0}\": {1}", url, error))
       {
       }
@@ -25,7 +25,7 @@ namespace GitLabSharp
    /// </summary>
    public class GitLabRequestException : Exception
    {
-      public GitLabRequestException(string url, string method, System.Net.WebException webException)
+      internal GitLabRequestException(string url, string method, System.Net.WebException webException)
          : base(String.Format("GitLab returned error on requesting URL \"{0}\" with method {1}", url, method))
       {
          WebException = webException;
@@ -56,9 +56,9 @@ namespace GitLabSharp
       /// <summary>
       /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
       /// </summary>
-      async internal Task<T> GetTaskAsync<T>(string url, CancellationToken? ct = null)
+      async internal Task<T> GetTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET", ct));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET"));
       }
 
       /// <summary>
@@ -148,14 +148,14 @@ namespace GitLabSharp
       /// <summary>
       /// Executes an asynchronous request but converts System.Net.WebException into GitLabSharpException
       /// </summary>
-      async protected Task<string> safeRequestTaskAsync(string url, string method, CancellationToken? ct = null)
+      async protected Task<string> safeRequestTaskAsync(string url, string method)
       {
          string response = String.Empty;
          try
          {
             if (method == "GET")
             {
-               response = await Client.GetTaskAsync(url, ct.Value);
+               response = await Client.GetTaskAsync(url);
             }
             else if (method == "POST")
             {
@@ -182,8 +182,8 @@ namespace GitLabSharp
       }
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();
-      internal HttpClient Client { get; }
-      internal string BaseUrl { get; }
+      protected HttpClient Client { get; }
+      protected string BaseUrl { get; }
    }
 }
 

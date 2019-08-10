@@ -12,12 +12,12 @@ namespace GitLabSharp
    /// <summary>
    /// Provides access to a list of notes
    /// </summary>
-   public class NotesAccessor : BaseMultiAccessor
+   public class NoteAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/notes
       /// </summary>
-      internal NotesAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal NoteAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
@@ -40,9 +40,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of notes from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Note>> LoadAllTaskAsync(CancellationToken ct)
+      public Task<List<Note>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?", ct);
+         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?");
       }
 
       /// <summary>

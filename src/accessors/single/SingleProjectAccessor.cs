@@ -30,6 +30,6 @@ namespace GitLabSharp
       /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
-      public MergeRequestsAccessor MergeRequests => new MergeRequestsAccessor(Client, BaseUrl + "/merge_requests");
+      public MergeRequestAccessor MergeRequests => new MergeRequestAccessor(Client, BaseUrl + "/merge_requests");
    }
 }
