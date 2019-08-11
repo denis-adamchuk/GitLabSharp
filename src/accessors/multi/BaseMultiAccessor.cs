@@ -35,8 +35,6 @@ namespace GitLabSharp
          return calculateCount(url);
       }
 
-      // TODO Get rid of copy/paste below
-
       /// <summary>
       /// Execute multiple Http GET requests and merge results in a single list
       /// </summary>
@@ -73,7 +71,7 @@ namespace GitLabSharp
          for (int iPage = 0; iPage < pages; ++iPage)
          {
             PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
-            TList chunk = await GetTaskAsync<TList>(url + pageFilter.ToQueryString(), ct);
+            TList chunk = await GetTaskAsync<TList>(url + pageFilter.ToQueryString());
             result.AddRange(chunk);
             Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          }

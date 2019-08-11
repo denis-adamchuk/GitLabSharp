@@ -68,17 +68,12 @@ namespace GitLabSharp
          return Client.UploadStringTaskAsync(url, "DELETE", "");
       }
 
-      internal void CancelAsync()
-      {
-         Client.CancelAsync();
-      }
-
       /// <summary>
       /// Collection of Headers for a response on the most recent Http request
       /// </summary>
       internal WebHeaderCollection ResponseHeaders => Client.ResponseHeaders;
 
-      internal CancellationTokenSource CancellationTokenSource { get; };
+      internal CancellationTokenSource CancellationTokenSource { get; }
 
       private WebClient Client { get; }
    }

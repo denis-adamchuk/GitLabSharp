@@ -24,6 +24,7 @@ namespace mrHelper.Client
       /// </summary>
       internal void Dispose()
       {
+         Debug.WriteLine("A task is being disposed");
          GitLab.Dispose();
       }
 
@@ -42,6 +43,7 @@ namespace mrHelper.Client
       /// </summary>
       void internal Cancel()
       {
+         Debug.WriteLine("A task is going to be cancelled");
          GitLab.CurrentCancellationTokenSource.Cancel();
       }
 

@@ -182,7 +182,7 @@ namespace GitLabSharp
       }
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();
-      protected HttpClient Client { get; }
+      internal HttpClient Client { get; }
       protected string BaseUrl { get; }
    }
 }

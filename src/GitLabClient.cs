@@ -44,7 +44,7 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         cancel();
+         Task.Run(async () => await cancel()).Wait();
       }
 
       async private Task cancel()
@@ -60,13 +60,16 @@ namespace GitLabSharp
          try
          {
             await CurrentTask;
+            Debug.Assert(false);
          }
          catch (OperationCanceledException)
          {
             // This is expected
+            Debug.WriteLine("Current task cancelled");
          }
          finally
          {
+            Debug.WriteLine("Disposing current task");
             CurrentTask.Dispose();
             CurrentTask = null;
          }
@@ -77,9 +80,11 @@ namespace GitLabSharp
          Debug.Assert(CurrentTask == null);
          CurrentTask = new GitLabTask(new GitLab(Host, Token), cmd);
 
+         Debug.WriteLine("Waiting for completion of the current task");
          try
          {
             return await CurrentTask.RunAsync();
+            Debug.WriteLine("Current task completed");
          }
          catch (OperationCanceledException)
          {
@@ -87,10 +92,12 @@ namespace GitLabSharp
          }
          catch (GitLabRequestException)
          {
+            Debug.WriteLine("Exception occured in the current task");
             throw;
          }
          finally
          {
+            Debug.WriteLine("Disposing current task");
             CurrentTask.Dispose();
             CurrentTask = null;
          }

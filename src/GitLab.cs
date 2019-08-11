@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GitLabSharp
@@ -21,7 +22,7 @@ namespace GitLabSharp
       /// <summary>
       /// Dispose the object
       /// </summary>
-      internal void Dispose()
+      public void Dispose()
       {
          CancellationTokenSource.Dispose();
       }
