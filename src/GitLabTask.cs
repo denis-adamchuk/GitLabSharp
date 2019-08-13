@@ -5,50 +5,49 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
-namespace mrHelper.Client
+namespace GitLabSharp
 {
    /// <summary>
    /// Internal library representation of a single request to GitLab
    /// </summary>
    internal class GitLabTask : IDisposable
    {
-      internal GitLabTask(GitLab gitLab, Command command)
+      internal GitLabTask(GitLab gitLab, GitLabClient.Command command)
       {
          GitLab = gitLab;
-         Command = command;
+         MyCommand = command;
       }
 
       /// <summary>
       /// Dispose the object
       /// </summary>
-      internal void Dispose()
+      public void Dispose()
       {
          Debug.WriteLine("A task is being disposed");
          GitLab.Dispose();
       }
-
-      internal delegate object Command(GitLab gitLab);
 
       /// <summary>
       /// Runs a command for GitLab object
       /// </summary>
       async internal Task<object> RunAsync()
       {
-         await Command(GitLab);
+         return await MyCommand(GitLab);
       }
 
       /// <summary>
       /// Cancels currently executing command at the GitLab object 
       /// </summary>
-      void internal Cancel()
+      internal void Cancel()
       {
          Debug.WriteLine("A task is going to be cancelled");
-         GitLab.CurrentCancellationTokenSource.Cancel();
+         GitLab.CancellationTokenSource.Cancel();
       }
 
       private GitLab GitLab { get; }
-      private Command Command { get; }
+      private GitLabClient.Command MyCommand { get; }
    }
 }
 

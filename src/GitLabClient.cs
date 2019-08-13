@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace GitLabSharp
 {
@@ -19,7 +20,7 @@ namespace GitLabSharp
          Token = token;
       }
 
-      public delegate object Command(GitLab gitLab);
+      public delegate Task<object> Command(GitLab gitLab);
 
       /// <summary>
       /// Run client request to GitLab API.
@@ -59,13 +60,13 @@ namespace GitLabSharp
          Debug.WriteLine("Waiting for current task cancellation");
          try
          {
-            await CurrentTask;
-            Debug.Assert(false);
+            //await CurrentTask;
+            //Debug.Assert(false);
          }
          catch (OperationCanceledException)
          {
             // This is expected
-            Debug.WriteLine("Current task cancelled");
+            //Debug.WriteLine("Current task cancelled");
          }
          finally
          {
@@ -75,7 +76,7 @@ namespace GitLabSharp
          }
       }
 
-      async private Task<object> complete(command cmd)
+      async private Task<object> complete(Command cmd)
       {
          Debug.Assert(CurrentTask == null);
          CurrentTask = new GitLabTask(new GitLab(Host, Token), cmd);
@@ -88,9 +89,9 @@ namespace GitLabSharp
          }
          catch (OperationCanceledException)
          {
-            Debug.Assert(false);
+            //Debug.Assert(false);
          }
-         catch (GitLabRequestException)
+         catch (GitLabSharp.Accessors.GitLabRequestException)
          {
             Debug.WriteLine("Exception occured in the current task");
             throw;

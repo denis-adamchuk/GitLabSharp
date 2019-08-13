@@ -66,6 +66,8 @@
     <Compile Include="src\entities\Version.cs" />
     <Compile Include="src\accessors\multi\VersionAccessor.cs" />
     <Compile Include="src\GitLab.cs" />
+    <Compile Include="src\GitLabClient.cs" />
+    <Compile Include="src\GitLabTask.cs" />
     <Compile Include="src\HttpClient.cs" />
     <Compile Include="src\UrlParser.cs" />
   </ItemGroup>
