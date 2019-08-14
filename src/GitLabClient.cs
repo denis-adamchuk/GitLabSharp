@@ -29,7 +29,7 @@ namespace GitLabSharp
       async public Task<object> RunAsync(Command cmd)
       {
          await cancel();
-         return await complete(cmd);
+         return complete(cmd);
       }
 
       /// <summary>
@@ -55,45 +55,32 @@ namespace GitLabSharp
             return;
          }
 
+         Debug.WriteLine("Issueing task cancellation");
          CurrentTask.Cancel();
 
          Debug.WriteLine("Waiting for current task cancellation");
-         try
-         {
-            //await CurrentTask;
-            //Debug.Assert(false);
-         }
-         catch (OperationCanceledException)
-         {
-            // This is expected
-            //Debug.WriteLine("Current task cancelled");
-         }
-         finally
-         {
-            Debug.WriteLine("Disposing current task");
-            CurrentTask.Dispose();
-            CurrentTask = null;
-         }
+         await Semaphore.WaitAsync();
       }
 
       async private Task<object> complete(Command cmd)
       {
          Debug.Assert(CurrentTask == null);
-         CurrentTask = new GitLabTask(new GitLab(Host, Token), cmd);
+         var gitLabTask = new GitLabTask(new GitLab(Host, Token), cmd);
 
          Debug.WriteLine("Waiting for completion of the current task");
          try
          {
-            return await CurrentTask.RunAsync();
+            object obj = await CurrentTask.RunAsync();
             Debug.WriteLine("Current task completed");
+            return obj;
          }
          catch (OperationCanceledException)
          {
-            //Debug.Assert(false);
+            Debug.WriteLine("Current task cancelled");
          }
          catch (GitLabSharp.Accessors.GitLabRequestException)
          {
-            Debug.WriteLine("Exception occured in the current task");
+            Debug.WriteLine("Exception occurred in the current task");
             throw;
          }
          finally
@@ -101,6 +88,7 @@ namespace GitLabSharp
             Debug.WriteLine("Disposing current task");
             CurrentTask.Dispose();
             CurrentTask = null;
+            Semaphore.Release();
          }
          return null;
       }
@@ -108,6 +96,7 @@ namespace GitLabSharp
       private string Host { get; }
       private string Token { get; }
       private GitLabTask CurrentTask = null;
+      private SemaphoreSlim Semaphore = new SemaphoreSlim(1);
    }
 }
 

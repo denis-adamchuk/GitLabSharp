@@ -32,9 +32,9 @@ namespace GitLabSharp
       /// <summary>
       /// Runs a command for GitLab object
       /// </summary>
-      async internal Task<object> RunAsync()
+      internal Task<object> RunAsync()
       {
-         return await MyCommand(GitLab);
+         return MyCommand(GitLab);
       }
 
       /// <summary>
