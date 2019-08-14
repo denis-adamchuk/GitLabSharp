@@ -39,9 +39,10 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Delete note
       /// </summary>
-      public Task DeleteTaskAsync()
+      async public Task<bool> DeleteTaskAsync()
       {
-         return base.DeleteTaskAsync(BaseUrl);
+         await base.DeleteTaskAsync(BaseUrl);
+         return true;
       }
 
       /// <summary>

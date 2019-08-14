@@ -29,6 +29,14 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load information about this project instance from Server and de-serialize it
+      /// </summary>
+      public Task<Project> LoadTaskAsync()
+      {
+         return GetTaskAsync<Project>(BaseUrl);
+      }
+
+      /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
       public MergeRequestAccessor MergeRequests => new MergeRequestAccessor(Client, BaseUrl + "/merge_requests");

@@ -69,5 +69,13 @@ namespace GitLabSharp.Accessors
       {
          return Post<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Create a new discussion with given parameters
+      /// </summary>
+      public Task<Discussion> CreateNewTaskAsync(NewDiscussionParameters parameters)
+      {
+         return PostTaskAsync<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
+      }
    }
 }
