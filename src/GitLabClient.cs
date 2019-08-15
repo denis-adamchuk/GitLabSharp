@@ -67,6 +67,7 @@ namespace GitLabSharp
       public void Dispose()
       {
          Task.Run(async () => await cancel()).Wait();
+         Semaphore.Dispose();
       }
 
       async private Task cancel()
@@ -76,18 +77,16 @@ namespace GitLabSharp
             return;
          }
 
-         Debug.WriteLine("Issuing task cancellation");
+         Debug.WriteLine("Issuing task cancellation" + " id #" + CurrentTask.Id);
          CurrentTask.Cancel();
-
-         Debug.WriteLine("Waiting for current task cancellation (semaphore)");
-         await Semaphore.WaitAsync();
-
-         CurrentTask.Dispose();
-         CurrentTask = null;
       }
 
       async private Task<object> complete(Command cmd)
       {
+         Debug.WriteLine("Waiting for a semaphore before start a new task");
+         await Semaphore.WaitAsync();
+
+         Debug.WriteLine("Task cancelled and semaphore released, ready to start a new task");
          Debug.Assert(CurrentTask == null);
 
          try
@@ -102,29 +101,26 @@ namespace GitLabSharp
 
          Debug.Assert(CurrentTask != null);
 
-         Debug.WriteLine("Waiting for semaphore");
-         Semaphore.Wait();
-
-         Debug.WriteLine("Waiting for completion of the current task");
+         Debug.WriteLine("Running task" + " id #" + CurrentTask.Id);
          try
          {
             object obj = await CurrentTask.RunAsync();
-            Debug.WriteLine("Current task completed");
+            Debug.WriteLine("Current task completed" + " id #" + CurrentTask.Id);
             return obj;
          }
          catch (OperationCanceledException)
          {
-            Debug.WriteLine("Current task cancelled");
+            Debug.WriteLine("Current task cancelled" + " id #" + CurrentTask.Id);
             throw new GitLabClientCancelled();
          }
          catch (GitLabSharp.Accessors.GitLabRequestException)
          {
-            Debug.WriteLine("Exception occurred in the current task");
+            Debug.WriteLine("Exception occurred in the current task" + " id #" + CurrentTask.Id);
             throw;
          }
          finally
          {
-            Debug.WriteLine("Disposing current task");
+            Debug.WriteLine("Disposing current task" + " id #" + CurrentTask.Id);
             CurrentTask.Dispose();
             CurrentTask = null;
 

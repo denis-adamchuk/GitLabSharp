@@ -14,10 +14,15 @@ namespace GitLabSharp
    /// </summary>
    internal class GitLabTask : IDisposable
    {
+      internal static int NextId = 0;
+      internal int Id = 0;
+
       internal GitLabTask(GitLab gitLab, GitLabClient.Command command)
       {
          GitLab = gitLab;
          MyCommand = command;
+         NextId++;
+         Id = NextId;
       }
 
       /// <summary>

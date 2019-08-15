@@ -165,6 +165,10 @@ namespace GitLabSharp.Accessors
          }
          catch (System.Net.WebException ex)
          {
+            if (ex.Status == System.Net.WebExceptionStatus.RequestCanceled)
+            {
+               throw new OperationCanceledException();
+            }
             throw new GitLabRequestException(url, method, ex);
          }
          return response;
