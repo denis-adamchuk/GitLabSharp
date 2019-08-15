@@ -49,7 +49,7 @@ namespace GitLabSharp
       /// </summary>
       async public Task<object> RunAsync(Command cmd)
       {
-         await cancel();
+         cancel();
          return await complete(cmd);
       }
 
@@ -58,7 +58,9 @@ namespace GitLabSharp
       /// </summary>
       async public Task CancelAsync()
       {
-         await cancel();
+         cancel();
+         await Semaphore.WaitAsync();
+         Semaphore.Release();
       }
 
       /// <summary>
@@ -66,11 +68,10 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         Task.Run(async () => await cancel()).Wait();
          Semaphore.Dispose();
       }
 
-      async private Task cancel()
+      private void cancel()
       {
          if (CurrentTask == null)
          {
