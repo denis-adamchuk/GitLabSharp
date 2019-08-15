@@ -13,6 +13,9 @@ namespace GitLabSharp
    /// </summary>
    internal class HttpClient
    {
+      /// <summary>
+      /// Throws ArgumentException when host name is invalid
+      /// </summary>
       internal HttpClient(string host, string token, CancellationTokenSource cts)
       {
          ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;

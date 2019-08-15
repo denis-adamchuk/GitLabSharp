@@ -13,6 +13,9 @@ namespace GitLabSharp
    /// </summary>
    public class GitLab : IDisposable
    {
+      /// <summary>
+      /// Throws ArgumentException when host name is invalid
+      /// </summary>
       internal GitLab(string host, string token)
       {
          CancellationTokenSource = new CancellationTokenSource();

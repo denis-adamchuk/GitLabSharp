@@ -10,17 +10,6 @@ using System.Web.Script.Serialization;
 namespace GitLabSharp.Accessors
 {
    /// <summary>
-   /// Exception class for non-specific issues.
-   /// </summary>
-   public class GitLabSharpException : Exception
-   {
-      internal GitLabSharpException(string url, string error)
-         : base(String.Format("Error occurred with URL \"{0}\": {1}", url, error))
-      {
-      }
-   }
-
-   /// <summary>
    /// Exception class for System.Net.WebException class of issues.
    /// </summary>
    public class GitLabRequestException : Exception
@@ -110,7 +99,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Executes a request but converts System.Net.WebException into GitLabSharpException
+      /// Executes a request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
       protected string safeRequest(string url, string method)
       {
@@ -146,7 +135,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Executes an asynchronous request but converts System.Net.WebException into GitLabSharpException
+      /// Executes an asynchronous request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
       async protected Task<string> safeRequestTaskAsync(string url, string method)
       {

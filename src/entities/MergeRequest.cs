@@ -36,6 +36,20 @@ namespace GitLabSharp.Entities
       public DateTime Created_At;
       public DateTime Updated_At;
       public int Project_Id;
+
+      public override int GetHashCode()
+      {
+         return Id.GetHashCode();
+      }
+
+      public override bool Equals(object obj)
+      {
+         if (obj is MergeRequest mr)
+         {
+            return mr.Id == Id;
+         }
+         return false;
+      }
    }
 
    /// <summary>
