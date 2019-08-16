@@ -49,8 +49,8 @@ namespace GitLabSharp
       /// </summary>
       async public Task<object> RunAsync(Command cmd)
       {
-         cancel();
-         return await complete(cmd);
+         issueCancel();
+         return await run(cmd);
       }
 
       /// <summary>
@@ -58,9 +58,13 @@ namespace GitLabSharp
       /// </summary>
       async public Task CancelAsync()
       {
-         cancel();
-         await Semaphore.WaitAsync();
-         Semaphore.Release();
+         issueCancel();
+
+         // The worst but the simplest way to wait, later change to TaskCompletionSource
+         while (RunningTasks.Count > 0)
+         {
+            await Task.Delay(50);
+         }
       }
 
       /// <summary>
@@ -68,31 +72,27 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         Semaphore.Dispose();
-      }
-
-      private void cancel()
-      {
-         if (CurrentTask == null)
+         foreach (GitLabTask task in RunningTasks)
          {
-            return;
+            task.Dispose();
          }
-
-         Debug.WriteLine("Issuing task cancellation" + " id #" + CurrentTask.Id);
-         CurrentTask.Cancel();
       }
 
-      async private Task<object> complete(Command cmd)
+      private void issueCancel()
       {
-         Debug.WriteLine("Waiting for a semaphore before start a new task");
-         await Semaphore.WaitAsync();
+         foreach (GitLabTask task in RunningTasks)
+         {
+            Debug.WriteLine("Issuing task cancellation" + " id #" + task.Id);
+            task.Cancel();
+         }
+      }
 
-         Debug.WriteLine("Task cancelled and semaphore released, ready to start a new task");
-         Debug.Assert(CurrentTask == null);
-
+      async private Task<object> run(Command cmd)
+      {
+         GitLabTask gitLabTask = null;
          try
          {
-            CurrentTask = new GitLabTask(new GitLab(Host, Token), cmd);
+            gitLabTask = new GitLabTask(new GitLab(Host, Token), cmd);
          }
          catch (ArgumentException ex)
          {
@@ -100,40 +100,41 @@ namespace GitLabSharp
             throw new GitLabSharpException(Host, "Cannot create GitLabTask", ex);
          }
 
-         Debug.Assert(CurrentTask != null);
+         Debug.Assert(gitLabTask != null);
 
-         Debug.WriteLine("Running task" + " id #" + CurrentTask.Id);
+         Debug.WriteLine("Adding task with id #" + gitLabTask.Id + " to the list of running tasks");
+         RunningTasks.Add(gitLabTask);
+
+         Debug.WriteLine("Running task" + " id #" + gitLabTask.Id);
          try
          {
-            object obj = await CurrentTask.RunAsync();
-            Debug.WriteLine("Current task completed" + " id #" + CurrentTask.Id);
+            object obj = await gitLabTask.RunAsync();
+            Debug.WriteLine("Current task completed" + " id #" + gitLabTask.Id);
             return obj;
          }
          catch (OperationCanceledException)
          {
-            Debug.WriteLine("Current task cancelled" + " id #" + CurrentTask.Id);
             throw new GitLabClientCancelled();
          }
          catch (GitLabSharp.Accessors.GitLabRequestException)
          {
-            Debug.WriteLine("Exception occurred in the current task" + " id #" + CurrentTask.Id);
+            Debug.WriteLine("Exception occurred in the current task" + " id #" + gitLabTask.Id);
             throw;
          }
          finally
          {
-            Debug.WriteLine("Disposing current task" + " id #" + CurrentTask.Id);
-            CurrentTask.Dispose();
-            CurrentTask = null;
+            Debug.WriteLine("Remove task from list of running tasks, id #" + gitLabTask.Id);
+            RunningTasks.Remove(gitLabTask);
 
-            Debug.WriteLine("Releasing semaphore");
-            Semaphore.Release();
+            Debug.WriteLine("Disposing current task" + " id #" + gitLabTask.Id);
+            gitLabTask.Dispose();
+            gitLabTask = null;
          }
       }
 
       private string Host { get; }
       private string Token { get; }
-      private GitLabTask CurrentTask = null;
-      private SemaphoreSlim Semaphore = new SemaphoreSlim(1);
+      private List<GitLabTask> RunningTasks = new List<GitLabTask>();
    }
 }
 

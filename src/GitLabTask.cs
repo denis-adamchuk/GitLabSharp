@@ -21,8 +21,8 @@ namespace GitLabSharp
       {
          GitLab = gitLab;
          MyCommand = command;
-         NextId++;
          Id = NextId;
+         NextId++;
       }
 
       /// <summary>
@@ -37,9 +37,17 @@ namespace GitLabSharp
       /// <summary>
       /// Runs a command for GitLab object
       /// </summary>
-      internal Task<object> RunAsync()
+      async internal Task<object> RunAsync()
       {
-         return MyCommand(GitLab);
+         try
+         {
+            return await MyCommand(GitLab);
+         }
+         catch (OperationCanceledException)
+         {
+            Debug.WriteLine("Task cancelled" + " id #" + Id);
+            throw;
+         }
       }
 
       /// <summary>
