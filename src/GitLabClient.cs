@@ -82,7 +82,6 @@ namespace GitLabSharp
       {
          foreach (GitLabTask task in RunningTasks)
          {
-            Debug.WriteLine("Issuing task cancellation" + " id #" + task.Id);
             task.Cancel();
          }
       }
@@ -96,21 +95,16 @@ namespace GitLabSharp
          }
          catch (ArgumentException ex)
          {
-            Debug.WriteLine("Cannot create GitLabTask");
             throw new GitLabSharpException(Host, "Cannot create GitLabTask", ex);
          }
 
          Debug.Assert(gitLabTask != null);
 
-         Debug.WriteLine("Adding task with id #" + gitLabTask.Id + " to the list of running tasks");
          RunningTasks.Add(gitLabTask);
 
-         Debug.WriteLine("Running task" + " id #" + gitLabTask.Id);
          try
          {
-            object obj = await gitLabTask.RunAsync();
-            Debug.WriteLine("Current task completed" + " id #" + gitLabTask.Id);
-            return obj;
+            return await gitLabTask.RunAsync();
          }
          catch (OperationCanceledException)
          {
@@ -118,15 +112,12 @@ namespace GitLabSharp
          }
          catch (GitLabSharp.Accessors.GitLabRequestException)
          {
-            Debug.WriteLine("Exception occurred in the current task" + " id #" + gitLabTask.Id);
             throw;
          }
          finally
          {
-            Debug.WriteLine("Remove task from list of running tasks, id #" + gitLabTask.Id);
             RunningTasks.Remove(gitLabTask);
 
-            Debug.WriteLine("Disposing current task" + " id #" + gitLabTask.Id);
             gitLabTask.Dispose();
             gitLabTask = null;
          }

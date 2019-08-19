@@ -30,7 +30,6 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         Debug.WriteLine("A task is being disposed");
          GitLab.Dispose();
       }
 
@@ -45,7 +44,6 @@ namespace GitLabSharp
          }
          catch (OperationCanceledException)
          {
-            Debug.WriteLine("Task cancelled" + " id #" + Id);
             throw;
          }
       }
@@ -55,7 +53,6 @@ namespace GitLabSharp
       /// </summary>
       internal void Cancel()
       {
-         Debug.WriteLine("A task is going to be cancelled");
          GitLab.CancellationTokenSource.Cancel();
       }
 
