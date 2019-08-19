@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a single project
@@ -28,8 +29,16 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Load information about this project instance from Server and de-serialize it
+      /// </summary>
+      public Task<Project> LoadTaskAsync()
+      {
+         return GetTaskAsync<Project>(BaseUrl);
+      }
+
+      /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
-      public MergeRequestsAccessor MergeRequests => new MergeRequestsAccessor(Client, BaseUrl + "/merge_requests");
+      public MergeRequestAccessor MergeRequests => new MergeRequestAccessor(Client, BaseUrl + "/merge_requests");
    }
 }

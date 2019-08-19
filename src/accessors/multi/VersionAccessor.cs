@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using GitLabSharp.Entities;
+using Version = GitLabSharp.Entities.Version;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a list of versions
    /// </summary>
-   public class VersionsAccessor : BaseMultiAccessor
+   public class VersionAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/versions
       /// </summary>
-      internal VersionsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal VersionAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
@@ -38,9 +40,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of versions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Version>> LoadAllTaskAsync(CancellationToken ct)
+      public Task<List<Version>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?", ct);
+         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?");
       }
 
       /// <summary>

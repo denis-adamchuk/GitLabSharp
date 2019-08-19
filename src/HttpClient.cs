@@ -13,64 +13,72 @@ namespace GitLabSharp
    /// </summary>
    internal class HttpClient
    {
-      internal HttpClient(string host, string token)
+      /// <summary>
+      /// Throws ArgumentException when host name is invalid
+      /// </summary>
+      internal HttpClient(string host, string token, CancellationTokenSource cts)
       {
          ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;
-         _client = new WebClient
+         Client = new WebClient
          {
             BaseAddress = host
          };
-         _client.Headers.Add("Content-Type:application/json");
-         _client.Headers.Add("Accept:application/json");
-         _client.Headers["Private-Token"] = token;
+         Client.Headers.Add("Content-Type:application/json");
+         Client.Headers.Add("Accept:application/json");
+         Client.Headers["Private-Token"] = token;
+
+         CancellationTokenSource = cts;
+         CancellationTokenSource.Token.Register(Client.CancelAsync);
       }
 
       internal string Get(string url)
       {
-         return _client.DownloadString(url);
+         return Client.DownloadString(url);
       }
 
-      internal Task<string> GetTaskAsync(string url, CancellationToken ct)
+      internal Task<string> GetTaskAsync(string url)
       {
-         ct.Register(_client.CancelAsync);
-         return _client.DownloadStringTaskAsync(url);
+         return Client.DownloadStringTaskAsync(url);
       }
 
       internal string Post(string url)
       {
-         return _client.UploadString(url, "POST", "");
+         return Client.UploadString(url, "POST", "");
       }
 
       internal Task<string> PostTaskAsync(string url)
       {
-         return _client.UploadStringTaskAsync(url, "POST", "");
+         return Client.UploadStringTaskAsync(url, "POST", "");
       }
 
       internal string Put(string url)
       {
-         return _client.UploadString(url, "PUT", "");
+         return Client.UploadString(url, "PUT", "");
       }
 
       internal Task<string> PutTaskAsync(string url)
       {
-         return _client.UploadStringTaskAsync(url, "PUT", "");
+         return Client.UploadStringTaskAsync(url, "PUT", "");
       }
 
       internal string Delete(string url)
       {
-         return _client.UploadString(url, "DELETE", "");
+         return Client.UploadString(url, "DELETE", "");
       }
 
       internal Task<string> DeleteTaskAsync(string url)
       {
-         return _client.UploadStringTaskAsync(url, "DELETE", "");
+         return Client.UploadStringTaskAsync(url, "DELETE", "");
       }
 
       /// <summary>
       /// Collection of Headers for a response on the most recent Http request
       /// </summary>
-      internal WebHeaderCollection ResponseHeaders => _client.ResponseHeaders;
+      internal WebHeaderCollection ResponseHeaders => Client.ResponseHeaders;
 
-      private readonly WebClient _client;
+      internal CancellationTokenSource CancellationTokenSource { get; }
+
+      private WebClient Client { get; }
    }
 }
+

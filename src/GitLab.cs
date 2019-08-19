@@ -2,19 +2,33 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using GitLabSharp.Accessors;
 
 namespace GitLabSharp
 {
-   public class GitLab
+   /// <summary>
+   /// Provides access to GitLab API requests
+   /// </summary>
+   public class GitLab : IDisposable
    {
       /// <summary>
-      /// Provides access to GitLab API requests
+      /// Throws ArgumentException when host name is invalid
       /// </summary>
-      public GitLab(string host, string token)
+      internal GitLab(string host, string token)
       {
-         Client = new HttpClient(host, token);
+         CancellationTokenSource = new CancellationTokenSource();
+         Client = new HttpClient(host, token, CancellationTokenSource);
          BaseUrl = host + "/api/" + "v4";
+      }
+
+      /// <summary>
+      /// Dispose the object
+      /// </summary>
+      public void Dispose()
+      {
+         CancellationTokenSource.Dispose();
       }
 
       /// <summary>
@@ -26,9 +40,12 @@ namespace GitLabSharp
       /// Get access to list of projects hosted at this server
       /// </summary>
       /// <returns></returns>
-      public ProjectsAccessor Projects => new ProjectsAccessor(Client, BaseUrl + "/projects");
+      public ProjectAccessor Projects => new ProjectAccessor(Client, BaseUrl + "/projects");
 
-      private HttpClient Client;
-      private string BaseUrl;
+      internal CancellationTokenSource CancellationTokenSource { get; }
+
+      private HttpClient Client { get; }
+      private string BaseUrl { get; }
    }
 }
+

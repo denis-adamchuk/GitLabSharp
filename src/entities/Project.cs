@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitLabSharp
+namespace GitLabSharp.Entities
 {
    /// <summary>
    /// https://docs.gitlab.com/ce/api/projects.html#get-single-project

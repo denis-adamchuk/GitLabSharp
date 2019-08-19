@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a single merge request instance
@@ -30,25 +31,25 @@ namespace GitLabSharp
       /// <summary>
       /// Load information about this merge request from Server and de-serialize it
       /// </summary>
-      public Task<MergeRequest> LoadTaskAsync(CancellationToken ct)
+      public Task<MergeRequest> LoadTaskAsync()
       {
-         return GetTaskAsync<MergeRequest>(BaseUrl, ct);
+         return GetTaskAsync<MergeRequest>(BaseUrl);
       }
 
       /// <summary>
       /// Get access to a list of versions of this merge request
       /// </summary>
-      public VersionsAccessor Versions => new VersionsAccessor(Client, BaseUrl + "/versions");
+      public VersionAccessor Versions => new VersionAccessor(Client, BaseUrl + "/versions");
 
       /// <summary>
       /// Get access to a list of discussions of this merge request
       /// </summary>
-      public DiscussionsAccessor Discussions => new DiscussionsAccessor(Client, BaseUrl + "/discussions");
+      public DiscussionAccessor Discussions => new DiscussionAccessor(Client, BaseUrl + "/discussions");
 
       /// <summary>
       /// Get access to a list of notes of this merge request
       /// </summary>
-      public NotesAccessor Notes => new NotesAccessor(Client, BaseUrl + "/notes");
+      public NoteAccessor Notes => new NoteAccessor(Client, BaseUrl + "/notes");
 
       /// <summary>
       /// Add spent time to the merge request of this merge request

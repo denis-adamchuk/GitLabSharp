@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to information about user
@@ -26,7 +27,7 @@ namespace GitLabSharp
       {
          return Get<User>(BaseUrl);
       }
-      
+
       /// <summary>
       /// Loads information about user from Server and de-serializes it
       /// </summary>

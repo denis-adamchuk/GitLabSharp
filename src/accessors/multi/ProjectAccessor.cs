@@ -5,18 +5,19 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a list of projects
    /// </summary>
-   public class ProjectsAccessor : BaseMultiAccessor
+   public class ProjectAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects
       /// </summary>
-      internal ProjectsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal ProjectAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
@@ -39,9 +40,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter, CancellationToken ct)
+      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter)
       {
-         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&", ct);
+         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>

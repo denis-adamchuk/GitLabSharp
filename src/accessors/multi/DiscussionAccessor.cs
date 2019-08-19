@@ -5,18 +5,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a list of discussions
    /// </summary>
-   public class DiscussionsAccessor : BaseMultiAccessor
+   public class DiscussionAccessor : BaseMultiAccessor
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/11/discussions
       /// </summary>
-      internal DiscussionsAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
+      internal DiscussionAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
       }
 
@@ -39,9 +40,9 @@ namespace GitLabSharp
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public Task<List<Discussion>> LoadAllTaskAsync(CancellationToken ct)
+      public Task<List<Discussion>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Discussion>, Discussion>(BaseUrl + "?", ct);
+         return GetAllTaskAsync<List<Discussion>, Discussion>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -60,13 +61,21 @@ namespace GitLabSharp
       {
          return new SingleDiscussionAccessor(Client, BaseUrl + "/" + discussionId);
       }
-      
+
       /// <summary>
       /// Create a new discussion with given parameters
       /// </summary>
       public Discussion CreateNew(NewDiscussionParameters parameters)
       {
          return Post<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
+      }
+
+      /// <summary>
+      /// Create a new discussion with given parameters
+      /// </summary>
+      public Task<Discussion> CreateNewTaskAsync(NewDiscussionParameters parameters)
+      {
+         return PostTaskAsync<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
    }
 }

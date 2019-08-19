@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a single note instance
@@ -38,9 +39,10 @@ namespace GitLabSharp
       /// <summary>
       /// Delete note
       /// </summary>
-      public Task DeleteTaskAsync()
+      async public Task<bool> DeleteTaskAsync()
       {
-         return base.DeleteTaskAsync(BaseUrl);
+         await base.DeleteTaskAsync(BaseUrl);
+         return true;
       }
 
       /// <summary>

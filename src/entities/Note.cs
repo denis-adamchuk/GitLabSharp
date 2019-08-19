@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GitLabSharp
+namespace GitLabSharp.Entities
 {
    /// <summary>
    /// https://docs.gitlab.com/ce/api/notes.html#get-single-merge-request-note

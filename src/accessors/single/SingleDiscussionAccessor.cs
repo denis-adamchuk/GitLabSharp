@@ -5,13 +5,14 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Entities;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to a single discussion. GitLab's discussion includes all its discussion notes.
    /// Note, this class does not provide access to individual notes within a discussion for their deletion or modification. 
-   /// NotesAccessor can be easily used for this purpose.
+   /// NoteAccessor can be easily used for this purpose.
    /// </summary>
    public class SingleDiscussionAccessor : BaseAccessor
    {
@@ -35,7 +36,7 @@ namespace GitLabSharp
       /// </summary>
       public Task<Discussion> LoadTaskAsync()
       {
-         return GetTaskAsync<Discussion>(BaseUrl, null);
+         return GetTaskAsync<Discussion>(BaseUrl);
       }
 
       /// <summary>

@@ -7,25 +7,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
-   /// <summary>
-   /// Exception class for non-specific issues.
-   /// </summary>
-   public class GitLabSharpException : Exception
-   {
-      public GitLabSharpException(string url, string error)
-         : base(String.Format("Error occurred with URL \"{0}\": {1}", url, error))
-      {
-      }
-   }
-
    /// <summary>
    /// Exception class for System.Net.WebException class of issues.
    /// </summary>
    public class GitLabRequestException : Exception
    {
-      public GitLabRequestException(string url, string method, System.Net.WebException webException)
+      internal GitLabRequestException(string url, string method, System.Net.WebException webException)
          : base(String.Format("GitLab returned error on requesting URL \"{0}\" with method {1}", url, method))
       {
          WebException = webException;
@@ -56,9 +45,9 @@ namespace GitLabSharp
       /// <summary>
       /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
       /// </summary>
-      async internal Task<T> GetTaskAsync<T>(string url, CancellationToken? ct = null)
+      async internal Task<T> GetTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET", ct));
+         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET"));
       }
 
       /// <summary>
@@ -110,7 +99,7 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Executes a request but converts System.Net.WebException into GitLabSharpException
+      /// Executes a request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
       protected string safeRequest(string url, string method)
       {
@@ -146,16 +135,16 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Executes an asynchronous request but converts System.Net.WebException into GitLabSharpException
+      /// Executes an asynchronous request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
-      async protected Task<string> safeRequestTaskAsync(string url, string method, CancellationToken? ct = null)
+      async protected Task<string> safeRequestTaskAsync(string url, string method)
       {
          string response = String.Empty;
          try
          {
             if (method == "GET")
             {
-               response = await Client.GetTaskAsync(url, ct.Value);
+               response = await Client.GetTaskAsync(url);
             }
             else if (method == "POST")
             {
@@ -176,6 +165,10 @@ namespace GitLabSharp
          }
          catch (System.Net.WebException ex)
          {
+            if (ex.Status == System.Net.WebExceptionStatus.RequestCanceled)
+            {
+               throw new OperationCanceledException();
+            }
             throw new GitLabRequestException(url, method, ex);
          }
          return response;
@@ -183,7 +176,7 @@ namespace GitLabSharp
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer();
       internal HttpClient Client { get; }
-      internal string BaseUrl { get; }
+      protected string BaseUrl { get; }
    }
 }
 
