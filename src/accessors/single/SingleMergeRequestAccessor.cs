@@ -42,6 +42,11 @@ namespace GitLabSharp.Accessors
       public VersionAccessor Versions => new VersionAccessor(Client, BaseUrl + "/versions");
 
       /// <summary>
+      /// Get access to a list of commits of this merge request
+      /// </summary>
+      public CommitAccessor Commits => new CommitAccessor(Client, BaseUrl + "/commits");
+
+      /// <summary>
       /// Get access to a list of discussions of this merge request
       /// </summary>
       public DiscussionAccessor Discussions => new DiscussionAccessor(Client, BaseUrl + "/discussions");

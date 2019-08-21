@@ -57,6 +57,7 @@
     <Compile Include="src\entities\Discussion.cs" />
     <Compile Include="src\entities\Note.cs" />
     <Compile Include="src\accessors\multi\NoteAccessor.cs" />
+    <Compile Include="src\accessors\multi\CommitAccessor.cs" />
     <Compile Include="src\accessors\multi\DiscussionAccessor.cs" />
     <Compile Include="src\entities\MergeRequest.cs" />
     <Compile Include="src\accessors\multi\MergeRequestAccessor.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="src\accessors\multi\ProjectAccessor.cs" />
     <Compile Include="src\entities\User.cs" />
     <Compile Include="src\entities\Version.cs" />
+    <Compile Include="src\entities\Commit.cs" />
     <Compile Include="src\accessors\multi\VersionAccessor.cs" />
     <Compile Include="src\GitLab.cs" />
     <Compile Include="src\GitLabClient.cs" />
