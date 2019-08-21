@@ -119,13 +119,12 @@ namespace GitLabSharp
             RunningTasks.Remove(gitLabTask);
 
             gitLabTask.Dispose();
-            gitLabTask = null;
          }
       }
 
       private string Host { get; }
       private string Token { get; }
-      private List<GitLabTask> RunningTasks = new List<GitLabTask>();
+      private readonly List<GitLabTask> RunningTasks = new List<GitLabTask>();
    }
 }
 

@@ -45,8 +45,7 @@ namespace GitLabSharp
 
          Host = m.Groups[1].Value;
          Project = m.Groups[3].Value;
-         int id = 0;
-         if (!int.TryParse(m.Groups[4].Value, out id))
+         if (!int.TryParse(m.Groups[4].Value, out int id))
          {
             throw new UriFormatException("Bad IId part of URL");
          }
