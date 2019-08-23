@@ -134,16 +134,17 @@ namespace GitLabSharp.Accessors
    }
 
    /// <summary>
-   /// Used to add spent time to merge request
+   /// Used to add/subtract spent time to merge request
    /// </summary>
    public class AddSpentTimeParameters
    {
+      public bool Add { get; set; }
       public TimeSpan Span { get; set; }
 
       public string ToQueryString()
       {
          string duration = Span.ToString("hh") + "h" + Span.ToString("mm") + "m" + Span.ToString("ss") + "s";
-         return "duration=" + duration;
+         return "duration=" + (Add ? "" : "-") + duration;
       }
    }
 }
