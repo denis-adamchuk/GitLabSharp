@@ -58,6 +58,10 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public SingleProjectAccessor Get(string projectId)
       {
+         if (projectId == null)
+         {
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by null project id");
+         }
          return new SingleProjectAccessor(Client, BaseUrl + "/" + WebUtility.UrlEncode(projectId));
       }
    }

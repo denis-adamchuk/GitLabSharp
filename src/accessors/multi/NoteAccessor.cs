@@ -60,6 +60,10 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public SingleNoteAccessor Get(int noteId)
       {
+         if (noteId == 0)
+         {
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero note Id");
+         }
          return new SingleNoteAccessor(Client, BaseUrl + "/" + noteId.ToString());
       }
 
