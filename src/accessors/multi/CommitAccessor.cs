@@ -29,6 +29,14 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load a single page from a full list of commits from Server and de-serialize it
+      /// </summary>
+      public Task<List<Commit>> LoadTaskAsync(PageFilter pageFilter)
+      {
+         return GetTaskAsync<List<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of commits from Server and de-serialize it
       /// </summary>
       public List<Commit> LoadAll()
@@ -50,6 +58,14 @@ namespace GitLabSharp.Accessors
       public int Count()
       {
          return Count(BaseUrl);
+      }
+
+      /// <summary>
+      /// Get number of commits asynchronously
+      /// </summary>
+      async public Task<int> CountTaskAsync()
+      {
+         return await CountTaskAsync(BaseUrl);
       }
    }
 }
