@@ -30,6 +30,14 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load a single page from a full list of versions from Server and de-serialize it
+      /// </summary>
+      public Task<List<Version>> LoadTaskAsync(PageFilter pageFilter)
+      {
+         return GetTaskAsync<List<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of versions from Server and de-serialize it
       /// </summary>
       public List<Version> LoadAll()
