@@ -9,6 +9,8 @@ namespace GitLabSharp.Entities
    {
       public string Id;
       public DateTime Created_At;
+      public string Title;
+      public string Message;
    }
 }
 
