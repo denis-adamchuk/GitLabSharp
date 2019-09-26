@@ -162,6 +162,9 @@ namespace GitLabSharp.Accessors
             {
                Debug.Assert(false);
             }
+
+            // if even an I/O completed, user might have requested its cancellation
+            Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          }
          catch (System.Net.WebException ex)
          {
