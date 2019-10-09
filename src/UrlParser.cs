@@ -7,27 +7,25 @@ namespace GitLabSharp
    /// <summary>
    /// Splits merge request url in parts and stores them in properties
    /// <summary>
-   public class ParsedMergeRequestUrl
+   public static class UrlParser
    {
       private static readonly Regex url_re = new Regex(
-         @"^(http[s]?:\/\/[^:\/\s]+)\/(api\/v4\/projects\/)?(\w+\/\w+)\/merge_requests\/(\d*)",
+         @"^(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?(\w+\/\w+)\/merge_requests\/(\d*)",
             RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      /// <summary>
-      /// Throws:
-      /// UriFormatException if parsing failed
-      /// <summary>
-      public ParsedMergeRequestUrl(string url)
+      public struct ParsedMergeRequestUrl
       {
-         parse(url);
+         public string Host;
+         public string Project;
+         public int IId;
       }
 
       /// <summary>
       /// Splits passed url in parts and stores in object properties
       /// <summary>
-      private void parse(string url)
+      public static ParsedMergeRequestUrl ParseMergeRequestUrl(string url)
       {
-         if (!Uri.IsWellFormedUriString(url, UriKind.Absolute))
+         if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
          {
             throw new UriFormatException("Wrong URL format");
          }
@@ -43,18 +41,18 @@ namespace GitLabSharp
             throw new UriFormatException("Unsupported URL format");
          }
 
-         Host = m.Groups[1].Value;
-         Project = m.Groups[3].Value;
-         if (!int.TryParse(m.Groups[4].Value, out int id))
+         if (!int.TryParse(m.Groups[5].Value, out int id))
          {
             throw new UriFormatException("Bad IId part of URL");
          }
-         IId = id;
-      }
 
-      public string Host { get; private set; }
-      public string Project { get; private set; }
-      public int IId { get; private set; }
+         return new ParsedMergeRequestUrl
+         {
+            Host = m.Groups[2].Value,
+            Project = m.Groups[4].Value,
+            IId = id
+         };
+      }
    }
 }
 
