@@ -172,6 +172,11 @@ namespace GitLabSharp.Accessors
             {
                throw new OperationCanceledException();
             }
+            else
+            {
+               // if even an I/O failed, user might have requested its cancellation
+               Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+            }
             throw new GitLabRequestException(url, method, ex);
          }
          return response;
