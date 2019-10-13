@@ -88,7 +88,7 @@ namespace GitLabSharp
 
       async private Task<object> run(Command cmd)
       {
-         GitLabTask gitLabTask = null;
+         GitLabTask gitLabTask;
          try
          {
             gitLabTask = new GitLabTask(new GitLab(Host, Token), cmd);

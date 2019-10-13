@@ -11,7 +11,7 @@ namespace GitLabSharp
    /// <summary>
    /// A wrapper for WebClient class with separate methods for each of request type (GET/PUT/POST/DELETE)
    /// </summary>
-   internal class HttpClient
+   internal class HttpClient : IDisposable
    {
       /// <summary>
       /// Throws ArgumentException when host name is invalid
@@ -29,6 +29,11 @@ namespace GitLabSharp
 
          CancellationTokenSource = cts;
          CancellationTokenSource.Token.Register(Client.CancelAsync);
+      }
+
+      public void Dispose()
+      {
+         Client.Dispose();
       }
 
       internal string Get(string url)

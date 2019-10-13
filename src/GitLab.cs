@@ -29,6 +29,7 @@ namespace GitLabSharp
       public void Dispose()
       {
          CancellationTokenSource.Dispose();
+         Client.Dispose();
       }
 
       /// <summary>
