@@ -31,7 +31,9 @@ async private Task<List<Commit>> GetCommitsAsync(string host, string token, stri
    }
    catch (Exception ex)
    {
-      Debug.Assert(ex is GitLabSharpException || ex is GitLabRequestException || ex is GitLabClientCancelled);
+      Debug.Assert(ex is GitLabSharpException
+                || ex is GitLabRequestException
+                || ex is GitLabClientCancelled);
       throw;
    }
 }
