@@ -3,7 +3,7 @@
 Object-oriented library for work with GitLab (merge requests primarily)
 
 ## Description
-This library was developed as a backend for https://github.com/denis-adamchuk/mrHelper application.
+This library was developed as a backend for [Merge Request Helper](https://github.com/denis-adamchuk/mrHelper) application.
 It does not support everything that is available via GitLab API but only a subset related to Merge Requests.
 
 ## Usage example
