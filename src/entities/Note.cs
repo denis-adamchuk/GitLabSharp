@@ -17,5 +17,7 @@ namespace GitLabSharp.Entities
       public DateTime Created_At;
       public User Author;
       public bool System;
+      public string Type;
+      public Position Position; // notes with type DiffNote must have it (others must not)
    }
 }
