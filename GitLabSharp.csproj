@@ -54,6 +54,7 @@
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
     <Compile Include="src\accessors\single\SingleUserAccessor.cs" />
     <Compile Include="src\accessors\single\SingleProjectAccessor.cs" />
+    <Compile Include="src\accessors\single\SingleVersionAccessor.cs" />
     <Compile Include="src\entities\Discussion.cs" />
     <Compile Include="src\entities\Note.cs" />
     <Compile Include="src\accessors\multi\NoteAccessor.cs" />

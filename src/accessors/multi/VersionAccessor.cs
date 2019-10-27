@@ -60,6 +60,18 @@ namespace GitLabSharp.Accessors
       {
          return Count(BaseUrl);
       }
+
+      /// <summary>
+      /// Get access to a single version by Id
+      /// </summary>
+      public SingleVersionAccessor Get(int id)
+      {
+         if (id == 0)
+         {
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero version Id");
+         }
+         return new SingleVersionAccessor(Client, BaseUrl +  "/" + id.ToString());
+      }
    }
 }
 

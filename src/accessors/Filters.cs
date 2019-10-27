@@ -37,10 +37,12 @@ namespace GitLabSharp.Accessors
       public string Labels { get; set; } = String.Empty;
       public WorkInProgressFilter WIP { get; set; } = WorkInProgressFilter.Yes;
       public StateFilter State { get; set; } = StateFilter.Open;
+      public bool SimpleView { get; set; } = false;
 
       public string ToQueryString()
       {
          return "scope=all"
+         + (SimpleView ? ("&view=simple") : "")
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
          + (Labels != null && Labels.Length > 0 ? "&labels=" : "");
