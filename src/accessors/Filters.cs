@@ -91,7 +91,7 @@ namespace GitLabSharp.Accessors
 
       public string ToQueryString()
       {
-         return (Ascending ? "asc" : "desc")
+         return "sort=" + (Ascending ? "asc" : "desc")
               + (OrderBy == String.Empty ? "" : "&order_by=" + OrderBy);
       }
    }
