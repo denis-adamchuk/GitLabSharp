@@ -83,4 +83,17 @@ namespace GitLabSharp.Accessors
             + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "");
       }
    }
+
+   public class SortFilter
+   {
+      public bool Ascending = false;
+      public string OrderBy = String.Empty;
+
+      public string ToQueryString()
+      {
+         return (Ascending ? "asc" : "desc")
+              + (OrderBy == String.Empty ? "" : "&order_by=" + OrderBy);
+      }
+   }
 }
+

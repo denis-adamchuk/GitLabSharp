@@ -39,6 +39,15 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load list of notes from Server and de-serialize it (async)
+      /// </summary>
+      public Task<List<Note>> LoadTaskAsync(PageFilter pageFilter, SortFilter sortFilter)
+      {
+         return GetTaskAsync<List<Note>>(BaseUrl + "?" + pageFilter.ToQueryString()
+                                                 + "&" + sortFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of notes from Server and de-serialize it (async)
       /// </summary>
       public Task<List<Note>> LoadAllTaskAsync()

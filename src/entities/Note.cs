@@ -15,6 +15,7 @@ namespace GitLabSharp.Entities
       public int Id;
       public string Body;
       public DateTime Created_At;
+      public DateTime Updated_At;
       public User Author;
       public bool System;
       public string Type;
