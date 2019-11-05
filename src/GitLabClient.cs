@@ -31,7 +31,7 @@ namespace GitLabSharp
    /// <summary>
    /// Runs requests to GitLab API
    /// </summary>
-   public class GitLabClient : IDisposable
+   public class GitLabClient
    {
       public GitLabClient(string host, string token)
       {
@@ -64,17 +64,6 @@ namespace GitLabSharp
          while (RunningTasks.Count > 0)
          {
             await Task.Delay(50);
-         }
-      }
-
-      /// <summary>
-      /// Dispose the object
-      /// </summary>
-      public void Dispose()
-      {
-         foreach (GitLabTask task in RunningTasks)
-         {
-            task.Dispose();
          }
       }
 
