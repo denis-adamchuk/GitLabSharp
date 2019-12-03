@@ -22,7 +22,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal int Count(string url)
       {
-         safeRequest(url, "GET");
+         makeRequest(url, "GET");
          return calculateCount(url);
       }
 
@@ -31,7 +31,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       async internal Task<int> CountTaskAsync(string url)
       {
-         await safeRequestTaskAsync(url, "GET");
+         await makeRequestAsync(url, "GET");
          Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          return calculateCount(url);
       }

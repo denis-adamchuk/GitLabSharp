@@ -39,7 +39,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal T Get<T>(string url)
       {
-         return Serializer.Deserialize<T>(safeRequest(url, "GET"));
+         return makeRequestAndDeserializeResponse<T>(url, "GET");
       }
 
       /// <summary>
@@ -47,7 +47,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       async internal Task<T> GetTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "GET"));
+         return await makeRequestAndDeserializeResponseAsync<T>(url, "GET");
       }
 
       /// <summary>
@@ -55,7 +55,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal T Post<T>(string url)
       {
-         return Serializer.Deserialize<T>(safeRequest(url, "POST"));
+         return makeRequestAndDeserializeResponse<T>(url, "POST");
       }
 
       /// <summary>
@@ -63,7 +63,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       async internal Task<T> PostTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "POST"));
+         return await makeRequestAndDeserializeResponseAsync<T>(url, "POST");
       }
 
       /// <summary>
@@ -71,7 +71,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal T Put<T>(string url)
       {
-         return Serializer.Deserialize<T>(safeRequest(url, "PUT"));
+         return makeRequestAndDeserializeResponse<T>(url, "PUT");
       }
 
       /// <summary>
@@ -79,7 +79,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       async internal Task<T> PutTaskAsync<T>(string url)
       {
-         return Serializer.Deserialize<T>(await safeRequestTaskAsync(url, "PUT"));
+         return await makeRequestAndDeserializeResponseAsync<T>(url, "PUT");
       }
 
       /// <summary>
@@ -87,7 +87,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal void Delete(string url)
       {
-         safeRequest(url, "DELETE");
+         makeRequest(url, "DELETE");
       }
 
       /// <summary>
@@ -95,13 +95,46 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal Task DeleteTaskAsync(string url)
       {
-         return safeRequestTaskAsync(url, "DELETE");
+         return makeRequestAsync(url, "DELETE");
+      }
+
+      /// <summary>
+      /// Execute a request and de-serialize JSON response
+      /// </summary>
+      protected T makeRequestAndDeserializeResponse<T>(string url, string method)
+      {
+         string r = makeRequest(url, method);
+
+         try
+         {
+            return Serializer.Deserialize<T>(r);
+         }
+         catch (Exception ex) // whatever deserialization Exception
+         {
+            throw new GitLabSharpException(url,
+               String.Format("Cannot deserialize JSON response of {0} method", method), ex);
+         }
+      }
+
+      async protected Task<T> makeRequestAndDeserializeResponseAsync<T>(string url, string method)
+      {
+         string r = await makeRequestAsync(url, method);
+
+         try
+         {
+            return Serializer.Deserialize<T>(r);
+         }
+         catch (Exception ex) // whatever deserialization Exception
+         {
+            throw new GitLabSharpException(url,
+               String.Format("Cannot deserialize JSON response of {0} method", method), ex);
+         }
       }
 
       /// <summary>
       /// Executes a request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
-      protected string safeRequest(string url, string method)
+      protected string makeRequest(string url, string method)
       {
          string response = String.Empty;
          try
@@ -137,7 +170,7 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Executes an asynchronous request but converts System.Net.WebException into GitLabRequestException
       /// </summary>
-      async protected Task<string> safeRequestTaskAsync(string url, string method)
+      async protected Task<string> makeRequestAsync(string url, string method)
       {
          string response = String.Empty;
          try
@@ -182,7 +215,13 @@ namespace GitLabSharp.Accessors
          return response;
       }
 
-      protected JavaScriptSerializer Serializer = new JavaScriptSerializer();
+      private static int DefaultMaxJsonLength = 2097152; // from the documentation
+      private static int MaxJsonLengthMultiplier = 10;
+
+      protected JavaScriptSerializer Serializer = new JavaScriptSerializer()
+      {
+         MaxJsonLength = DefaultMaxJsonLength * MaxJsonLengthMultiplier
+      };
       internal HttpClient Client { get; }
       protected string BaseUrl { get; }
    }
