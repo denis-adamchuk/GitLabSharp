@@ -26,6 +26,7 @@ namespace GitLabSharp
          Client.Headers.Add("Content-Type:application/json");
          Client.Headers.Add("Accept:application/json");
          Client.Headers["Private-Token"] = token;
+         Client.Encoding = Encoding.UTF8;
 
          CancellationTokenSource = cts;
          CancellationTokenSource.Token.Register(Client.CancelAsync);
