@@ -11,7 +11,6 @@ namespace GitLabSharp.Entities
    /// </summary>
    public struct Project
    {
-      public int Id;
       public string Path_With_Namespace;
    }
 }
