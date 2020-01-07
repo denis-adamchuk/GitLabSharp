@@ -24,25 +24,25 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of merge requests from Server and de-serialize it
       /// </summary>
-      public List<MergeRequest> Load(MergeRequestsFilter filter, PageFilter pageFilter)
+      public IEnumerable<MergeRequest> Load(MergeRequestsFilter filter, PageFilter pageFilter)
       {
-         return Get<List<MergeRequest>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
+         return Get<IEnumerable<MergeRequest>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      public List<MergeRequest> LoadAll(MergeRequestsFilter filter)
+      public IEnumerable<MergeRequest> LoadAll(MergeRequestsFilter filter)
       {
-         return GetAll<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAll<MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
+      public Task<IEnumerable<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
       {
-         return GetAllTaskAsync<List<MergeRequest>, MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAllTaskAsync<MergeRequest>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>

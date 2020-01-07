@@ -24,33 +24,33 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of versions from Server and de-serialize it
       /// </summary>
-      public List<Version> Load(PageFilter pageFilter)
+      public IEnumerable<Version> Load(PageFilter pageFilter)
       {
-         return Get<List<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
+         return Get<IEnumerable<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load a single page from a full list of versions from Server and de-serialize it
       /// </summary>
-      public Task<List<Version>> LoadTaskAsync(PageFilter pageFilter)
+      public Task<IEnumerable<Version>> LoadTaskAsync(PageFilter pageFilter)
       {
-         return GetTaskAsync<List<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
+         return GetTaskAsync<IEnumerable<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of versions from Server and de-serialize it
       /// </summary>
-      public List<Version> LoadAll()
+      public IEnumerable<Version> LoadAll()
       {
-         return GetAll<List<Version>, Version>(BaseUrl + "?");
+         return GetAll<Version>(BaseUrl + "?");
       }
 
       /// <summary>
       /// Load full list of versions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Version>> LoadAllTaskAsync()
+      public Task<IEnumerable<Version>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Version>, Version>(BaseUrl + "?");
+         return GetAllTaskAsync<Version>(BaseUrl + "?");
       }
 
       /// <summary>

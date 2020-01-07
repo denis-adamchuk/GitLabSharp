@@ -13,7 +13,7 @@ namespace GitLabSharp.Entities
    public struct Discussion
    {
       public string Id;
-      public List<DiscussionNote> Notes;
+      public IEnumerable<DiscussionNote> Notes;
       public bool Individual_Note;
    }
 

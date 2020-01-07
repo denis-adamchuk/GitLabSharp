@@ -28,7 +28,7 @@ namespace GitLabSharp.Entities
       public string Source_Branch;
       public string Target_Branch;
       public string State;
-      public List<string> Labels;
+      public IEnumerable<string> Labels;
       public string Web_Url;
       public bool Work_In_Progress;
       public User Author;

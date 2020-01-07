@@ -23,33 +23,33 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of commits from Server and de-serialize it
       /// </summary>
-      public List<Commit> Load(PageFilter pageFilter)
+      public IEnumerable<Commit> Load(PageFilter pageFilter)
       {
-         return Get<List<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
+         return Get<IEnumerable<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load a single page from a full list of commits from Server and de-serialize it
       /// </summary>
-      public Task<List<Commit>> LoadTaskAsync(PageFilter pageFilter)
+      public Task<IEnumerable<Commit>> LoadTaskAsync(PageFilter pageFilter)
       {
-         return GetTaskAsync<List<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
+         return GetTaskAsync<IEnumerable<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of commits from Server and de-serialize it
       /// </summary>
-      public List<Commit> LoadAll()
+      public IEnumerable<Commit> LoadAll()
       {
-         return GetAll<List<Commit>, Commit>(BaseUrl + "?");
+         return GetAll<Commit>(BaseUrl + "?");
       }
 
       /// <summary>
       /// Load full list of commits from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Commit>> LoadAllTaskAsync()
+      public Task<IEnumerable<Commit>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Commit>, Commit>(BaseUrl + "?");
+         return GetAllTaskAsync<Commit>(BaseUrl + "?");
       }
 
       /// <summary>

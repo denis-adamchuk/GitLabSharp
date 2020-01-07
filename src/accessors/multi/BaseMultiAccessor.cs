@@ -39,9 +39,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Execute multiple Http GET requests and merge results in a single list
       /// </summary>
-      internal TList GetAll<TList, TItem>(string url) where TList : List<TItem>, new()
+      internal IEnumerable<TItem> GetAll<TItem>(string url)
       {
-         TList result = new TList();
+         List<TItem> result = new List<TItem>();
 
          int total = Count(url);
          int perPage = 100;
@@ -49,7 +49,7 @@ namespace GitLabSharp.Accessors
          for (int iPage = 0; iPage < pages; ++iPage)
          {
             PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
-            TList chunk = Get<TList>(url + pageFilter.ToQueryString());
+            IEnumerable<TItem> chunk = Get<List<TItem>>(url + pageFilter.ToQueryString());
             result.AddRange(chunk);
          }
 
@@ -59,9 +59,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Execute multiple Http GET requests and merge results in a single list
       /// </summary>
-      async internal Task<TList> GetAllTaskAsync<TList, TItem>(string url) where TList : List<TItem>, new()
+      async internal Task<IEnumerable<TItem>> GetAllTaskAsync<TItem>(string url)
       {
-         TList result = new TList();
+         List<TItem> result = new List<TItem>();
 
          Task<int> countTask = CountTaskAsync(url);
          int total = await countTask;
@@ -72,7 +72,7 @@ namespace GitLabSharp.Accessors
          for (int iPage = 0; iPage < pages; ++iPage)
          {
             PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
-            TList chunk = await GetTaskAsync<TList>(url + pageFilter.ToQueryString());
+            IEnumerable<TItem> chunk = await GetTaskAsync<List<TItem>>(url + pageFilter.ToQueryString());
             result.AddRange(chunk);
             Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          }

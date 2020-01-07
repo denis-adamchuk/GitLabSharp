@@ -24,25 +24,25 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of projects from Server and de-serialize it
       /// </summary>
-      public List<Project> Load(ProjectsFilter filter, PageFilter pageFilter)
+      public IEnumerable<Project> Load(ProjectsFilter filter, PageFilter pageFilter)
       {
-         return Get<List<Project>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
+         return Get<IEnumerable<Project>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
-      public List<Project> LoadAll(ProjectsFilter filter)
+      public IEnumerable<Project> LoadAll(ProjectsFilter filter)
       {
-         return GetAll<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAll<Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>
       /// Load full list of discussions from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Project>> LoadAllTaskAsync(ProjectsFilter filter)
+      public Task<IEnumerable<Project>> LoadAllTaskAsync(ProjectsFilter filter)
       {
-         return GetAllTaskAsync<List<Project>, Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
+         return GetAllTaskAsync<Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
       }
 
       /// <summary>

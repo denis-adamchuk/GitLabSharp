@@ -25,34 +25,34 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of notes from Server and de-serialize it
       /// </summary>
-      public List<Note> Load(PageFilter pageFilter)
+      public IEnumerable<Note> Load(PageFilter pageFilter)
       {
-         return Get<List<Note>>(BaseUrl + "?" + pageFilter.ToQueryString());
+         return Get<IEnumerable<Note>>(BaseUrl + "?" + pageFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of notes from Server and de-serialize it
       /// </summary>
-      public List<Note> LoadAll()
+      public IEnumerable<Note> LoadAll()
       {
-         return GetAll<List<Note>, Note>(BaseUrl + "?");
+         return GetAll<Note>(BaseUrl + "?");
       }
 
       /// <summary>
       /// Load list of notes from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Note>> LoadTaskAsync(PageFilter pageFilter, SortFilter sortFilter)
+      public Task<IEnumerable<Note>> LoadTaskAsync(PageFilter pageFilter, SortFilter sortFilter)
       {
-         return GetTaskAsync<List<Note>>(BaseUrl + "?" + pageFilter.ToQueryString()
+         return GetTaskAsync<IEnumerable<Note>>(BaseUrl + "?" + pageFilter.ToQueryString()
                                                  + "&" + sortFilter.ToQueryString());
       }
 
       /// <summary>
       /// Load full list of notes from Server and de-serialize it (async)
       /// </summary>
-      public Task<List<Note>> LoadAllTaskAsync()
+      public Task<IEnumerable<Note>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<List<Note>, Note>(BaseUrl + "?");
+         return GetAllTaskAsync<Note>(BaseUrl + "?");
       }
 
       /// <summary>
