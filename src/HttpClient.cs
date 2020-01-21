@@ -23,6 +23,8 @@ namespace GitLabSharp
          {
             BaseAddress = host
          };
+         ServicePointManager.Expect100Continue = true;
+         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
          Client.Headers.Add("Content-Type:application/json");
          Client.Headers.Add("Accept:application/json");
          Client.Headers["Private-Token"] = token;
