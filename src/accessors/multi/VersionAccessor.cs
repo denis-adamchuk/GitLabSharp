@@ -68,7 +68,7 @@ namespace GitLabSharp.Accessors
       {
          if (id == 0)
          {
-            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero version Id");
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero version Id", null);
          }
          return new SingleVersionAccessor(Client, BaseUrl +  "/" + id.ToString());
       }

@@ -33,7 +33,7 @@ namespace GitLabSharp
          Match m = url_re.Match(url);
          if (!m.Success)
          {
-            throw new UriFormatException("Failed");
+            throw new UriFormatException("Failed to parse URL");
          }
 
          if (m.Groups.Count < 4)

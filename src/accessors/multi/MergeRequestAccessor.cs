@@ -60,7 +60,7 @@ namespace GitLabSharp.Accessors
       {
          if (mergeRequestId == 0)
          {
-            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero merge request Id");
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero merge request Id", null);
          }
          return new SingleMergeRequestAccessor(Client, BaseUrl +  "/" + mergeRequestId.ToString());
       }

@@ -6,21 +6,20 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using GitLabSharp.Utils;
 
 namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Exception class for System.Net.WebException class of issues.
    /// </summary>
-   public class GitLabRequestException : Exception
+   public class GitLabRequestException : ExceptionEx
    {
-      internal GitLabRequestException(string url, string method, System.Net.WebException webException)
-         : base(String.Format("GitLab returned error on requesting URL \"{0}\" with method {1}", url, method))
+      internal GitLabRequestException(string url, string method, Exception innerException)
+         : base(String.Format("GitLab returned error on requesting URL \"{0}\" with method {1}", url, method),
+            innerException)
       {
-         WebException = webException;
       }
-
-      public System.Net.WebException WebException { get; }
    }
 
    /// <summary>
@@ -215,8 +214,8 @@ namespace GitLabSharp.Accessors
          return response;
       }
 
-      private static int DefaultMaxJsonLength = 2097152; // from the documentation
-      private static int MaxJsonLengthMultiplier = 10;
+      private static readonly int DefaultMaxJsonLength = 2097152; // from the documentation
+      private static readonly int MaxJsonLengthMultiplier = 10;
 
       protected JavaScriptSerializer Serializer = new JavaScriptSerializer()
       {

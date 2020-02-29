@@ -61,7 +61,7 @@ namespace GitLabSharp.Accessors
       {
          if (discussionId == null)
          {
-            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by null discussion id");
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by null discussion id", null);
          }
          return new SingleDiscussionAccessor(Client, BaseUrl + "/" + discussionId);
       }

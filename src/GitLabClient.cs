@@ -6,21 +6,19 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using GitLabSharp.Utils;
 
 namespace GitLabSharp
 {
    /// <summary>
    /// Exception class for non-specific issues.
    /// </summary>
-   public class GitLabSharpException : Exception
+   public class GitLabSharpException : ExceptionEx
    {
-      internal GitLabSharpException(string url, string error, Exception exception = null)
-         : base(String.Format("Error occurred with URL \"{0}\": {1}", url, error))
+      internal GitLabSharpException(string url, string error, Exception innerException)
+         : base(String.Format("Internal error with URL \"{0}\": {1}", url, error), innerException)
       {
-         InternalException = exception;
       }
-
-      public Exception InternalException { get; }
    }
 
    /// <summary>

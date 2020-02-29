@@ -74,6 +74,7 @@
     <Compile Include="src\GitLabTask.cs" />
     <Compile Include="src\HttpClient.cs" />
     <Compile Include="src\UrlParser.cs" />
+    <Compile Include="src\ExceptionEx.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
