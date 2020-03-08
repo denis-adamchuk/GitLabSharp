@@ -40,5 +40,11 @@ namespace GitLabSharp.Accessors
       /// Get access to a list of merge requests of this project
       /// </summary>
       public MergeRequestAccessor MergeRequests => new MergeRequestAccessor(Client, BaseUrl + "/merge_requests");
+
+      /// <summary>
+      /// Get access to git repository
+      /// </summary>
+      public SingleRepositoryAccessor Repository => new SingleRepositoryAccessor(Client, BaseUrl + "/repository");
    }
 }
+

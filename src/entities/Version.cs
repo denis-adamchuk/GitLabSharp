@@ -9,13 +9,14 @@ namespace GitLabSharp.Entities
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-a-single-mr-diff-version
    /// </summary>
-   public struct Diff
+   public struct DiffStruct
    {
       public string Old_Path;
       public string New_Path;
       public bool New_File;
       public bool Renamed_File;
       public bool Deleted_File;
+      public string Diff;
    }
 
    /// <summary>
@@ -28,7 +29,7 @@ namespace GitLabSharp.Entities
       public string Head_Commit_SHA;
       public string Start_Commit_SHA;
       public DateTime Created_At;
-      public IEnumerable<Diff> Diffs;
+      public IEnumerable<DiffStruct> Diffs;
    }
 }
 

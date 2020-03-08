@@ -147,5 +147,19 @@ namespace GitLabSharp.Accessors
          return "duration=" + (Add ? "" : "-") + duration;
       }
    }
+
+   /// <summary>
+   /// Used to compare branches, tags or commits
+   /// </summary>
+   public class CompareParameters
+   {
+      public string From;
+      public string To;
+
+      public string ToQueryString()
+      {
+         return String.Format("from={0}&to={1}", WebUtility.UrlEncode(From), WebUtility.UrlEncode(To));
+      }
+   }
 }
 
