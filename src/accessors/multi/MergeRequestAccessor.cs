@@ -10,7 +10,7 @@ using GitLabSharp.Entities;
 namespace GitLabSharp.Accessors
 {
    /// <summary>
-   /// Provides access to a list of merge requests
+   /// Provides access to a list of project merge requests
    /// </summary>
    public class MergeRequestAccessor : BaseMultiAccessor
    {
@@ -30,7 +30,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it (async)
+      /// Load full list of merge requests from Server and de-serialize it (async)
       /// </summary>
       public IEnumerable<MergeRequest> LoadAll(MergeRequestsFilter filter)
       {
@@ -38,7 +38,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it (async)
+      /// Load full list of merge requests from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<MergeRequest>> LoadAllTaskAsync(MergeRequestsFilter filter)
       {
@@ -54,15 +54,15 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Get access to a single merge request by Id
+      /// Get access to a single merge request by IId
       /// </summary>
-      public SingleMergeRequestAccessor Get(int mergeRequestId)
+      public SingleMergeRequestAccessor Get(int mergeRequestIId)
       {
-         if (mergeRequestId == 0)
+         if (mergeRequestIId == 0)
          {
-            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero merge request Id", null);
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero merge request IId", null);
          }
-         return new SingleMergeRequestAccessor(Client, BaseUrl +  "/" + mergeRequestId.ToString());
+         return new SingleMergeRequestAccessor(Client, BaseUrl +  "/" + mergeRequestIId.ToString());
       }
    }
 }

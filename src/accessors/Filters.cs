@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,7 +40,7 @@ namespace GitLabSharp.Accessors
       public StateFilter State { get; set; } = StateFilter.Open;
       public bool SimpleView { get; set; } = false;
 
-      public string ToQueryString()
+      public virtual string ToQueryString()
       {
          return "scope=all"
          + (SimpleView ? ("&view=simple") : "")
@@ -68,6 +69,17 @@ namespace GitLabSharp.Accessors
             case WorkInProgressFilter.Yes: return "yes";
          }
          return "";
+      }
+   }
+
+   public class GlobalMergeRequestsFilter : MergeRequestsFilter
+   {
+      public string Search { get; set; }
+
+      public override string ToQueryString()
+      {
+         return base.ToQueryString()
+            + (String.IsNullOrEmpty(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
       }
    }
 
