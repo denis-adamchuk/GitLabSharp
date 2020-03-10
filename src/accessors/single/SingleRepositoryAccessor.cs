@@ -27,6 +27,11 @@ namespace GitLabSharp.Accessors
       {
          return GetTaskAsync<Comparison>(BaseUrl + "/compare?" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Get access to repository files
+      /// </summary>
+      public RepositoryFileAccessor Files => new RepositoryFileAccessor(Client, BaseUrl + "/files");
    }
 }
 

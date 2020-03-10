@@ -15,5 +15,18 @@ namespace GitLabSharp.Entities
       public IEnumerable<Commit> Commits;
       public IEnumerable<DiffStruct> Diffs;
    }
+
+   /// <summary>
+   /// https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository
+   /// <summary>
+   public struct File
+   {
+      public string File_Name;
+      public string File_Path;
+      public string Size;
+      public string Encoding;
+      public string Content;
+      public string Ref;
+   }
 }
 

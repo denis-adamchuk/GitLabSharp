@@ -50,10 +50,12 @@
     <Compile Include="src\accessors\Filters.cs" />
     <Compile Include="src\accessors\multi\BaseMultiAccessor.cs" />
     <Compile Include="src\accessors\multi\GlobalMergeRequestAccessor.cs" />
+    <Compile Include="src\accessors\multi\RepositoryFileAccessor.cs" />
     <Compile Include="src\accessors\Parameters.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
+    <Compile Include="src\accessors\single\SingleRepositoryFileAccessor.cs" />
     <Compile Include="src\accessors\single\SingleUserAccessor.cs" />
     <Compile Include="src\accessors\single\SingleProjectAccessor.cs" />
     <Compile Include="src\accessors\single\SingleRepositoryAccessor.cs" />
