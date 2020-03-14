@@ -30,6 +30,7 @@ namespace GitLabSharp.Entities
       public string Start_Commit_SHA;
       public DateTime Created_At;
       public IEnumerable<DiffStruct> Diffs;
+      public IEnumerable<Commit> Commits;
    }
 }
 
