@@ -17,6 +17,16 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load list of merge requests from Server and de-serialize it (async)
+      /// </summary>
+      public Task<IEnumerable<MergeRequest>> LoadTaskAsync(GlobalMergeRequestsFilter filter,
+         PageFilter pageFilter, SortFilter sortFilter)
+      {
+         return GetTaskAsync<IEnumerable<MergeRequest>>(BaseUrl +
+            "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString() + "&" + sortFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of merge requests from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<MergeRequest>> LoadAllTaskAsync(GlobalMergeRequestsFilter filter)
