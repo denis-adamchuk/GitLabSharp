@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace GitLabSharp.Entities
 {
@@ -11,6 +12,7 @@ namespace GitLabSharp.Entities
       public DateTime Created_At;
       public string Title;
       public string Message;
+      public IEnumerable<string> Parent_Ids;
    }
 }
 

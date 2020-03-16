@@ -32,6 +32,11 @@ namespace GitLabSharp.Accessors
       /// Get access to repository files
       /// </summary>
       public RepositoryFileAccessor Files => new RepositoryFileAccessor(Client, BaseUrl + "/files");
+
+      /// <summary>
+      /// Get access to repository commits
+      /// </summary>
+      public CommitAccessor Commits => new CommitAccessor(Client, BaseUrl + "/commits");
    }
 }
 

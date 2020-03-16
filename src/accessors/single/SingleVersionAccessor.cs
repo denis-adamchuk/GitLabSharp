@@ -14,7 +14,7 @@ namespace GitLabSharp.Accessors
    public class SingleVersionAccessor : BaseAccessor
    {
       /// <summary>
-      /// baseUrl example: https://gitlab.example.com/api/v4/Versions/1/merge_requests/1/versions/1
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/1/merge_requests/1/versions/1
       /// </summary>
       internal SingleVersionAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {

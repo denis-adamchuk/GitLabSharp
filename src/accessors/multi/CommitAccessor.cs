@@ -14,7 +14,8 @@ namespace GitLabSharp.Accessors
    public class CommitAccessor : BaseMultiAccessor
    {
       /// <summary>
-      /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/commits
+      /// baseUrl example: https://gitlab.example.com/api/v4/projects/5/merge_requests/5/commits
+      /// or https://gitlab.example.com/api/v4/projects/5/repository/commits
       /// </summary>
       internal CommitAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
@@ -66,6 +67,18 @@ namespace GitLabSharp.Accessors
       async public Task<int> CountTaskAsync()
       {
          return await CountTaskAsync(BaseUrl);
+      }
+
+      /// <summary>
+      /// Get access to a single commit by SHA
+      /// </summary>
+      public SingleCommitAccessor Get(string sha)
+      {
+         if (String.IsNullOrWhiteSpace(sha))
+         {
+            throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by empty sha", null);
+         }
+         return new SingleCommitAccessor(Client, BaseUrl +  "/" + sha.ToString());
       }
    }
 }
