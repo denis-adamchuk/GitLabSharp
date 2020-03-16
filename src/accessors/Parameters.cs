@@ -161,5 +161,19 @@ namespace GitLabSharp.Accessors
          return String.Format("from={0}&to={1}", WebUtility.UrlEncode(From), WebUtility.UrlEncode(To));
       }
    }
+
+   /// <summary>
+   /// Used to create branches in the repository
+   /// </summary>
+   public class CreateNewBranchParameters
+   {
+      public string Name;
+      public string Ref;
+
+      public string ToQueryString()
+      {
+         return String.Format("branch={0}&ref={1}", WebUtility.UrlEncode(Name), WebUtility.UrlEncode(Ref));
+      }
+   }
 }
 

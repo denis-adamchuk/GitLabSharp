@@ -28,5 +28,14 @@ namespace GitLabSharp.Entities
       public string Content;
       public string Ref;
    }
+
+   /// <summary>
+   /// https://docs.gitlab.com/ee/api/branches.html#get-single-repository-branch
+   /// </summary>
+   public struct Branch
+   {
+      public string Name;
+      public Commit Commit;
+   }
 }
 

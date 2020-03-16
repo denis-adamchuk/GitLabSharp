@@ -53,6 +53,7 @@
     <Compile Include="src\accessors\multi\RepositoryFileAccessor.cs" />
     <Compile Include="src\accessors\Parameters.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
+    <Compile Include="src\accessors\single\SingleBranchAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
     <Compile Include="src\accessors\single\SingleRepositoryFileAccessor.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="src\entities\Note.cs" />
     <Compile Include="src\accessors\multi\NoteAccessor.cs" />
     <Compile Include="src\accessors\multi\CommitAccessor.cs" />
+    <Compile Include="src\accessors\multi\BranchAccessor.cs" />
     <Compile Include="src\accessors\multi\DiscussionAccessor.cs" />
     <Compile Include="src\entities\MergeRequest.cs" />
     <Compile Include="src\accessors\multi\MergeRequestAccessor.cs" />
