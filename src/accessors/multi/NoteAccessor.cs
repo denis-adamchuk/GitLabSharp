@@ -65,6 +65,15 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Get number of notes (async)
+      /// Note: PageFilter is ignored
+      /// </summary>
+      public Task<int> CountAsync()
+      {
+         return CountTaskAsync(BaseUrl);
+      }
+
+      /// <summary>
       /// Get access to a single note by Id
       /// </summary>
       public SingleNoteAccessor Get(int noteId)
