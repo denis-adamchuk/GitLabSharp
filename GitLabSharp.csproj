@@ -48,6 +48,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\accessors\BaseAccessor.cs" />
     <Compile Include="src\accessors\Filters.cs" />
+    <Compile Include="src\accessors\multi\BaseMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\multi\BaseMultiAccessor.cs" />
     <Compile Include="src\accessors\multi\GlobalMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\multi\RepositoryFileAccessor.cs" />

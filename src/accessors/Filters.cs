@@ -39,6 +39,9 @@ namespace GitLabSharp.Accessors
       public WorkInProgressFilter WIP { get; set; } = WorkInProgressFilter.Yes;
       public StateFilter State { get; set; } = StateFilter.Open;
       public bool SimpleView { get; set; } = false;
+      public string Search { get; set; }
+      public string TargetBranch { get; set; }
+      public IEnumerable<int> IIds { get; set; }
 
       public virtual string ToQueryString()
       {
@@ -46,7 +49,10 @@ namespace GitLabSharp.Accessors
          + (SimpleView ? ("&view=simple") : "")
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
-         + (Labels != null && Labels.Length > 0 ? "&labels=" : "");
+         + (Labels != null && Labels.Length > 0 ? "&labels=" : "")
+         + (IIds != null ? String.Join("iids[]=", IIds) : "")
+         + (String.IsNullOrEmpty(TargetBranch) ? "" : "&target_branch=" + WebUtility.UrlEncode(TargetBranch))
+         + (String.IsNullOrEmpty(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
       }
 
       private string stateFilterToString(StateFilter state)
@@ -69,17 +75,6 @@ namespace GitLabSharp.Accessors
             case WorkInProgressFilter.Yes: return "yes";
          }
          return "";
-      }
-   }
-
-   public class GlobalMergeRequestsFilter : MergeRequestsFilter
-   {
-      public string Search { get; set; }
-
-      public override string ToQueryString()
-      {
-         return base.ToQueryString()
-            + (String.IsNullOrEmpty(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
       }
    }
 
