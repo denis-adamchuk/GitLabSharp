@@ -9,9 +9,10 @@ namespace GitLabSharp
    /// <summary>
    public static class UrlParser
    {
-      private static readonly Regex url_re = new Regex(
-         @"^(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?([\w_-]+\/[\w_-]+)\/(?>-\/)?merge_requests\/(\d*)",
-            RegexOptions.Compiled | RegexOptions.IgnoreCase);
+      public static readonly string RegEx =
+         @"(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?([\w_-]+\/[\w_-]+)\/(?>-\/)?merge_requests\/(\d*)";
+
+      private static readonly Regex url_re = new Regex(RegEx, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
       public struct ParsedMergeRequestUrl
       {
