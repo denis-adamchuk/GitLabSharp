@@ -52,6 +52,7 @@
     <Compile Include="src\accessors\multi\BaseMultiAccessor.cs" />
     <Compile Include="src\accessors\multi\GlobalMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\multi\RepositoryFileAccessor.cs" />
+    <Compile Include="src\accessors\multi\UserAccessor.cs" />
     <Compile Include="src\accessors\Parameters.cs" />
     <Compile Include="src\accessors\single\SingleDiscussionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleBranchAccessor.cs" />

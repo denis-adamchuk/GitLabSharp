@@ -34,15 +34,18 @@ namespace GitLabSharp
       public SingleUserAccessor CurrentUser => new SingleUserAccessor(Client, BaseUrl + "/user");
 
       /// <summary>
+      /// Get access to list of users at this server
+      /// </summary>
+      public UserAccessor Users => new UserAccessor(Client, BaseUrl + "/users");
+
+      /// <summary>
       /// Get access to list of projects hosted at this server
       /// </summary>
-      /// <returns></returns>
       public ProjectAccessor Projects => new ProjectAccessor(Client, BaseUrl + "/projects");
 
       /// <summary>
       /// Get access to list of merge requests stored at this server
       /// </summary>
-      /// <returns></returns>
       public GlobalMergeRequestAccessor MergeRequests =>
          new GlobalMergeRequestAccessor(Client, BaseUrl + "/merge_requests");
 
