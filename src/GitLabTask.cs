@@ -14,15 +14,10 @@ namespace GitLabSharp
    /// </summary>
    internal class GitLabTask : IDisposable
    {
-      internal static int NextId = 0;
-      internal int Id = 0;
-
       internal GitLabTask(GitLab gitLab, GitLabClient.Command command)
       {
          GitLab = gitLab;
          MyCommand = command;
-         Id = NextId;
-         NextId++;
       }
 
       /// <summary>
@@ -49,7 +44,7 @@ namespace GitLabSharp
       }
 
       /// <summary>
-      /// Cancels currently executing command at the GitLab object 
+      /// Cancels currently executing command at the GitLab object
       /// </summary>
       internal void Cancel()
       {
