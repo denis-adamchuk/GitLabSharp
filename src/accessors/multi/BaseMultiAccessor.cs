@@ -48,7 +48,7 @@ namespace GitLabSharp.Accessors
          int pages = total / perPage + (total % perPage > 0 ? 1 : 0);
          for (int iPage = 0; iPage < pages; ++iPage)
          {
-            PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
+            PageFilter pageFilter = new PageFilter(perPage, iPage + 1);
             IEnumerable<TItem> chunk = Get<List<TItem>>(url + pageFilter.ToQueryString());
             result.AddRange(chunk);
          }
@@ -71,7 +71,7 @@ namespace GitLabSharp.Accessors
          int pages = total / perPage + (total % perPage > 0 ? 1 : 0);
          for (int iPage = 0; iPage < pages; ++iPage)
          {
-            PageFilter pageFilter = new PageFilter { PageNumber = iPage + 1, PerPage = perPage };
+            PageFilter pageFilter = new PageFilter(perPage, iPage + 1);
             IEnumerable<TItem> chunk = await GetTaskAsync<List<TItem>>(url + pageFilter.ToQueryString());
             result.AddRange(chunk);
             Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();

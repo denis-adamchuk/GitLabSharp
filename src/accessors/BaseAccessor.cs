@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using GitLabSharp.Utils;
@@ -106,7 +102,7 @@ namespace GitLabSharp.Accessors
 
          try
          {
-            return Serializer.Deserialize<T>(r);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r);
          }
          catch (Exception ex) // whatever deserialization Exception
          {
@@ -121,7 +117,7 @@ namespace GitLabSharp.Accessors
 
          try
          {
-            return Serializer.Deserialize<T>(r);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r);
          }
          catch (Exception ex) // whatever deserialization Exception
          {
@@ -214,13 +210,6 @@ namespace GitLabSharp.Accessors
          return response;
       }
 
-      private static readonly int DefaultMaxJsonLength = 2097152; // from the documentation
-      private static readonly int MaxJsonLengthMultiplier = 10;
-
-      protected JavaScriptSerializer Serializer = new JavaScriptSerializer()
-      {
-         MaxJsonLength = DefaultMaxJsonLength * MaxJsonLengthMultiplier
-      };
       internal HttpClient Client { get; }
       protected string BaseUrl { get; }
    }

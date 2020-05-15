@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitLabSharp.Accessors
 {
@@ -13,13 +9,25 @@ namespace GitLabSharp.Accessors
    /// </summary>
    public struct PositionParameters
    {
-      public string OldPath { get; set; }
-      public string NewPath { get; set; }
-      public string OldLine { get; set; }
-      public string NewLine { get; set; }
-      public string BaseSHA { get; set; }
-      public string HeadSHA { get; set; }
-      public string StartSHA { get; set; }
+      public PositionParameters(string oldPath, string newPath, string oldLine, string newLine,
+         string baseSHA, string headSHA, string startSHA)
+      {
+         OldPath = oldPath;
+         NewPath = newPath;
+         OldLine = oldLine;
+         NewLine = newLine;
+         BaseSHA = baseSHA;
+         HeadSHA = headSHA;
+         StartSHA = startSHA;
+      }
+
+      public string OldPath { get; }
+      public string NewPath { get; }
+      public string OldLine { get; }
+      public string NewLine { get; }
+      public string BaseSHA { get; }
+      public string HeadSHA { get; }
+      public string StartSHA { get; }
 
       public string ToQueryString()
       {
@@ -48,8 +56,14 @@ namespace GitLabSharp.Accessors
    /// </summary>
    public struct NewDiscussionParameters
    {
-      public string Body { get; set; }
-      public PositionParameters? Position { get; set; }
+      public NewDiscussionParameters(string body, PositionParameters? position)
+      {
+         Body = body;
+         Position = position;
+      }
+
+      public string Body { get; }
+      public PositionParameters? Position { get; }
 
       public string ToQueryString()
       {
@@ -60,11 +74,16 @@ namespace GitLabSharp.Accessors
 
    /// <summary>
    /// Used to create notes
-   /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note 
+   /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note
    /// </summary>
-   public class CreateNewNoteParameters
+   public struct CreateNewNoteParameters
    {
-      public string Body { get; set; }
+      public CreateNewNoteParameters(string body)
+      {
+         Body = body;
+      }
+
+      public string Body { get; }
 
       public string ToQueryString()
       {
@@ -76,9 +95,14 @@ namespace GitLabSharp.Accessors
    /// <summary>
    /// Used to resolve/un-resolve discussion threads
    /// </summary>
-   public class ResolveThreadParameters
+   public struct ResolveThreadParameters
    {
-      public bool Resolve { get; set; }
+      public ResolveThreadParameters(bool resolve)
+      {
+         Resolve = resolve;
+      }
+
+      public bool Resolve { get; }
 
       public string ToQueryString()
       {
@@ -88,11 +112,16 @@ namespace GitLabSharp.Accessors
 
    /// <summary>
    /// Used to modify notes
-   /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note 
+   /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note
    /// </summary>
-   public class ModifyNoteParameters
+   public struct ModifyNoteParameters
    {
-      public string Body { get; set; }
+      public ModifyNoteParameters(string body)
+      {
+         Body = body;
+      }
+
+      public string Body { get; }
 
       public string ToQueryString()
       {
@@ -105,17 +134,24 @@ namespace GitLabSharp.Accessors
    /// Used to modify discussion notes
    /// https://docs.gitlab.com/ce/api/discussions.html#modify-an-existing-merge-request-thread-note
    /// </summary>
-   public class ModifyDiscussionNoteParameters
+   public struct ModifyDiscussionNoteParameters
    {
+      public ModifyDiscussionNoteParameters(ModificationType type, string body, bool resolved)
+      {
+         Type = type;
+         Body = body;
+         Resolved = resolved;
+      }
+
       public enum ModificationType
       {
          Body,
          Resolved
       }
 
-      public ModificationType Type { get; set; }
-      public string Body { get; set; }
-      public bool Resolved { get; set; }
+      public ModificationType Type { get; }
+      public string Body { get; }
+      public bool Resolved { get; }
 
       public string ToQueryString()
       {
@@ -136,10 +172,16 @@ namespace GitLabSharp.Accessors
    /// <summary>
    /// Used to add/subtract spent time to merge request
    /// </summary>
-   public class AddSpentTimeParameters
+   public struct AddSpentTimeParameters
    {
-      public bool Add { get; set; }
-      public TimeSpan Span { get; set; }
+      public AddSpentTimeParameters(bool add, TimeSpan span)
+      {
+         Add = add;
+         Span = span;
+      }
+
+      public bool Add { get; }
+      public TimeSpan Span { get; }
 
       public string ToQueryString()
       {
@@ -151,10 +193,16 @@ namespace GitLabSharp.Accessors
    /// <summary>
    /// Used to compare branches, tags or commits
    /// </summary>
-   public class CompareParameters
+   public struct CompareParameters
    {
-      public string From;
-      public string To;
+      public CompareParameters(string from, string to)
+      {
+         From = from;
+         To = to;
+      }
+
+      public string From { get; }
+      public string To { get; }
 
       public string ToQueryString()
       {
@@ -165,10 +213,16 @@ namespace GitLabSharp.Accessors
    /// <summary>
    /// Used to create branches in the repository
    /// </summary>
-   public class CreateNewBranchParameters
+   public struct CreateNewBranchParameters
    {
-      public string Name;
-      public string Ref;
+      public CreateNewBranchParameters(string name, string sha)
+      {
+         Name = name;
+         Ref = sha;
+      }
+
+      public string Name { get; }
+      public string Ref { get; }
 
       public string ToQueryString()
       {

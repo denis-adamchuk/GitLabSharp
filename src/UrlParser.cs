@@ -16,9 +16,16 @@ namespace GitLabSharp
 
       public struct ParsedMergeRequestUrl
       {
-         public string Host;
-         public string Project;
-         public int IId;
+         public ParsedMergeRequestUrl(string host, string project, int iid)
+         {
+            Host = host;
+            Project = project;
+            IId = iid;
+         }
+
+         public string Host { get; }
+         public string Project { get; }
+         public int IId { get; }
       }
 
       /// <summary>
@@ -42,17 +49,12 @@ namespace GitLabSharp
             throw new UriFormatException("Unsupported URL format");
          }
 
-         if (!int.TryParse(m.Groups[5].Value, out int id))
+         if (!int.TryParse(m.Groups[5].Value, out int iid))
          {
             throw new UriFormatException("Bad IId part of URL");
          }
 
-         return new ParsedMergeRequestUrl
-         {
-            Host = m.Groups[2].Value,
-            Project = m.Groups[4].Value,
-            IId = id
-         };
+         return new ParsedMergeRequestUrl(m.Groups[2].Value, m.Groups[4].Value, iid);
       }
    }
 }

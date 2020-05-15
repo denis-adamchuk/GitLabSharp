@@ -1,41 +1,73 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitLabSharp.Entities
 {
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
    /// </summary>
-   public struct DiffRefs
+   public class DiffRefs
    {
-      public string Base_SHA;
-      public string Head_SHA;
-      public string Start_SHA;
+      [JsonProperty]
+      public string Base_SHA { get; protected set; }
+
+      [JsonProperty]
+      public string Head_SHA { get; protected set; }
+
+      [JsonProperty]
+      public string Start_SHA { get; protected set; }
    }
 
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#get-single-mr
    /// </summary>
-   public struct MergeRequest
+   public class MergeRequest
    {
-      public int Id;
-      public int IId;
-      public string Title;
-      public string Description;
-      public string Source_Branch;
-      public string Target_Branch;
-      public string State;
-      public IEnumerable<string> Labels;
-      public string Web_Url;
-      public bool Work_In_Progress;
-      public User Author;
-      public DiffRefs Diff_Refs;
-      public DateTime Created_At;
-      public DateTime Updated_At;
-      public int Project_Id;
+      [JsonProperty]
+      public int Id { get; protected set; }
+
+      [JsonProperty]
+      public int IId { get; protected set; }
+
+      [JsonProperty]
+      public string Title { get; protected set; }
+
+      [JsonProperty]
+      public string Description { get; protected set; }
+
+      [JsonProperty]
+      public string Source_Branch { get; protected set; }
+
+      [JsonProperty]
+      public string Target_Branch { get; protected set; }
+
+      [JsonProperty]
+      public string State { get; protected set; }
+
+      [JsonProperty]
+      public IEnumerable<string> Labels { get; protected set; }
+
+      [JsonProperty]
+      public string Web_Url { get; protected set; }
+
+      [JsonProperty]
+      public bool Work_In_Progress { get; protected set; }
+
+      [JsonProperty]
+      public User Author { get; protected set; }
+
+      [JsonProperty]
+      public DiffRefs Diff_Refs { get; protected set; }
+
+      [JsonProperty]
+      public DateTime Created_At { get; protected set; }
+
+      [JsonProperty]
+      public DateTime Updated_At { get; protected set; }
+
+      [JsonProperty]
+      public int Project_Id { get; protected set; }
 
       public override int GetHashCode()
       {
@@ -55,11 +87,18 @@ namespace GitLabSharp.Entities
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#add-spent-time-for-a-merge-request
    /// </summary>
-   public struct SpentTime
+   public class SpentTime
    {
-      public string Human_Time_Estimate;
-      public string Human_Total_Time_Spent;
-      public int Time_Estimate;
-      public int Total_Time_Spent;
+      [JsonProperty]
+      public string Human_Time_Estimate { get; protected set; }
+
+      [JsonProperty]
+      public string Human_Total_Time_Spent { get; protected set; }
+
+      [JsonProperty]
+      public int Time_Estimate { get; protected set; }
+
+      [JsonProperty]
+      public int Total_Time_Spent { get; protected set; }
    }
 }

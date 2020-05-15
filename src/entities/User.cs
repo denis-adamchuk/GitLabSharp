@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
 
 namespace GitLabSharp.Entities
 {
    /// <summary>
    /// https://docs.gitlab.com/ce/api/users.html#single-user
    /// </summary>
-   public struct User
+   public class User
    {
-      public int Id;
-      public string Name;
-      public string Username;
-      public string EMail;
+      [JsonProperty]
+      public int Id { get; protected set; }
+
+      [JsonProperty]
+      public string Name { get; protected set; }
+
+      [JsonProperty]
+      public string Username { get; protected set; }
+
+      [JsonProperty]
+      public string EMail { get; protected set; }
    }
 }

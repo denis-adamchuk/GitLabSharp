@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitLabSharp.Accessors
 {
    public struct PageFilter
    {
-      public int PerPage;
-      public int PageNumber;
+      public PageFilter(int perPage, int pageNumber)
+      {
+         PerPage = perPage;
+         PageNumber = pageNumber;
+      }
+
+      public int PerPage { get; }
+      public int PageNumber { get; }
 
       public string ToQueryString()
       {
@@ -18,8 +21,20 @@ namespace GitLabSharp.Accessors
       }
    }
 
-   public class MergeRequestsFilter
+   public struct MergeRequestsFilter
    {
+      public MergeRequestsFilter(string labels, WorkInProgressFilter wip, StateFilter state,
+         bool simpleView, string search, string targetBranch, IEnumerable<int> iids)
+      {
+         Labels = labels;
+         WIP = wip;
+         State = state;
+         SimpleView = simpleView;
+         Search = search;
+         TargetBranch = targetBranch;
+         IIds = iids;
+      }
+
       public enum StateFilter
       {
          Open,
@@ -35,24 +50,24 @@ namespace GitLabSharp.Accessors
          All
       }
 
-      public string Labels { get; set; } = String.Empty;
-      public WorkInProgressFilter WIP { get; set; } = WorkInProgressFilter.Yes;
-      public StateFilter State { get; set; } = StateFilter.Open;
-      public bool SimpleView { get; set; } = false;
-      public string Search { get; set; }
-      public string TargetBranch { get; set; }
-      public IEnumerable<int> IIds { get; set; }
+      public string Labels { get; }
+      public WorkInProgressFilter WIP { get; }
+      public StateFilter State { get; }
+      public bool SimpleView { get; }
+      public string Search { get; }
+      public string TargetBranch { get; }
+      public IEnumerable<int> IIds { get; }
 
-      public virtual string ToQueryString()
+      public string ToQueryString()
       {
          return "scope=all"
          + (SimpleView ? ("&view=simple") : "")
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
-         + (Labels != null && Labels.Length > 0 ? "&labels=" : "")
+         + (String.IsNullOrWhiteSpace(Labels) ? "" : "&labels=")
          + (IIds != null ? String.Join("iids[]=", IIds) : "")
-         + (String.IsNullOrEmpty(TargetBranch) ? "" : "&target_branch=" + WebUtility.UrlEncode(TargetBranch))
-         + (String.IsNullOrEmpty(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
+         + (String.IsNullOrWhiteSpace(TargetBranch) ? "" : "&target_branch=" + WebUtility.UrlEncode(TargetBranch))
+         + (String.IsNullOrWhiteSpace(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
       }
 
       private string stateFilterToString(StateFilter state)
@@ -78,10 +93,16 @@ namespace GitLabSharp.Accessors
       }
    }
 
-   public class ProjectsFilter
+   public struct ProjectsFilter
    {
-      public bool PublicOnly { get; set; } = true;
-      public bool WithMergeRequestsEnabled { get; set; } = true;
+      public ProjectsFilter(bool publicOnly, bool withMergeRequestsEnabled)
+      {
+         PublicOnly = publicOnly;
+         WithMergeRequestsEnabled = withMergeRequestsEnabled;
+      }
+
+      public bool PublicOnly { get; }
+      public bool WithMergeRequestsEnabled { get; }
 
       public string ToQueryString()
       {
@@ -91,15 +112,21 @@ namespace GitLabSharp.Accessors
       }
    }
 
-   public class SortFilter
+   public struct SortFilter
    {
-      public bool Ascending = false;
-      public string OrderBy = String.Empty;
+      public SortFilter(bool ascending, string orderBy)
+      {
+         Ascending = ascending;
+         OrderBy = orderBy;
+      }
+
+      public bool Ascending { get; }
+      public string OrderBy { get; }
 
       public string ToQueryString()
       {
          return "sort=" + (Ascending ? "asc" : "desc")
-              + (OrderBy == String.Empty ? "" : "&order_by=" + OrderBy);
+              + (String.IsNullOrWhiteSpace(OrderBy) ? "" : "&order_by=" + OrderBy);
       }
    }
 }

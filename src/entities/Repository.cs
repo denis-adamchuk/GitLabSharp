@@ -1,41 +1,56 @@
-using System;
+using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GitLabSharp.Entities
 {
    /// <summary>
    /// https://docs.gitlab.com/ce/api/repositories.html#compare-branches-tags-or-commits
    /// </summary>
-   public struct Comparison
+   public class Comparison
    {
-      public Commit Commit;
-      public IEnumerable<Commit> Commits;
-      public IEnumerable<DiffStruct> Diffs;
+      [JsonProperty]
+      public Commit Commit { get; protected set; }
+
+      [JsonProperty]
+      public IEnumerable<Commit> Commits { get; protected set; }
+
+      [JsonProperty]
+      public IEnumerable<DiffStruct> Diffs { get; protected set; }
    }
 
    /// <summary>
    /// https://docs.gitlab.com/ee/api/repository_files.html#get-file-from-repository
    /// <summary>
-   public struct File
+   public class File
    {
-      public string File_Name;
-      public string File_Path;
-      public string Size;
-      public string Encoding;
-      public string Content;
-      public string Ref;
+      [JsonProperty]
+      public string File_Name { get; protected set; }
+
+      [JsonProperty]
+      public string File_Path { get; protected set; }
+
+      [JsonProperty]
+      public string Size { get; protected set; }
+
+      [JsonProperty]
+      public string Encoding { get; protected set; }
+
+      [JsonProperty]
+      public string Content { get; protected set; }
+
+      [JsonProperty]
+      public string Ref { get; protected set; }
    }
 
    /// <summary>
    /// https://docs.gitlab.com/ee/api/branches.html#get-single-repository-branch
    /// </summary>
-   public struct Branch
+   public class Branch
    {
-      public string Name;
-      public Commit Commit;
+      [JsonProperty]
+      public string Name { get; protected set; }
+
+      [JsonProperty]
+      public Commit Commit { get; protected set; }
    }
 }
-
