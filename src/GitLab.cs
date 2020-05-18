@@ -29,6 +29,11 @@ namespace GitLabSharp
       }
 
       /// <summary>
+      /// Host passed to constructor
+      /// </summary>
+      public string Host => Client.Host;
+
+      /// <summary>
       /// Get access to information about current user
       /// </summary>
       public SingleUserAccessor CurrentUser => new SingleUserAccessor(Client, BaseUrl + "/user");

@@ -39,6 +39,14 @@ namespace GitLabSharp.Accessors
       {
          return GetAllTaskAsync<User>(BaseUrl + "?search=" + WebUtility.UrlEncode(name) + "&");
       }
+
+      /// <summary>
+      /// Search users by name (async)
+      /// </summary>
+      public Task<IEnumerable<User>> SearchByUsernameTaskAsync(string username)
+      {
+         return GetAllTaskAsync<User>(BaseUrl + "?username=" + WebUtility.UrlEncode(username) + "&");
+      }
    }
 }
 

@@ -39,6 +39,8 @@ namespace GitLabSharp
          Client.Dispose();
       }
 
+      public string Host => Client.BaseAddress;
+
       internal string Get(string url)
       {
          return Client.DownloadString(url);

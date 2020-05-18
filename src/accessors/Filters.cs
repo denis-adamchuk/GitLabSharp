@@ -24,7 +24,8 @@ namespace GitLabSharp.Accessors
    public struct MergeRequestsFilter
    {
       public MergeRequestsFilter(string labels, WorkInProgressFilter wip, StateFilter state,
-         bool simpleView, string search, string targetBranch, IEnumerable<int> iids)
+         bool simpleView, string search, string targetBranch, IEnumerable<int> iids, string authorUsername,
+         int? assigneeId)
       {
          Labels = labels;
          WIP = wip;
@@ -33,6 +34,8 @@ namespace GitLabSharp.Accessors
          Search = search;
          TargetBranch = targetBranch;
          IIds = iids;
+         AuthorUsername = authorUsername;
+         AssigneeId = assigneeId;
       }
 
       public enum StateFilter
@@ -57,6 +60,8 @@ namespace GitLabSharp.Accessors
       public string Search { get; }
       public string TargetBranch { get; }
       public IEnumerable<int> IIds { get; }
+      public string AuthorUsername { get; }
+      public int? AssigneeId { get; }
 
       public string ToQueryString()
       {
@@ -64,7 +69,9 @@ namespace GitLabSharp.Accessors
          + (SimpleView ? ("&view=simple") : "")
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
          + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
-         + (String.IsNullOrWhiteSpace(Labels) ? "" : "&labels=")
+         + (String.IsNullOrWhiteSpace(Labels) ? "" : "&labels=" + WebUtility.UrlEncode(Labels))
+         + (String.IsNullOrWhiteSpace(AuthorUsername) ? "" : "&author_username=" + WebUtility.UrlEncode(AuthorUsername))
+         + (AssigneeId == null ? "" : "&assignee_id=" + AssigneeId.Value.ToString())
          + (IIds != null ? String.Join("iids[]=", IIds) : "")
          + (String.IsNullOrWhiteSpace(TargetBranch) ? "" : "&target_branch=" + WebUtility.UrlEncode(TargetBranch))
          + (String.IsNullOrWhiteSpace(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
