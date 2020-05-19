@@ -61,20 +61,22 @@ namespace GitLabSharp.Accessors
       /// </summary>
       async internal Task<IEnumerable<TItem>> GetAllTaskAsync<TItem>(string url)
       {
+         const int perPage = 100;
          List<TItem> result = new List<TItem>();
 
-         Task<int> countTask = CountTaskAsync(url);
-         int total = await countTask;
+         PageFilter firstChunkFilter = new PageFilter(perPage, 1);
+         IEnumerable<TItem> chunk = await GetTaskAsync<List<TItem>>(url + firstChunkFilter.ToQueryString());
          Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+         result.AddRange(chunk);
 
-         int perPage = 100;
+         int total = calculateCount(url);
          int pages = total / perPage + (total % perPage > 0 ? 1 : 0);
-         for (int iPage = 0; iPage < pages; ++iPage)
+         for (int iPage = 1; iPage < pages; ++iPage)
          {
             PageFilter pageFilter = new PageFilter(perPage, iPage + 1);
-            IEnumerable<TItem> chunk = await GetTaskAsync<List<TItem>>(url + pageFilter.ToQueryString());
-            result.AddRange(chunk);
+            chunk = await GetTaskAsync<List<TItem>>(url + pageFilter.ToQueryString());
             Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+            result.AddRange(chunk);
          }
 
          return result;
