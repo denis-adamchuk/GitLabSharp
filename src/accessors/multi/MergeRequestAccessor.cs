@@ -30,7 +30,7 @@ namespace GitLabSharp.Accessors
          {
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero merge request IId", null);
          }
-         return new SingleMergeRequestAccessor(Client, BaseUrl +  "/" + mergeRequestIId.ToString());
+         return new SingleMergeRequestAccessor(Client, BaseUrl + "/" + mergeRequestIId.ToString());
       }
    }
 }

@@ -84,7 +84,8 @@ namespace GitLabSharp.Accessors
             case StateFilter.All: return "";
             case StateFilter.Closed: return "closed";
             case StateFilter.Merged: return "merged";
-            case StateFilter.Open: return "opened"; }
+            case StateFilter.Open: return "opened";
+         }
          return "";
       }
 

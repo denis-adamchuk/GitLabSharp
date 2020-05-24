@@ -70,7 +70,7 @@ namespace GitLabSharp.Accessors
          {
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero version Id", null);
          }
-         return new SingleVersionAccessor(Client, BaseUrl +  "/" + id.ToString());
+         return new SingleVersionAccessor(Client, BaseUrl + "/" + id.ToString());
       }
    }
 }

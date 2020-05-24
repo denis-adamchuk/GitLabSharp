@@ -29,7 +29,7 @@ namespace GitLabSharp.Accessors
          {
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero user id", null);
          }
-         return new SingleUserAccessor(Client, BaseUrl +  "/" + id.ToString());
+         return new SingleUserAccessor(Client, BaseUrl + "/" + id.ToString());
       }
 
       /// <summary>

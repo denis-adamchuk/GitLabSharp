@@ -180,7 +180,7 @@ namespace GitLabSharp.Accessors
             }
             else if (method == "PUT")
             {
-               response  = await Client.PutTaskAsync(url);
+               response = await Client.PutTaskAsync(url);
             }
             else if (method == "DELETE")
             {

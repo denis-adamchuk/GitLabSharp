@@ -68,20 +68,6 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public int Project_Id { get; protected set; }
-
-      public override int GetHashCode()
-      {
-         return Id.GetHashCode();
-      }
-
-      public override bool Equals(object obj)
-      {
-         if (obj is MergeRequest mr)
-         {
-            return mr.Id == Id;
-         }
-         return false;
-      }
    }
 
    /// <summary>
