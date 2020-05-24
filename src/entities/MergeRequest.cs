@@ -17,6 +17,23 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Start_SHA { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is DiffRefs refs &&
+                Base_SHA == refs.Base_SHA &&
+                Head_SHA == refs.Head_SHA &&
+                Start_SHA == refs.Start_SHA;
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = 1263814533;
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Base_SHA);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Head_SHA);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Start_SHA);
+         return hashCode;
+      }
    }
 
    /// <summary>
@@ -68,6 +85,47 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public int Project_Id { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is MergeRequest request &&
+                Id == request.Id &&
+                IId == request.IId &&
+                Title == request.Title &&
+                Description == request.Description &&
+                Source_Branch == request.Source_Branch &&
+                Target_Branch == request.Target_Branch &&
+                State == request.State &&
+                EqualityComparer<IEnumerable<string>>.Default.Equals(Labels, request.Labels) &&
+                Web_Url == request.Web_Url &&
+                Work_In_Progress == request.Work_In_Progress &&
+                EqualityComparer<User>.Default.Equals(Author, request.Author) &&
+                EqualityComparer<DiffRefs>.Default.Equals(Diff_Refs, request.Diff_Refs) &&
+                Created_At == request.Created_At &&
+                Updated_At == request.Updated_At &&
+                Project_Id == request.Project_Id;
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = -371336302;
+         hashCode = hashCode * -1521134295 + Id.GetHashCode();
+         hashCode = hashCode * -1521134295 + IId.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Source_Branch);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Target_Branch);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(State);
+         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<string>>.Default.GetHashCode(Labels);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Web_Url);
+         hashCode = hashCode * -1521134295 + Work_In_Progress.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Author);
+         hashCode = hashCode * -1521134295 + EqualityComparer<DiffRefs>.Default.GetHashCode(Diff_Refs);
+         hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + Updated_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + Project_Id.GetHashCode();
+         return hashCode;
+      }
    }
 
    /// <summary>
@@ -86,5 +144,24 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public int Total_Time_Spent { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is SpentTime time &&
+                Human_Time_Estimate == time.Human_Time_Estimate &&
+                Human_Total_Time_Spent == time.Human_Total_Time_Spent &&
+                Time_Estimate == time.Time_Estimate &&
+                Total_Time_Spent == time.Total_Time_Spent;
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = 1258033978;
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Human_Time_Estimate);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Human_Total_Time_Spent);
+         hashCode = hashCode * -1521134295 + Time_Estimate.GetHashCode();
+         hashCode = hashCode * -1521134295 + Total_Time_Spent.GetHashCode();
+         return hashCode;
+      }
    }
 }

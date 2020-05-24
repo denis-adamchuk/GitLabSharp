@@ -20,5 +20,16 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Path_With_Namespace { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is Project project &&
+                Path_With_Namespace == project.Path_With_Namespace;
+      }
+
+      public override int GetHashCode()
+      {
+         return -1038938045 + EqualityComparer<string>.Default.GetHashCode(Path_With_Namespace);
+      }
    }
 }

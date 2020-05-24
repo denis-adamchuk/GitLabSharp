@@ -17,6 +17,23 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public bool Individual_Note { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is Discussion discussion &&
+                Id == discussion.Id &&
+                EqualityComparer<IEnumerable<DiscussionNote>>.Default.Equals(Notes, discussion.Notes) &&
+                Individual_Note == discussion.Individual_Note;
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = 786683189;
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
+         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<DiscussionNote>>.Default.GetHashCode(Notes);
+         hashCode = hashCode * -1521134295 + Individual_Note.GetHashCode();
+         return hashCode;
+      }
    }
 
    /// <summary>
@@ -44,6 +61,31 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Start_SHA { get; protected set; }
+
+      public override bool Equals(object obj)
+      {
+         return obj is Position position &&
+                Old_Path == position.Old_Path &&
+                New_Path == position.New_Path &&
+                Old_Line == position.Old_Line &&
+                New_Line == position.New_Line &&
+                Base_SHA == position.Base_SHA &&
+                Head_SHA == position.Head_SHA &&
+                Start_SHA == position.Start_SHA;
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = -606002133;
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Old_Path);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(New_Path);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Old_Line);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(New_Line);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Base_SHA);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Head_SHA);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Start_SHA);
+         return hashCode;
+      }
    }
 
    /// <summary>
@@ -81,5 +123,36 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public Position Position { get; protected set; } // notes with type DiffNote must have it (others must not)
+
+      public override bool Equals(object obj)
+      {
+         return obj is DiscussionNote note &&
+                Id == note.Id &&
+                Body == note.Body &&
+                Created_At == note.Created_At &&
+                Updated_At == note.Updated_At &&
+                EqualityComparer<User>.Default.Equals(Author, note.Author) &&
+                Type == note.Type &&
+                System == note.System &&
+                Resolvable == note.Resolvable &&
+                Resolved == note.Resolved &&
+                EqualityComparer<Position>.Default.Equals(Position, note.Position);
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = -2032422984;
+         hashCode = hashCode * -1521134295 + Id.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Body);
+         hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + Updated_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Author);
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Type);
+         hashCode = hashCode * -1521134295 + System.GetHashCode();
+         hashCode = hashCode * -1521134295 + Resolvable.GetHashCode();
+         hashCode = hashCode * -1521134295 + Resolved.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<Position>.Default.GetHashCode(Position);
+         return hashCode;
+      }
    }
 }

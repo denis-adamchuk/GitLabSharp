@@ -37,5 +37,32 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public Position Position { get; protected set; } // notes with type DiffNote must have it (others must not)
+
+      public override bool Equals(object obj)
+      {
+         return obj is Note note &&
+                Id == note.Id &&
+                Body == note.Body &&
+                Created_At == note.Created_At &&
+                Updated_At == note.Updated_At &&
+                EqualityComparer<User>.Default.Equals(Author, note.Author) &&
+                System == note.System &&
+                Type == note.Type &&
+                EqualityComparer<Position>.Default.Equals(Position, note.Position);
+      }
+
+      public override int GetHashCode()
+      {
+         int hashCode = -310762489;
+         hashCode = hashCode * -1521134295 + Id.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Body);
+         hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + Updated_At.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Author);
+         hashCode = hashCode * -1521134295 + System.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Type);
+         hashCode = hashCode * -1521134295 + EqualityComparer<Position>.Default.GetHashCode(Position);
+         return hashCode;
+      }
    }
 }
