@@ -14,9 +14,9 @@ namespace GitLabSharp
    /// </summary>
    internal class GitLabTask : IDisposable
    {
-      internal GitLabTask(GitLab gitLab, GitLabClient.Command command)
+      internal GitLabTask(string host, string token, GitLabClient.Command command)
       {
-         GitLab = gitLab;
+         GitLab = new GitLab(host, token);
          MyCommand = command;
       }
 

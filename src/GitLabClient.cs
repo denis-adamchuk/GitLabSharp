@@ -41,18 +41,16 @@ namespace GitLabSharp
 
       /// <summary>
       /// Run client request to GitLab API.
-      /// Cancels currently running task (if it exists).
       /// Throws GitLabSharpException when internal error occurred.
       /// Throws GitLabRequestException when GitLab returned an error.
       /// </summary>
       async public Task<object> RunAsync(Command cmd)
       {
-         issueCancel();
          return await run(cmd);
       }
 
       /// <summary>
-      /// Cancels currently running task
+      /// Cancels currently running tasks
       /// </summary>
       async public Task CancelAsync()
       {
@@ -63,6 +61,14 @@ namespace GitLabSharp
          {
             await Task.Delay(50);
          }
+      }
+
+      /// <summary>
+      /// Cancels currently running tasks
+      /// </summary>
+      public void Cancel()
+      {
+         issueCancel();
       }
 
       private void issueCancel()
@@ -78,7 +84,7 @@ namespace GitLabSharp
          GitLabTask gitLabTask;
          try
          {
-            gitLabTask = new GitLabTask(new GitLab(Host, Token), cmd);
+            gitLabTask = new GitLabTask(Host, Token, cmd);
          }
          catch (ArgumentException ex)
          {
