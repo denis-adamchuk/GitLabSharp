@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Diagnostics;
+using GitLabSharp.Accessors;
 
 namespace GitLabSharp
 {
@@ -14,10 +9,10 @@ namespace GitLabSharp
    /// </summary>
    internal class GitLabTask : IDisposable
    {
-      internal GitLabTask(GitLab gitLab, GitLabClient.Command command)
+      internal GitLabTask(string host, string token, Func<GitLab, Task<object>> func)
       {
-         GitLab = gitLab;
-         MyCommand = command;
+         _gitlab = new GitLab(host, token);
+         _func = func;
       }
 
       /// <summary>
@@ -25,7 +20,7 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         GitLab.Dispose();
+         _gitlab.Dispose();
       }
 
       /// <summary>
@@ -35,7 +30,7 @@ namespace GitLabSharp
       {
          try
          {
-            return await MyCommand(GitLab);
+            return await _func(_gitlab);
          }
          catch (OperationCanceledException)
          {
@@ -48,11 +43,11 @@ namespace GitLabSharp
       /// </summary>
       internal void Cancel()
       {
-         GitLab.CancellationTokenSource.Cancel();
+         _gitlab.CancellationTokenSource.Cancel();
       }
 
-      private GitLab GitLab { get; }
-      private GitLabClient.Command MyCommand { get; }
+      private GitLab _gitlab { get; }
+      private Func<GitLab, Task<object>> _func { get; }
    }
 }
 

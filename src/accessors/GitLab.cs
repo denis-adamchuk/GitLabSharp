@@ -2,7 +2,7 @@
 using System.Threading;
 using GitLabSharp.Accessors;
 
-namespace GitLabSharp
+namespace GitLabSharp.Accessors
 {
    /// <summary>
    /// Provides access to GitLab API requests
