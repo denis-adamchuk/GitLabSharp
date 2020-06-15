@@ -56,6 +56,18 @@ namespace GitLabSharp.Entities
    /// </summary>
    public class Version
    {
+      public Version(int id, string base_Commit_SHA, string head_Commit_SHA, string start_Commit_SHA,
+         DateTime created_At, IEnumerable<DiffStruct> diffs, IEnumerable<Commit> commits)
+      {
+         Id = id;
+         Base_Commit_SHA = base_Commit_SHA;
+         Head_Commit_SHA = head_Commit_SHA;
+         Start_Commit_SHA = start_Commit_SHA;
+         Created_At = created_At;
+         Diffs = diffs;
+         Commits = commits;
+      }
+
       [JsonProperty]
       public int Id { get; protected set; }
 
