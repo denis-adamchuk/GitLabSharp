@@ -24,7 +24,7 @@ namespace GitLabSharp.Accessors
          {
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by empty file name", null);
          }
-         return new SingleRepositoryFileAccessor(Client, BaseUrl + "/" + WebUtility.UrlEncode(filename));
+         return new SingleRepositoryFileAccessor(Client, BaseUrl + "/" + Uri.EscapeDataString(filename));
       }
    }
 }
