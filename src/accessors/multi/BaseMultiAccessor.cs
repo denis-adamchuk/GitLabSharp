@@ -82,6 +82,16 @@ namespace GitLabSharp.Accessors
          return result;
       }
 
+      /// <summary>
+      /// Execute Http GET request asynchronously, de-serialize a response into a new T object instance
+      /// Additionally provides a total count of items from X-Total response header.
+      /// </summary>
+      async internal Task<Tuple<T, int>> GetAndCalculateCountTaskAsync<T>(string url)
+      {
+         T x = await makeRequestAndDeserializeResponseAsync<T>(url, "GET");
+         return new Tuple<T, int>(x, calculateCount(url));
+      }
+
       private int calculateCount(string url)
       {
          if (!Client.ResponseHeaders.AllKeys.Contains("X-Total"))

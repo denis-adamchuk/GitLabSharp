@@ -48,6 +48,16 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Load list of notes and total count of notes from Server and de-serialize it (async)
+      /// </summary>
+      public Task<Tuple<IEnumerable<Note>, int>> LoadAndCalculateTotalCountAsync(
+         PageFilter pageFilter, SortFilter sortFilter)
+      {
+         return GetAndCalculateCountTaskAsync<IEnumerable<Note>>(
+            BaseUrl + "?" + pageFilter.ToQueryString() + "&" + sortFilter.ToQueryString());
+      }
+
+      /// <summary>
       /// Load full list of notes from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<Note>> LoadAllTaskAsync()
