@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 
 namespace GitLabSharp.Entities
@@ -6,7 +7,7 @@ namespace GitLabSharp.Entities
    /// <summary>
    /// https://docs.gitlab.com/ce/api/repositories.html#compare-branches-tags-or-commits
    /// </summary>
-   public class Comparison
+   public class Comparison : IEquatable<Comparison>
    {
       [JsonProperty]
       public Commit Commit { get; protected set; }
@@ -17,20 +18,30 @@ namespace GitLabSharp.Entities
       [JsonProperty]
       public IEnumerable<DiffStruct> Diffs { get; protected set; }
 
+      [JsonProperty]
+      public bool Compare_Timeout { get; protected set; }
+
       public override bool Equals(object obj)
       {
-         return obj is Comparison comparison &&
-                EqualityComparer<Commit>.Default.Equals(Commit, comparison.Commit) &&
-                EqualityComparer<IEnumerable<Commit>>.Default.Equals(Commits, comparison.Commits) &&
-                EqualityComparer<IEnumerable<DiffStruct>>.Default.Equals(Diffs, comparison.Diffs);
+         return Equals(obj as Comparison);
+      }
+
+      public bool Equals(Comparison other)
+      {
+         return other != null &&
+                EqualityComparer<Commit>.Default.Equals(Commit, other.Commit) &&
+                EqualityComparer<IEnumerable<Commit>>.Default.Equals(Commits, other.Commits) &&
+                EqualityComparer<IEnumerable<DiffStruct>>.Default.Equals(Diffs, other.Diffs) &&
+                Compare_Timeout == other.Compare_Timeout;
       }
 
       public override int GetHashCode()
       {
-         int hashCode = -2142193844;
+         var hashCode = -1301001864;
          hashCode = hashCode * -1521134295 + EqualityComparer<Commit>.Default.GetHashCode(Commit);
          hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<Commit>>.Default.GetHashCode(Commits);
          hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<DiffStruct>>.Default.GetHashCode(Diffs);
+         hashCode = hashCode * -1521134295 + Compare_Timeout.GetHashCode();
          return hashCode;
       }
    }
