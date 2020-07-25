@@ -64,6 +64,7 @@
     <Compile Include="src\accessors\single\SingleRepositoryAccessor.cs" />
     <Compile Include="src\accessors\single\SingleCommitAccessor.cs" />
     <Compile Include="src\accessors\single\SingleVersionAccessor.cs" />
+    <Compile Include="src\entities\CommitRef.cs" />
     <Compile Include="src\entities\Repository.cs" />
     <Compile Include="src\entities\Discussion.cs" />
     <Compile Include="src\entities\Note.cs" />

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
@@ -23,6 +23,14 @@ namespace GitLabSharp.Accessors
       public Task<Commit> LoadTaskAsync()
       {
          return GetTaskAsync<Commit>(BaseUrl);
+      }
+
+      /// <summary>
+      /// Load information about references of this Commit from Server and de-serialize it
+      /// </summary>
+      public Task<IEnumerable<CommitRef>> LoadRefsTaskAsync()
+      {
+         return GetTaskAsync<IEnumerable<CommitRef>>(BaseUrl + "/refs");
       }
    }
 }
