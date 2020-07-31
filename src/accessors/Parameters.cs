@@ -206,7 +206,7 @@ namespace GitLabSharp.Accessors
 
       public string ToQueryString()
       {
-         return String.Format("from={0}&to={1}", WebUtility.UrlEncode(From), WebUtility.UrlEncode(To));
+         return String.Format("from={0}&to={1}&straight=true", WebUtility.UrlEncode(From), WebUtility.UrlEncode(To));
       }
    }
 
