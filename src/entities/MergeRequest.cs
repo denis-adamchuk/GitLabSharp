@@ -86,6 +86,15 @@ namespace GitLabSharp.Entities
       [JsonProperty]
       public int Project_Id { get; protected set; }
 
+      [JsonProperty]
+      public bool Squash { get; protected set; }
+
+      [JsonProperty]
+      public bool Should_Remove_Source_Branch { get; protected set; }
+
+      [JsonProperty]
+      public User Assignee { get; protected set; }
+
       public override bool Equals(object obj)
       {
          return obj is MergeRequest request &&

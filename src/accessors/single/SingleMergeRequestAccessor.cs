@@ -71,5 +71,14 @@ namespace GitLabSharp.Accessors
       {
          return PostTaskAsync<SpentTime>(BaseUrl + "/add_spent_time?" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Update merge request
+      /// </summary>
+      public Task<MergeRequest> UpdateMergeRequestTaskAsync(UpdateMergeRequestParameters parameters)
+      {
+         return PutTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+      }
    }
 }
+

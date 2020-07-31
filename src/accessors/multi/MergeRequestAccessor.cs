@@ -32,6 +32,14 @@ namespace GitLabSharp.Accessors
          }
          return new SingleMergeRequestAccessor(Client, BaseUrl + "/" + mergeRequestIId.ToString());
       }
+
+      /// <summary>
+      /// Create a new merge request with given parameters
+      /// </summary>
+      public Task<MergeRequest> CreateNewTaskAsync(CreateNewMergeRequestParameters parameters)
+      {
+         return PostTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+      }
    }
 }
 

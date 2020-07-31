@@ -229,5 +229,120 @@ namespace GitLabSharp.Accessors
          return String.Format("branch={0}&ref={1}", WebUtility.UrlEncode(Name), WebUtility.UrlEncode(Ref));
       }
    }
+
+   /// <summary>
+   /// Used to create merge requests
+   /// https://docs.gitlab.com/ee/api/merge_requests.html#create-mr
+   /// </summary>
+   public struct CreateNewMergeRequestParameters
+   {
+      public CreateNewMergeRequestParameters(string sourceBranch, string targetBranch, string title,
+         int? assigneeId, string description, bool? removeSourceBranch, bool? squash)
+      {
+         SourceBranch = sourceBranch;
+         TargetBranch = targetBranch;
+         Title = title;
+         AssigneeId = assigneeId;
+         Description = description;
+         RemoveSourceBranch = removeSourceBranch;
+         Squash = squash;
+      }
+
+      // required
+      public string SourceBranch { get; }
+      public string TargetBranch { get; }
+      public string Title { get; }
+
+      // optional
+      public int? AssigneeId { get; }
+      public string Description { get; }
+      public bool? RemoveSourceBranch { get; }
+      public bool? Squash { get; }
+
+      public string ToQueryString()
+      {
+         string result = String.Format("source_branch={0}&target_branch={1}&title={2}",
+            WebUtility.UrlEncode(SourceBranch), WebUtility.UrlEncode(TargetBranch),
+            WebUtility.UrlEncode(Title.Replace("\r", "")));
+         if (AssigneeId.HasValue)
+         {
+            result += "&assignee_id=" + AssigneeId.Value.ToString();
+         }
+         if (!String.IsNullOrEmpty(Description))
+         {
+            result += "&description=" + WebUtility.UrlEncode(Description.Replace("\r", ""));
+         }
+         if (RemoveSourceBranch.HasValue)
+         {
+            result += "&remove_source_branch=" + RemoveSourceBranch.ToString().ToLower();
+         }
+         if (Squash.HasValue)
+         {
+            result += "&squash=" + Squash.ToString().ToLower();
+         }
+         return result;
+      }
+   }
+
+   /// <summary>
+   /// Used to edit merge requests
+   /// https://docs.gitlab.com/ee/api/merge_requests.html#update-mr
+   /// </summary>
+   public struct UpdateMergeRequestParameters
+   {
+      public UpdateMergeRequestParameters(string targetBranch, string title,
+         int? assigneeId, string description, string stateEvent, bool? removeSourceBranch, bool? squash)
+      {
+         TargetBranch = targetBranch;
+         Title = title;
+         AssigneeId = assigneeId;
+         Description = description;
+         StateEvent = stateEvent;
+         RemoveSourceBranch = removeSourceBranch;
+         Squash = squash;
+      }
+
+      public string TargetBranch { get; }
+      public string Title { get; }
+      public int? AssigneeId { get; }
+      public string Description { get; }
+      public string StateEvent { get; } // "close" or "reopen"
+      public bool? RemoveSourceBranch { get; }
+      public bool? Squash { get; }
+
+      public string ToQueryString()
+      {
+         string result = String.Empty;
+         if (!String.IsNullOrEmpty(TargetBranch))
+         {
+            result += "&target_branch=" + WebUtility.UrlEncode(TargetBranch);
+         }
+         if (!String.IsNullOrEmpty(Title))
+         {
+            result += "&title=" + WebUtility.UrlEncode(Title.Replace("\r", ""));
+         }
+         if (AssigneeId.HasValue)
+         {
+            result += "&assignee_id=" + AssigneeId.Value.ToString();
+         }
+         if (!String.IsNullOrEmpty(Description))
+         {
+            result += "&description=" + WebUtility.UrlEncode(Description.Replace("\r", ""));
+         }
+         if (!String.IsNullOrEmpty(StateEvent))
+         {
+            result += "&state_event=" + WebUtility.UrlEncode(StateEvent);
+         }
+         if (RemoveSourceBranch.HasValue)
+         {
+            result += "&remove_source_branch=" + RemoveSourceBranch.ToString().ToLower();
+         }
+         if (Squash.HasValue)
+         {
+            result += "&squash=" + Squash.ToString().ToLower();
+         }
+         return result;
+      }
+   }
 }
 
