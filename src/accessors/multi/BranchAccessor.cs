@@ -11,7 +11,7 @@ using GitLabSharp.Entities;
 namespace GitLabSharp.Accessors
 {
    /// <summary>
-   /// Provides access to a list of Branchs
+   /// Provides access to a list of Branches
    /// </summary>
    public class BranchAccessor : BaseMultiAccessor
    {
@@ -23,7 +23,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load a single page from a full list of Branchs from Server and de-serialize it
+      /// Load a single page from a full list of Branches from Server and de-serialize it
       /// </summary>
       public IEnumerable<Branch> Load(PageFilter pageFilter)
       {
@@ -31,7 +31,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of Branchs from Server and de-serialize it
+      /// Load full list of Branches from Server and de-serialize it
       /// </summary>
       public IEnumerable<Branch> LoadAll()
       {
@@ -39,7 +39,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load list of Branchs from Server and de-serialize it (async)
+      /// Load list of Branches from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<Branch>> LoadTaskAsync(PageFilter pageFilter)
       {
@@ -47,15 +47,15 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of Branchs from Server and de-serialize it (async)
+      /// Load full list of Branches from Server and de-serialize it (async)
       /// </summary>
-      public Task<IEnumerable<Branch>> LoadAllTaskAsync()
+      public Task<IEnumerable<Branch>> LoadAllTaskAsync(string search)
       {
-         return GetAllTaskAsync<Branch>(BaseUrl + "?");
+         return GetAllTaskAsync<Branch>(BaseUrl + "?search=" + Uri.EscapeDataString(search) + "&");
       }
 
       /// <summary>
-      /// Get number of Branchs
+      /// Get number of Branches
       /// Branch: PageFilter is ignored
       /// </summary>
       public int Count()

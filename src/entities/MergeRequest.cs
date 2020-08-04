@@ -90,14 +90,18 @@ namespace GitLabSharp.Entities
       public bool Squash { get; protected set; }
 
       [JsonProperty]
-      public bool Should_Remove_Source_Branch { get; protected set; }
+      public bool? Should_Remove_Source_Branch { get; protected set; }
+
+      [JsonProperty]
+      public bool Force_Remove_Source_Branch { get; protected set; }
 
       [JsonProperty]
       public User Assignee { get; protected set; }
 
       public override bool Equals(object obj)
       {
-         return obj is MergeRequest request &&
+         var request = obj as MergeRequest;
+         return request != null &&
                 Id == request.Id &&
                 IId == request.IId &&
                 Title == request.Title &&
@@ -112,12 +116,16 @@ namespace GitLabSharp.Entities
                 EqualityComparer<DiffRefs>.Default.Equals(Diff_Refs, request.Diff_Refs) &&
                 Created_At == request.Created_At &&
                 Updated_At == request.Updated_At &&
-                Project_Id == request.Project_Id;
+                Project_Id == request.Project_Id &&
+                Squash == request.Squash &&
+                EqualityComparer<bool?>.Default.Equals(Should_Remove_Source_Branch, request.Should_Remove_Source_Branch) &&
+                EqualityComparer<bool>.Default.Equals(Force_Remove_Source_Branch, request.Force_Remove_Source_Branch) &&
+                EqualityComparer<User>.Default.Equals(Assignee, request.Assignee);
       }
 
       public override int GetHashCode()
       {
-         int hashCode = -371336302;
+         var hashCode = -1657845478;
          hashCode = hashCode * -1521134295 + Id.GetHashCode();
          hashCode = hashCode * -1521134295 + IId.GetHashCode();
          hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
@@ -133,6 +141,10 @@ namespace GitLabSharp.Entities
          hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
          hashCode = hashCode * -1521134295 + Updated_At.GetHashCode();
          hashCode = hashCode * -1521134295 + Project_Id.GetHashCode();
+         hashCode = hashCode * -1521134295 + Squash.GetHashCode();
+         hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Should_Remove_Source_Branch);
+         hashCode = hashCode * -1521134295 + EqualityComparer<bool>.Default.GetHashCode(Force_Remove_Source_Branch);
+         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Assignee);
          return hashCode;
       }
    }

@@ -78,7 +78,7 @@ namespace GitLabSharp.Accessors
          {
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by empty sha", null);
          }
-         return new SingleCommitAccessor(Client, BaseUrl + "/" + sha.ToString());
+         return new SingleCommitAccessor(Client, BaseUrl + "/" + Uri.EscapeDataString(sha));
       }
    }
 }

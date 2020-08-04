@@ -100,20 +100,23 @@ namespace GitLabSharp.Accessors
 
    public struct ProjectsFilter
    {
-      public ProjectsFilter(bool publicOnly, bool withMergeRequestsEnabled)
+      public ProjectsFilter(bool publicOnly, bool withMergeRequestsEnabled, bool membership)
       {
          PublicOnly = publicOnly;
          WithMergeRequestsEnabled = withMergeRequestsEnabled;
+         Membership = membership;
       }
 
       public bool PublicOnly { get; }
       public bool WithMergeRequestsEnabled { get; }
+      public bool Membership { get; }
 
       public string ToQueryString()
       {
          return "simple=true"
             + (PublicOnly ? "&visibility=public" : "")
-            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "");
+            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "")
+            + (Membership ? "&membership=true" : "&membership=false");
       }
    }
 
