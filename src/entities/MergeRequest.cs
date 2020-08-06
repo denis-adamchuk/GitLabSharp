@@ -76,9 +76,6 @@ namespace GitLabSharp.Entities
       public User Author { get; protected set; }
 
       [JsonProperty]
-      public DiffRefs Diff_Refs { get; protected set; }
-
-      [JsonProperty]
       public DateTime Created_At { get; protected set; }
 
       [JsonProperty]
@@ -114,7 +111,6 @@ namespace GitLabSharp.Entities
                 Web_Url == request.Web_Url &&
                 Work_In_Progress == request.Work_In_Progress &&
                 EqualityComparer<User>.Default.Equals(Author, request.Author) &&
-                EqualityComparer<DiffRefs>.Default.Equals(Diff_Refs, request.Diff_Refs) &&
                 Created_At == request.Created_At &&
                 Updated_At == request.Updated_At &&
                 Project_Id == request.Project_Id &&
