@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GitLabSharp.Entities
 {
@@ -22,17 +23,13 @@ namespace GitLabSharp.Entities
       {
          return obj is Discussion discussion &&
                 Id == discussion.Id &&
-                EqualityComparer<IEnumerable<DiscussionNote>>.Default.Equals(Notes, discussion.Notes) &&
+                Enumerable.SequenceEqual(Notes, discussion.Notes) &&
                 Individual_Note == discussion.Individual_Note;
       }
 
       public override int GetHashCode()
       {
-         int hashCode = 786683189;
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Id);
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<DiscussionNote>>.Default.GetHashCode(Notes);
-         hashCode = hashCode * -1521134295 + Individual_Note.GetHashCode();
-         return hashCode;
+         throw new NotImplementedException();
       }
    }
 

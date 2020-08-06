@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GitLabSharp.Entities
 {
@@ -30,19 +31,14 @@ namespace GitLabSharp.Entities
       {
          return other != null &&
                 EqualityComparer<Commit>.Default.Equals(Commit, other.Commit) &&
-                EqualityComparer<IEnumerable<Commit>>.Default.Equals(Commits, other.Commits) &&
-                EqualityComparer<IEnumerable<DiffStruct>>.Default.Equals(Diffs, other.Diffs) &&
+                Enumerable.SequenceEqual(Commits, other.Commits) &&
+                Enumerable.SequenceEqual(Diffs, other.Diffs) &&
                 Compare_Timeout == other.Compare_Timeout;
       }
 
       public override int GetHashCode()
       {
-         var hashCode = -1301001864;
-         hashCode = hashCode * -1521134295 + EqualityComparer<Commit>.Default.GetHashCode(Commit);
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<Commit>>.Default.GetHashCode(Commits);
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<DiffStruct>>.Default.GetHashCode(Diffs);
-         hashCode = hashCode * -1521134295 + Compare_Timeout.GetHashCode();
-         return hashCode;
+         throw new NotImplementedException();
       }
    }
 

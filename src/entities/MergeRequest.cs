@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GitLabSharp.Entities
 {
@@ -109,7 +110,7 @@ namespace GitLabSharp.Entities
                 Source_Branch == request.Source_Branch &&
                 Target_Branch == request.Target_Branch &&
                 State == request.State &&
-                EqualityComparer<IEnumerable<string>>.Default.Equals(Labels, request.Labels) &&
+                Enumerable.SequenceEqual(Labels, request.Labels) &&
                 Web_Url == request.Web_Url &&
                 Work_In_Progress == request.Work_In_Progress &&
                 EqualityComparer<User>.Default.Equals(Author, request.Author) &&
@@ -125,27 +126,7 @@ namespace GitLabSharp.Entities
 
       public override int GetHashCode()
       {
-         var hashCode = -1657845478;
-         hashCode = hashCode * -1521134295 + Id.GetHashCode();
-         hashCode = hashCode * -1521134295 + IId.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Title);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Description);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Source_Branch);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Target_Branch);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(State);
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<string>>.Default.GetHashCode(Labels);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Web_Url);
-         hashCode = hashCode * -1521134295 + Work_In_Progress.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Author);
-         hashCode = hashCode * -1521134295 + EqualityComparer<DiffRefs>.Default.GetHashCode(Diff_Refs);
-         hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
-         hashCode = hashCode * -1521134295 + Updated_At.GetHashCode();
-         hashCode = hashCode * -1521134295 + Project_Id.GetHashCode();
-         hashCode = hashCode * -1521134295 + Squash.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<bool?>.Default.GetHashCode(Should_Remove_Source_Branch);
-         hashCode = hashCode * -1521134295 + EqualityComparer<bool>.Default.GetHashCode(Force_Remove_Source_Branch);
-         hashCode = hashCode * -1521134295 + EqualityComparer<User>.Default.GetHashCode(Assignee);
-         return hashCode;
+         throw new NotImplementedException();
       }
    }
 

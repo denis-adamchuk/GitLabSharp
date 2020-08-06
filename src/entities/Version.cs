@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GitLabSharp.Entities
 {
@@ -97,21 +98,13 @@ namespace GitLabSharp.Entities
                 Head_Commit_SHA == version.Head_Commit_SHA &&
                 Start_Commit_SHA == version.Start_Commit_SHA &&
                 Created_At == version.Created_At &&
-                EqualityComparer<IEnumerable<DiffStruct>>.Default.Equals(Diffs, version.Diffs) &&
-                EqualityComparer<IEnumerable<Commit>>.Default.Equals(Commits, version.Commits);
+                Enumerable.SequenceEqual(Diffs, version.Diffs) &&
+                Enumerable.SequenceEqual(Commits, version.Commits);
       }
 
       public override int GetHashCode()
       {
-         int hashCode = 1862810366;
-         hashCode = hashCode * -1521134295 + Id.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Base_Commit_SHA);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Head_Commit_SHA);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Start_Commit_SHA);
-         hashCode = hashCode * -1521134295 + Created_At.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<DiffStruct>>.Default.GetHashCode(Diffs);
-         hashCode = hashCode * -1521134295 + EqualityComparer<IEnumerable<Commit>>.Default.GetHashCode(Commits);
-         return hashCode;
+         throw new NotImplementedException();
       }
    }
 }
