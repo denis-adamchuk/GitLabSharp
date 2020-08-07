@@ -94,6 +94,12 @@ namespace GitLabSharp.Entities
    /// </summary>
    public class Branch
    {
+      public Branch(string name, Commit commit)
+      {
+         Name = name;
+         Commit = commit;
+      }
+
       [JsonProperty]
       public string Name { get; protected set; }
 
