@@ -107,7 +107,7 @@ namespace GitLabSharp.Entities
                 Source_Branch == request.Source_Branch &&
                 Target_Branch == request.Target_Branch &&
                 State == request.State &&
-                Enumerable.SequenceEqual(Labels, request.Labels) &&
+                ((Labels == null && request.Labels == null) || Enumerable.SequenceEqual(Labels, request.Labels)) &&
                 Web_Url == request.Web_Url &&
                 Work_In_Progress == request.Work_In_Progress &&
                 EqualityComparer<User>.Default.Equals(Author, request.Author) &&

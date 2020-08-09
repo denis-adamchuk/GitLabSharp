@@ -98,8 +98,8 @@ namespace GitLabSharp.Entities
                 Head_Commit_SHA == version.Head_Commit_SHA &&
                 Start_Commit_SHA == version.Start_Commit_SHA &&
                 Created_At == version.Created_At &&
-                Enumerable.SequenceEqual(Diffs, version.Diffs) &&
-                Enumerable.SequenceEqual(Commits, version.Commits);
+                ((Commits == null && version.Commits == null) || Enumerable.SequenceEqual(Commits, version.Commits)) &&
+                ((Diffs == null && version.Diffs == null) || Enumerable.SequenceEqual(Diffs, version.Diffs));
       }
 
       public override int GetHashCode()

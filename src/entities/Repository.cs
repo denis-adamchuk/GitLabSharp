@@ -31,8 +31,8 @@ namespace GitLabSharp.Entities
       {
          return other != null &&
                 EqualityComparer<Commit>.Default.Equals(Commit, other.Commit) &&
-                Enumerable.SequenceEqual(Commits, other.Commits) &&
-                Enumerable.SequenceEqual(Diffs, other.Diffs) &&
+                ((Commits == null && other.Commits == null) || Enumerable.SequenceEqual(Commits, other.Commits)) &&
+                ((Diffs == null && other.Diffs == null) || Enumerable.SequenceEqual(Diffs, other.Diffs)) &&
                 Compare_Timeout == other.Compare_Timeout;
       }
 

@@ -23,7 +23,7 @@ namespace GitLabSharp.Entities
       {
          return obj is Discussion discussion &&
                 Id == discussion.Id &&
-                Enumerable.SequenceEqual(Notes, discussion.Notes) &&
+                ((Notes == null && discussion.Notes == null) || Enumerable.SequenceEqual(Notes, discussion.Notes)) &&
                 Individual_Note == discussion.Individual_Note;
       }
 

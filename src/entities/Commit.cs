@@ -32,7 +32,8 @@ namespace GitLabSharp.Entities
                 Created_At == commit.Created_At &&
                 Title == commit.Title &&
                 Message == commit.Message &&
-                Enumerable.SequenceEqual(Parent_Ids, commit.Parent_Ids);
+                ((Parent_Ids == null && commit.Parent_Ids == null) ||
+                   Enumerable.SequenceEqual(Parent_Ids, commit.Parent_Ids));
       }
 
       public override int GetHashCode()
