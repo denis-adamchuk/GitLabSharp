@@ -55,28 +55,26 @@ namespace GitLabSharp
       /// <summary>
       public static ParsedMergeRequestUrl ParseMergeRequestUrl(string url)
       {
-         if (!Uri.IsWellFormedUriString(url, UriKind.RelativeOrAbsolute))
-         {
-            throw new UriFormatException("Wrong URL format");
-         }
-
          Match m = url_re.Match(url);
-         if (!m.Success)
+         if (!ifMatchSucceeded(m))
          {
             throw new UriFormatException("Failed to parse URL");
          }
+         return new ParsedMergeRequestUrl(m.Groups[2].Value, m.Groups[4].Value, int.Parse(m.Groups[5].Value));
+      }
 
-         if (m.Groups.Count < 4)
-         {
-            throw new UriFormatException("Unsupported URL format");
-         }
+      /// <summary>
+      /// Splits passed url in parts and stores in object properties
+      /// <summary>
+      public static bool Check(string url)
+      {
+         Match m = url_re.Match(url);
+         return ifMatchSucceeded(m);
+      }
 
-         if (!int.TryParse(m.Groups[5].Value, out int iid))
-         {
-            throw new UriFormatException("Bad IId part of URL");
-         }
-
-         return new ParsedMergeRequestUrl(m.Groups[2].Value, m.Groups[4].Value, iid);
+      private static bool ifMatchSucceeded(Match m)
+      {
+         return m.Success && m.Groups.Count == 6 && int.TryParse(m.Groups[5].Value, out int iid);
       }
    }
 }
