@@ -344,5 +344,60 @@ namespace GitLabSharp.Accessors
          return result;
       }
    }
+
+   /// <summary>
+   /// Used to merge merge requests
+   /// https://docs.gitlab.com/ee/api/merge_requests.html#accept-mr
+   /// </summary>
+   public struct AcceptMergeRequestParameters
+   {
+      public AcceptMergeRequestParameters(string mergeCommitMessage, string squashCommitMessage,
+         bool? squash, bool? shouldRemoveSourceBranch, bool? mergeWhenPipelineSucceeds, string sha)
+      {
+         MergeCommitMessage = mergeCommitMessage;
+         SquashCommitMessage = squashCommitMessage;
+         Squash = squash;
+         ShouldRemoveSourceBranch = shouldRemoveSourceBranch;
+         MergeWhenPipelineSucceeds = mergeWhenPipelineSucceeds;
+         Sha = sha;
+      }
+
+      public string MergeCommitMessage { get; }
+      public string SquashCommitMessage { get; }
+      public bool? Squash { get; }
+      public bool? ShouldRemoveSourceBranch { get; }
+      public bool? MergeWhenPipelineSucceeds { get; }
+      public string Sha { get; }
+
+      public string ToQueryString()
+      {
+         string result = String.Empty;
+         if (!String.IsNullOrEmpty(MergeCommitMessage))
+         {
+            result += "&merge_commit_message=" + WebUtility.UrlEncode(MergeCommitMessage.Replace("\r", ""));
+         }
+         if (!String.IsNullOrEmpty(SquashCommitMessage))
+         {
+            result += "&squash_commit_message=" + WebUtility.UrlEncode(SquashCommitMessage.Replace("\r", ""));
+         }
+         if (Squash.HasValue)
+         {
+            result += "&squash=" + Squash.ToString().ToLower();
+         }
+         if (ShouldRemoveSourceBranch.HasValue)
+         {
+            result += "&should_remove_source_branch=" + ShouldRemoveSourceBranch.ToString().ToLower();
+         }
+         if (MergeWhenPipelineSucceeds.HasValue)
+         {
+            result += "&merge_when_pipeline_succeeds=" + MergeWhenPipelineSucceeds.ToString().ToLower();
+         }
+         if (!String.IsNullOrEmpty(Sha))
+         {
+            result += "&state_event=" + WebUtility.UrlEncode(Sha);
+         }
+         return result;
+      }
+   }
 }
 

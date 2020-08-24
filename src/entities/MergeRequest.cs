@@ -127,6 +127,18 @@ namespace GitLabSharp.Entities
    }
 
    /// <summary>
+   /// https://docs.gitlab.com/ce/api/merge_requests.html#rebase-a-merge-request
+   /// </summary>
+   public class MergeRequestRebaseResponse
+   {
+      [JsonProperty]
+      public string Rebase_In_Progress { get; protected set; }
+
+      [JsonProperty]
+      public string Merge_Error { get; protected set; }
+   }
+
+   /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_requests.html#add-spent-time-for-a-merge-request
    /// </summary>
    public class SpentTime
