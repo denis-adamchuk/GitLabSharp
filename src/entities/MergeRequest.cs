@@ -18,23 +18,6 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Start_SHA { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is DiffRefs refs &&
-                Base_SHA == refs.Base_SHA &&
-                Head_SHA == refs.Head_SHA &&
-                Start_SHA == refs.Start_SHA;
-      }
-
-      public override int GetHashCode()
-      {
-         int hashCode = 1263814533;
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Base_SHA);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Head_SHA);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Start_SHA);
-         return hashCode;
-      }
    }
 
    /// <summary>
@@ -96,34 +79,11 @@ namespace GitLabSharp.Entities
       [JsonProperty]
       public User Assignee { get; protected set; }
 
-      public override bool Equals(object obj)
-      {
-         var request = obj as MergeRequest;
-         return request != null &&
-                Id == request.Id &&
-                IId == request.IId &&
-                Title == request.Title &&
-                Description == request.Description &&
-                Source_Branch == request.Source_Branch &&
-                Target_Branch == request.Target_Branch &&
-                State == request.State &&
-                ((Labels == null && request.Labels == null) || Enumerable.SequenceEqual(Labels, request.Labels)) &&
-                Web_Url == request.Web_Url &&
-                Work_In_Progress == request.Work_In_Progress &&
-                EqualityComparer<User>.Default.Equals(Author, request.Author) &&
-                Created_At == request.Created_At &&
-                Updated_At == request.Updated_At &&
-                Project_Id == request.Project_Id &&
-                Squash == request.Squash &&
-                EqualityComparer<bool?>.Default.Equals(Should_Remove_Source_Branch, request.Should_Remove_Source_Branch) &&
-                EqualityComparer<bool>.Default.Equals(Force_Remove_Source_Branch, request.Force_Remove_Source_Branch) &&
-                EqualityComparer<User>.Default.Equals(Assignee, request.Assignee);
-      }
+      [JsonProperty]
+      public bool Rebase_In_Progress { get; protected set; }
 
-      public override int GetHashCode()
-      {
-         throw new NotImplementedException();
-      }
+      [JsonProperty]
+      public string Merge_Error { get; protected set; }
    }
 
    /// <summary>
@@ -132,10 +92,7 @@ namespace GitLabSharp.Entities
    public class MergeRequestRebaseResponse
    {
       [JsonProperty]
-      public string Rebase_In_Progress { get; protected set; }
-
-      [JsonProperty]
-      public string Merge_Error { get; protected set; }
+      public bool Rebase_In_Progress { get; protected set; }
    }
 
    /// <summary>
@@ -154,24 +111,5 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public int Total_Time_Spent { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is SpentTime time &&
-                Human_Time_Estimate == time.Human_Time_Estimate &&
-                Human_Total_Time_Spent == time.Human_Total_Time_Spent &&
-                Time_Estimate == time.Time_Estimate &&
-                Total_Time_Spent == time.Total_Time_Spent;
-      }
-
-      public override int GetHashCode()
-      {
-         int hashCode = 1258033978;
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Human_Time_Estimate);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Human_Total_Time_Spent);
-         hashCode = hashCode * -1521134295 + Time_Estimate.GetHashCode();
-         hashCode = hashCode * -1521134295 + Total_Time_Spent.GetHashCode();
-         return hashCode;
-      }
    }
 }
