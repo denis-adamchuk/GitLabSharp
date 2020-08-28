@@ -80,10 +80,19 @@ namespace GitLabSharp.Entities
       public User Assignee { get; protected set; }
 
       [JsonProperty]
-      public bool Rebase_In_Progress { get; protected set; }
+      public bool? Rebase_In_Progress { get; protected set; }
 
       [JsonProperty]
       public string Merge_Error { get; protected set; }
+
+      [JsonProperty]
+      public string Merge_Status { get; protected set; }
+
+      [JsonProperty]
+      public bool Has_Conflicts { get; protected set; }
+
+      [JsonProperty]
+      public bool Blocking_Discussions_Resolved { get; protected set; }
    }
 
    /// <summary>
