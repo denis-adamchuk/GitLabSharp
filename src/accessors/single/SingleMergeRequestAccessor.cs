@@ -82,7 +82,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<MergeRequest> UpdateMergeRequestTaskAsync(UpdateMergeRequestParameters parameters)
       {
-         return PutTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+         return PutTaskAsync<MergeRequest>(BaseUrl + parameters.ToQueryString());
       }
 
       /// <summary>
@@ -90,10 +90,10 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<MergeRequestRebaseResponse> RebaseMergeRequestTaskAsync(bool? skipCI = null)
       {
-         string url = BaseUrl;
+         string url = BaseUrl + "/rebase";
          if (skipCI.HasValue)
          {
-            url += String.Format("&skip_ci={0}", skipCI.Value.ToString());
+            url += String.Format("?skip_ci={0}", skipCI.Value.ToString());
          }
          return PutTaskAsync<MergeRequestRebaseResponse>(url);
       }
@@ -103,7 +103,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<MergeRequest> AcceptMergeRequestTaskAsync(AcceptMergeRequestParameters parameters)
       {
-         return PutTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+         return PutTaskAsync<MergeRequest>(BaseUrl + "/merge" + parameters.ToQueryString());
       }
    }
 }
