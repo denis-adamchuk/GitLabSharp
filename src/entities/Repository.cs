@@ -8,7 +8,7 @@ namespace GitLabSharp.Entities
    /// <summary>
    /// https://docs.gitlab.com/ce/api/repositories.html#compare-branches-tags-or-commits
    /// </summary>
-   public class Comparison : IEquatable<Comparison>
+   public class Comparison
    {
       [JsonProperty]
       public Commit Commit { get; protected set; }
@@ -21,25 +21,6 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public bool Compare_Timeout { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return Equals(obj as Comparison);
-      }
-
-      public bool Equals(Comparison other)
-      {
-         return other != null &&
-                EqualityComparer<Commit>.Default.Equals(Commit, other.Commit) &&
-                ((Commits == null && other.Commits == null) || Enumerable.SequenceEqual(Commits, other.Commits)) &&
-                ((Diffs == null && other.Diffs == null) || Enumerable.SequenceEqual(Diffs, other.Diffs)) &&
-                Compare_Timeout == other.Compare_Timeout;
-      }
-
-      public override int GetHashCode()
-      {
-         throw new NotImplementedException();
-      }
    }
 
    /// <summary>
@@ -105,20 +86,5 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public Commit Commit { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is Branch branch &&
-                Name == branch.Name &&
-                EqualityComparer<Commit>.Default.Equals(Commit, branch.Commit);
-      }
-
-      public override int GetHashCode()
-      {
-         int hashCode = -1719515118;
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Name);
-         hashCode = hashCode * -1521134295 + EqualityComparer<Commit>.Default.GetHashCode(Commit);
-         return hashCode;
-      }
    }
 }

@@ -24,22 +24,6 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public IEnumerable<string> Parent_Ids { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is Commit commit &&
-                Id == commit.Id &&
-                Created_At == commit.Created_At &&
-                Title == commit.Title &&
-                Message == commit.Message &&
-                ((Parent_Ids == null && commit.Parent_Ids == null) ||
-                   Enumerable.SequenceEqual(Parent_Ids, commit.Parent_Ids));
-      }
-
-      public override int GetHashCode()
-      {
-         throw new NotImplementedException();
-      }
    }
 }
 

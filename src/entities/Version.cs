@@ -27,29 +27,6 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Diff { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is DiffStruct @struct &&
-                Old_Path == @struct.Old_Path &&
-                New_Path == @struct.New_Path &&
-                New_File == @struct.New_File &&
-                Renamed_File == @struct.Renamed_File &&
-                Deleted_File == @struct.Deleted_File &&
-                Diff == @struct.Diff;
-      }
-
-      public override int GetHashCode()
-      {
-         int hashCode = 439609276;
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Old_Path);
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(New_Path);
-         hashCode = hashCode * -1521134295 + New_File.GetHashCode();
-         hashCode = hashCode * -1521134295 + Renamed_File.GetHashCode();
-         hashCode = hashCode * -1521134295 + Deleted_File.GetHashCode();
-         hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(Diff);
-         return hashCode;
-      }
    }
 
    /// <summary>
@@ -89,22 +66,5 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public IEnumerable<Commit> Commits { get; protected set; }
-
-      public override bool Equals(object obj)
-      {
-         return obj is Version version &&
-                Id == version.Id &&
-                Base_Commit_SHA == version.Base_Commit_SHA &&
-                Head_Commit_SHA == version.Head_Commit_SHA &&
-                Start_Commit_SHA == version.Start_Commit_SHA &&
-                Created_At == version.Created_At &&
-                ((Commits == null && version.Commits == null) || Enumerable.SequenceEqual(Commits, version.Commits)) &&
-                ((Diffs == null && version.Diffs == null) || Enumerable.SequenceEqual(Diffs, version.Diffs));
-      }
-
-      public override int GetHashCode()
-      {
-         throw new NotImplementedException();
-      }
    }
 }

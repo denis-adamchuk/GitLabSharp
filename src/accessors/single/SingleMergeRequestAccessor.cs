@@ -31,9 +31,14 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load information about this merge request from Server and de-serialize it
       /// </summary>
-      public Task<MergeRequest> LoadTaskAsync()
+      public Task<MergeRequest> LoadTaskAsync(bool? includeRebaseInProgress = null)
       {
-         return GetTaskAsync<MergeRequest>(BaseUrl);
+         string url = BaseUrl;
+         if (includeRebaseInProgress.HasValue)
+         {
+            url += String.Format("&include_rebase_in_progress={0}", includeRebaseInProgress.Value.ToString());
+         }
+         return GetTaskAsync<MergeRequest>(url);
       }
 
       /// <summary>
@@ -77,7 +82,28 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<MergeRequest> UpdateMergeRequestTaskAsync(UpdateMergeRequestParameters parameters)
       {
-         return PutTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+         return PutTaskAsync<MergeRequest>(BaseUrl + parameters.ToQueryString());
+      }
+
+      /// <summary>
+      /// Rebase merge request
+      /// </summary>
+      public Task<MergeRequestRebaseResponse> RebaseMergeRequestTaskAsync(bool? skipCI = null)
+      {
+         string url = BaseUrl + "/rebase";
+         if (skipCI.HasValue)
+         {
+            url += String.Format("?skip_ci={0}", skipCI.Value.ToString());
+         }
+         return PutTaskAsync<MergeRequestRebaseResponse>(url);
+      }
+
+      /// <summary>
+      /// Accept merge request (Merge)
+      /// </summary>
+      public Task<MergeRequest> AcceptMergeRequestTaskAsync(AcceptMergeRequestParameters parameters)
+      {
+         return PutTaskAsync<MergeRequest>(BaseUrl + "/merge" + parameters.ToQueryString());
       }
    }
 }

@@ -3,6 +3,22 @@ using System.Net;
 
 namespace GitLabSharp.Accessors
 {
+   public static class QueryStringHelper
+   {
+      public static string AddQueryParameter(string current, string name, string value)
+      {
+         if (String.IsNullOrEmpty(current))
+         {
+            current = "?";
+         }
+         else
+         {
+            current += "&";
+         }
+         return current + String.Format("{0}={1}", name, value);
+      }
+   }
+
    /// <summary>
    /// Part of NewDiscussionParameters
    /// https://docs.gitlab.com/ce/api/discussions.html#create-new-merge-request-thread
@@ -261,24 +277,29 @@ namespace GitLabSharp.Accessors
 
       public string ToQueryString()
       {
-         string result = String.Format("source_branch={0}&target_branch={1}&title={2}",
-            WebUtility.UrlEncode(SourceBranch), WebUtility.UrlEncode(TargetBranch),
-            WebUtility.UrlEncode(Title.Replace("\r", "")));
+         string result = String.Empty;
+         result = QueryStringHelper.AddQueryParameter(result, "source_branch", WebUtility.UrlEncode(SourceBranch));
+         result = QueryStringHelper.AddQueryParameter(result, "target_branch", WebUtility.UrlEncode(TargetBranch));
+         result = QueryStringHelper.AddQueryParameter(result, "title", WebUtility.UrlEncode(Title.Replace("\r", "")));
          if (AssigneeId.HasValue)
          {
-            result += "&assignee_id=" + AssigneeId.Value.ToString();
+            result = QueryStringHelper.AddQueryParameter(result,
+               "assignee_id", AssigneeId.Value.ToString());
          }
          if (!String.IsNullOrEmpty(Description))
          {
-            result += "&description=" + WebUtility.UrlEncode(Description.Replace("\r", ""));
+            result = QueryStringHelper.AddQueryParameter(result,
+               "description", WebUtility.UrlEncode(Description.Replace("\r", "")));
          }
          if (RemoveSourceBranch.HasValue)
          {
-            result += "&remove_source_branch=" + RemoveSourceBranch.ToString().ToLower();
+            result = QueryStringHelper.AddQueryParameter(result,
+               "remove_source_branch", RemoveSourceBranch.ToString().ToLower());
          }
          if (Squash.HasValue)
          {
-            result += "&squash=" + Squash.ToString().ToLower();
+            result = QueryStringHelper.AddQueryParameter(result,
+               "squash", Squash.ToString().ToLower());
          }
          return result;
       }
@@ -315,31 +336,92 @@ namespace GitLabSharp.Accessors
          string result = String.Empty;
          if (!String.IsNullOrEmpty(TargetBranch))
          {
-            result += "&target_branch=" + WebUtility.UrlEncode(TargetBranch);
+            result = QueryStringHelper.AddQueryParameter(result, "target_branch", WebUtility.UrlEncode(TargetBranch));
          }
          if (!String.IsNullOrEmpty(Title))
          {
-            result += "&title=" + WebUtility.UrlEncode(Title.Replace("\r", ""));
+            result = QueryStringHelper.AddQueryParameter(result, "title", WebUtility.UrlEncode(Title.Replace("\r", "")));
          }
          if (AssigneeId.HasValue)
          {
-            result += "&assignee_id=" + AssigneeId.Value.ToString();
+            result = QueryStringHelper.AddQueryParameter(result, "assignee_id", AssigneeId.Value.ToString());
          }
          if (!String.IsNullOrEmpty(Description))
          {
-            result += "&description=" + WebUtility.UrlEncode(Description.Replace("\r", ""));
+            result = QueryStringHelper.AddQueryParameter(result,
+               "description", WebUtility.UrlEncode(Description.Replace("\r", "")));
          }
          if (!String.IsNullOrEmpty(StateEvent))
          {
-            result += "&state_event=" + WebUtility.UrlEncode(StateEvent);
+            result = QueryStringHelper.AddQueryParameter(result, "state_event", WebUtility.UrlEncode(StateEvent));
          }
          if (RemoveSourceBranch.HasValue)
          {
-            result += "&remove_source_branch=" + RemoveSourceBranch.ToString().ToLower();
+            result = QueryStringHelper.AddQueryParameter(result,
+               "remove_source_branch", RemoveSourceBranch.ToString().ToLower());
          }
          if (Squash.HasValue)
          {
-            result += "&squash=" + Squash.ToString().ToLower();
+            result = QueryStringHelper.AddQueryParameter(result, "squash", Squash.ToString().ToLower());
+         }
+         return result;
+      }
+   }
+
+   /// <summary>
+   /// Used to merge merge requests
+   /// https://docs.gitlab.com/ee/api/merge_requests.html#accept-mr
+   /// </summary>
+   public struct AcceptMergeRequestParameters
+   {
+      public AcceptMergeRequestParameters(string mergeCommitMessage, string squashCommitMessage,
+         bool? squash, bool? shouldRemoveSourceBranch, bool? mergeWhenPipelineSucceeds, string sha)
+      {
+         MergeCommitMessage = mergeCommitMessage;
+         SquashCommitMessage = squashCommitMessage;
+         Squash = squash;
+         ShouldRemoveSourceBranch = shouldRemoveSourceBranch;
+         MergeWhenPipelineSucceeds = mergeWhenPipelineSucceeds;
+         Sha = sha;
+      }
+
+      public string MergeCommitMessage { get; }
+      public string SquashCommitMessage { get; }
+      public bool? Squash { get; }
+      public bool? ShouldRemoveSourceBranch { get; }
+      public bool? MergeWhenPipelineSucceeds { get; }
+      public string Sha { get; }
+
+      public string ToQueryString()
+      {
+         string result = String.Empty;
+         if (!String.IsNullOrEmpty(MergeCommitMessage))
+         {
+            result = QueryStringHelper.AddQueryParameter(result,
+               "merge_commit_message", WebUtility.UrlEncode(MergeCommitMessage.Replace("\r", "")));
+         }
+         if (!String.IsNullOrEmpty(SquashCommitMessage))
+         {
+            result = QueryStringHelper.AddQueryParameter(result,
+               "squash_commit_message", WebUtility.UrlEncode(SquashCommitMessage.Replace("\r", "")));
+         }
+         if (Squash.HasValue)
+         {
+            result = QueryStringHelper.AddQueryParameter(result, "squash", Squash.ToString().ToLower());
+         }
+         if (ShouldRemoveSourceBranch.HasValue)
+         {
+            result = QueryStringHelper.AddQueryParameter(result,
+               "should_remove_source_branch", ShouldRemoveSourceBranch.ToString().ToLower());
+         }
+         if (MergeWhenPipelineSucceeds.HasValue)
+         {
+            result = QueryStringHelper.AddQueryParameter(result,
+               "merge_when_pipeline_succeeds", MergeWhenPipelineSucceeds.ToString().ToLower());
+         }
+         if (!String.IsNullOrEmpty(Sha))
+         {
+            result = QueryStringHelper.AddQueryParameter(result, "state_event", WebUtility.UrlEncode(Sha));
          }
          return result;
       }

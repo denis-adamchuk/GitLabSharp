@@ -113,10 +113,10 @@ namespace GitLabSharp.Accessors
 
       public string ToQueryString()
       {
-         return "simple=true"
+         return
+              (Membership ? "membership=true" : "membership=false")
             + (PublicOnly ? "&visibility=public" : "")
-            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "")
-            + (Membership ? "&membership=true" : "&membership=false");
+            + (WithMergeRequestsEnabled ? "&with_merge_requests_enabled=true" : "");
       }
    }
 

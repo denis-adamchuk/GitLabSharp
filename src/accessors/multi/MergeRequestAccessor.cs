@@ -38,7 +38,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<MergeRequest> CreateNewTaskAsync(CreateNewMergeRequestParameters parameters)
       {
-         return PostTaskAsync<MergeRequest>(BaseUrl + "?" + parameters.ToQueryString());
+         return PostTaskAsync<MergeRequest>(BaseUrl + parameters.ToQueryString());
       }
    }
 }
