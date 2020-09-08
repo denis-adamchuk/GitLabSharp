@@ -15,6 +15,7 @@ namespace GitLabSharp.Accessors
    {
       /// <summary>
       /// baseUrl example: https://gitlab.example.com/api/v4/users
+      /// or https://gitlab.example.com/api/v4/projects/1/users
       /// </summary>
       internal UserAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
@@ -22,6 +23,7 @@ namespace GitLabSharp.Accessors
 
       /// <summary>
       /// Get access to a single user by id
+      /// Note: This is not supported when BaseUrl is project-based
       /// </summary>
       public SingleUserAccessor Get(int id)
       {
@@ -30,6 +32,14 @@ namespace GitLabSharp.Accessors
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero user id", null);
          }
          return new SingleUserAccessor(Client, BaseUrl + "/" + id.ToString());
+      }
+
+      /// <summary>
+      /// Load full list of users from Server and de-serialize it (async)
+      /// </summary>
+      public Task<IEnumerable<User>> LoadAllTaskAsync()
+      {
+         return GetAllTaskAsync<User>(BaseUrl + "?");
       }
 
       /// <summary>

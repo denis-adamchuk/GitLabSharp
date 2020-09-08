@@ -30,7 +30,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it
+      /// Load full list of projects from Server and de-serialize it
       /// </summary>
       public IEnumerable<Project> LoadAll(ProjectsFilter filter)
       {
@@ -38,7 +38,7 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of discussions from Server and de-serialize it (async)
+      /// Load full list of projects from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<Project>> LoadAllTaskAsync(ProjectsFilter filter)
       {

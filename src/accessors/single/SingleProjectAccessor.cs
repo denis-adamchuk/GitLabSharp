@@ -37,6 +37,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
+      /// Get access to list of users of this project
+      /// </summary>
+      public UserAccessor Users => new UserAccessor(Client, BaseUrl + "/users");
+
+      /// <summary>
       /// Get access to a list of merge requests of this project
       /// </summary>
       public MergeRequestAccessor MergeRequests => new MergeRequestAccessor(Client, BaseUrl + "/merge_requests");
