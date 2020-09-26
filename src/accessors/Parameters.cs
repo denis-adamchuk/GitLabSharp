@@ -90,7 +90,7 @@ namespace GitLabSharp.Accessors
 
    /// <summary>
    /// Used to create notes
-   /// https://docs.gitlab.com/ce/api/notes.html#modify-existing-merge-request-note
+   /// https://docs.gitlab.com/ce/api/notes.html#create-new-merge-request-note
    /// </summary>
    public struct CreateNewNoteParameters
    {
