@@ -39,7 +39,7 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public Task<IEnumerable<User>> LoadAllTaskAsync()
       {
-         return GetAllTaskAsync<User>(BaseUrl + "?");
+         return GetAllTaskAsync<User>(BaseUrl + "?active=true" + "&");
       }
 
       /// <summary>
