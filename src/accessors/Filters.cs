@@ -23,7 +23,7 @@ namespace GitLabSharp.Accessors
 
    public struct MergeRequestsFilter
    {
-      public MergeRequestsFilter(string labels, WorkInProgressFilter wip, StateFilter state,
+      public MergeRequestsFilter(string labels, WorkInProgressFilter wip, string state,
          bool simpleView, string search, string targetBranch, IEnumerable<int> iids,
          int? authorId)
       {
@@ -37,14 +37,6 @@ namespace GitLabSharp.Accessors
          AuthorId = authorId;
       }
 
-      public enum StateFilter
-      {
-         Open,
-         Closed,
-         Merged,
-         All
-      }
-
       public enum WorkInProgressFilter
       {
          Yes,
@@ -54,7 +46,7 @@ namespace GitLabSharp.Accessors
 
       public string Labels { get; }
       public WorkInProgressFilter WIP { get; }
-      public StateFilter State { get; }
+      public string State { get; }
       public bool SimpleView { get; }
       public string Search { get; }
       public string TargetBranch { get; }
@@ -64,26 +56,14 @@ namespace GitLabSharp.Accessors
       public string ToQueryString()
       {
          return "scope=all"
-         + (SimpleView ? ("&view=simple") : "")
+         + (SimpleView ? "&view=simple" : "")
          + (WIP != WorkInProgressFilter.All ? ("&wip=" + workInProgressToString(WIP)) : "")
-         + (State != StateFilter.All ? ("&state=" + stateFilterToString(State)) : "")
+         + (State != null ? "&state=" + State : "")
          + (String.IsNullOrWhiteSpace(Labels) ? "" : "&labels=" + WebUtility.UrlEncode(Labels))
          + (AuthorId == null ? "" : "&author_id=" + AuthorId.Value.ToString())
-         + (IIds != null ? String.Join("iids[]=", IIds) : "")
+         + (IIds != null ? ("&iids[]=" + String.Join("&iids[]=", IIds)) : "")
          + (String.IsNullOrWhiteSpace(TargetBranch) ? "" : "&target_branch=" + WebUtility.UrlEncode(TargetBranch))
          + (String.IsNullOrWhiteSpace(Search) ? "" : "&search=" + WebUtility.UrlEncode(Search));
-      }
-
-      private string stateFilterToString(StateFilter state)
-      {
-         switch (state)
-         {
-            case StateFilter.All: return "";
-            case StateFilter.Closed: return "closed";
-            case StateFilter.Merged: return "merged";
-            case StateFilter.Open: return "opened";
-         }
-         return "";
       }
 
       private string workInProgressToString(WorkInProgressFilter wip)
