@@ -48,7 +48,7 @@ namespace GitLabSharp
 
       internal Task<string> GetTaskAsync(string url)
       {
-         return Client.DownloadStringTaskAsync(url);
+         return TimeoutAfter(Client.DownloadStringTaskAsync(url), AsyncOperationTimeOut);
       }
 
       internal string Post(string url)
@@ -58,7 +58,7 @@ namespace GitLabSharp
 
       internal Task<string> PostTaskAsync(string url)
       {
-         return Client.UploadStringTaskAsync(url, "POST", "");
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut);
       }
 
       internal string Put(string url)
@@ -68,7 +68,7 @@ namespace GitLabSharp
 
       internal Task<string> PutTaskAsync(string url)
       {
-         return Client.UploadStringTaskAsync(url, "PUT", "");
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut);
       }
 
       internal string Delete(string url)
@@ -78,7 +78,19 @@ namespace GitLabSharp
 
       internal Task<string> DeleteTaskAsync(string url)
       {
-         return Client.UploadStringTaskAsync(url, "DELETE", "");
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut);
+      }
+
+      private static readonly int AsyncOperationTimeOut = 60 * 1000; // 60 sec
+
+      async private static Task<T> TimeoutAfter<T>(Task<T> task, int millisecondsDelay)
+      {
+         await Task.WhenAny(task, Task.Delay(millisecondsDelay));;
+         if (!task.IsCompleted)
+         {
+            throw new TimeoutException("HTTP async operation timed out.");
+         }
+         return await task;
       }
 
       /// <summary>

@@ -207,6 +207,12 @@ namespace GitLabSharp.Accessors
             }
             throw new GitLabRequestException(url, method, ex);
          }
+         catch (TimeoutException ex)
+         {
+            // if even an I/O timed out, user might have requested its cancellation
+            Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
+            throw new GitLabRequestException(url, method, ex);
+         }
          return response;
       }
 
