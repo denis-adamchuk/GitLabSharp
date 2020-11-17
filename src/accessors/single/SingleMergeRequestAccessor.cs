@@ -36,7 +36,7 @@ namespace GitLabSharp.Accessors
          string url = BaseUrl;
          if (includeRebaseInProgress.HasValue)
          {
-            url += String.Format("&include_rebase_in_progress={0}", includeRebaseInProgress.Value.ToString());
+            url += String.Format("?include_rebase_in_progress={0}", includeRebaseInProgress.Value.ToString().ToLower());
          }
          return GetTaskAsync<MergeRequest>(url);
       }
