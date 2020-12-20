@@ -93,6 +93,9 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public bool Blocking_Discussions_Resolved { get; protected set; }
+
+      [JsonProperty]
+      public string Sha { get; protected set; }
    }
 
    /// <summary>

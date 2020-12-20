@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace GitLabSharp.Entities
 {
@@ -34,18 +33,6 @@ namespace GitLabSharp.Entities
    /// </summary>
    public class Version
    {
-      public Version(int id, string base_Commit_SHA, string head_Commit_SHA, string start_Commit_SHA,
-         DateTime created_At, IEnumerable<DiffStruct> diffs, IEnumerable<Commit> commits)
-      {
-         Id = id;
-         Base_Commit_SHA = base_Commit_SHA;
-         Head_Commit_SHA = head_Commit_SHA;
-         Start_Commit_SHA = start_Commit_SHA;
-         Created_At = created_At;
-         Diffs = diffs;
-         Commits = commits;
-      }
-
       [JsonProperty]
       public int Id { get; protected set; }
 
@@ -65,6 +52,6 @@ namespace GitLabSharp.Entities
       public IEnumerable<DiffStruct> Diffs { get; protected set; }
 
       [JsonProperty]
-      public IEnumerable<Commit> Commits { get; protected set; }
+      public IEnumerable<Commit> Commits { get; set; }
    }
 }
