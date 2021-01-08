@@ -48,7 +48,7 @@ namespace GitLabSharp
 
       internal Task<string> GetTaskAsync(string url)
       {
-         return TimeoutAfter(Client.DownloadStringTaskAsync(url), AsyncOperationTimeOut);
+         return TimeoutAfter(Client.DownloadStringTaskAsync(url), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Post(string url)
@@ -58,7 +58,7 @@ namespace GitLabSharp
 
       internal Task<string> PostTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut);
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Put(string url)
@@ -68,7 +68,7 @@ namespace GitLabSharp
 
       internal Task<string> PutTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut);
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Delete(string url)
@@ -78,17 +78,23 @@ namespace GitLabSharp
 
       internal Task<string> DeleteTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut);
+         return TimeoutAfter(Client.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut, onTimeout);
+      }
+
+      private void onTimeout()
+      {
+         Client.CancelAsync();
+         throw new TimeoutException("HTTP async operation timed out.");
       }
 
       private static readonly int AsyncOperationTimeOut = 60 * 1000; // 60 sec
 
-      async private static Task<T> TimeoutAfter<T>(Task<T> task, int millisecondsDelay)
+      async private static Task<T> TimeoutAfter<T>(Task<T> task, int millisecondsDelay, Action OnTimeout)
       {
-         await Task.WhenAny(task, Task.Delay(millisecondsDelay));;
+         await Task.WhenAny(task, Task.Delay(millisecondsDelay));
          if (!task.IsCompleted)
          {
-            throw new TimeoutException("HTTP async operation timed out.");
+            OnTimeout?.Invoke();
          }
          return await task;
       }
