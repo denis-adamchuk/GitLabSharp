@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
@@ -23,6 +21,7 @@ namespace GitLabSharp
          {
             BaseAddress = host
          };
+         ServicePointManager.DefaultConnectionLimit = 25; // TODO Make it configurable
          ServicePointManager.Expect100Continue = true;
          ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
          Client.Headers.Add("Content-Type:application/json");
