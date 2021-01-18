@@ -81,6 +81,7 @@
     <Compile Include="src\entities\Commit.cs" />
     <Compile Include="src\accessors\multi\VersionAccessor.cs" />
     <Compile Include="src\accessors\GitLab.cs" />
+    <Compile Include="src\GitLabSharp.cs" />
     <Compile Include="src\GitLabTaskRunner.cs" />
     <Compile Include="src\impl\GitLabTask.cs" />
     <Compile Include="src\impl\HttpClient.cs" />

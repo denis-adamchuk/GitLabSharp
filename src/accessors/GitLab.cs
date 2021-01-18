@@ -25,13 +25,21 @@ namespace GitLabSharp.Accessors
       public void Dispose()
       {
          CancellationTokenSource.Dispose();
+         CancellationTokenSource = null;
+
          Client.Dispose();
+         Client = null;
+      }
+
+      internal void Cancel()
+      {
+         CancellationTokenSource?.Cancel();
       }
 
       /// <summary>
       /// Host passed to constructor
       /// </summary>
-      public string Host => Client.Host;
+      public string Host => Client?.Host;
 
       /// <summary>
       /// Get access to information about current user
@@ -54,9 +62,10 @@ namespace GitLabSharp.Accessors
       public GlobalMergeRequestAccessor MergeRequests =>
          new GlobalMergeRequestAccessor(Client, BaseUrl + "/merge_requests");
 
-      internal CancellationTokenSource CancellationTokenSource { get; }
+      private CancellationTokenSource CancellationTokenSource;
 
-      private HttpClient Client { get; }
+      private HttpClient Client;
+
       private string BaseUrl { get; }
    }
 }

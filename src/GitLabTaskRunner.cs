@@ -38,6 +38,7 @@ namespace GitLabSharp
       {
          foreach (GitLabTask task in _runningTasks)
          {
+            // Cancelling task here and waiting for OperationCanceledException to dispose the task, see run().
             task.Cancel();
          }
          _runningTasks.Clear();
@@ -77,7 +78,7 @@ namespace GitLabSharp
          {
             throw new GitLabTaskRunnerCancelled();
          }
-         catch (GitLabSharp.Accessors.GitLabRequestException)
+         catch (GitLabRequestException)
          {
             throw;
          }

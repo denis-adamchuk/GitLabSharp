@@ -20,7 +20,8 @@ namespace GitLabSharp
       /// </summary>
       public void Dispose()
       {
-         _gitlab.Dispose();
+         _gitlab?.Dispose();
+         _gitlab = null;
       }
 
       /// <summary>
@@ -43,10 +44,11 @@ namespace GitLabSharp
       /// </summary>
       internal void Cancel()
       {
-         _gitlab.CancellationTokenSource.Cancel();
+         _gitlab?.Cancel();
       }
 
-      private GitLab _gitlab { get; }
+      private GitLab _gitlab;
+
       private Func<GitLab, Task<object>> _func { get; }
    }
 }

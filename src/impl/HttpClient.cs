@@ -16,73 +16,70 @@ namespace GitLabSharp
       /// </summary>
       internal HttpClient(string host, string token, CancellationTokenSource cts)
       {
-         ServicePointManager.ServerCertificateValidationCallback += (o, c, ch, er) => true;
          Client = new WebClient
          {
-            BaseAddress = host
+            BaseAddress = host,
+            Encoding = Encoding.UTF8
          };
-         ServicePointManager.DefaultConnectionLimit = 25; // TODO Make it configurable
-         ServicePointManager.Expect100Continue = true;
-         ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-         Client.Headers.Add("Content-Type:application/json");
-         Client.Headers.Add("Accept:application/json");
-         Client.Headers["Private-Token"] = token;
-         Client.Encoding = Encoding.UTF8;
+         Client?.Headers.Add("Content-Type", "application/json");
+         Client?.Headers.Add("Accept", "application/json");
+         Client?.Headers.Add("Private-Token", token);
 
          CancellationTokenSource = cts;
-         CancellationTokenSource.Token.Register(Client.CancelAsync);
+         CancellationTokenSource.Token.Register(() => Client?.CancelAsync());
       }
 
       public void Dispose()
       {
-         Client.Dispose();
+         Client?.Dispose();
+         Client = null;
       }
 
-      public string Host => Client.BaseAddress;
+      public string Host => Client?.BaseAddress;
 
       internal string Get(string url)
       {
-         return Client.DownloadString(url);
+         return Client?.DownloadString(url);
       }
 
       internal Task<string> GetTaskAsync(string url)
       {
-         return TimeoutAfter(Client.DownloadStringTaskAsync(url), AsyncOperationTimeOut, onTimeout);
+         return TimeoutAfter(Client?.DownloadStringTaskAsync(url), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Post(string url)
       {
-         return Client.UploadString(url, "POST", "");
+         return Client?.UploadString(url, "POST", "");
       }
 
       internal Task<string> PostTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut, onTimeout);
+         return TimeoutAfter(Client?.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Put(string url)
       {
-         return Client.UploadString(url, "PUT", "");
+         return Client?.UploadString(url, "PUT", "");
       }
 
       internal Task<string> PutTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut, onTimeout);
+         return TimeoutAfter(Client?.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut, onTimeout);
       }
 
       internal string Delete(string url)
       {
-         return Client.UploadString(url, "DELETE", "");
+         return Client?.UploadString(url, "DELETE", "");
       }
 
       internal Task<string> DeleteTaskAsync(string url)
       {
-         return TimeoutAfter(Client.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut, onTimeout);
+         return TimeoutAfter(Client?.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut, onTimeout);
       }
 
       private void onTimeout()
       {
-         Client.CancelAsync();
+         Client?.CancelAsync();
          throw new TimeoutException("HTTP async operation timed out.");
       }
 
@@ -101,11 +98,11 @@ namespace GitLabSharp
       /// <summary>
       /// Collection of Headers for a response on the most recent Http request
       /// </summary>
-      internal WebHeaderCollection ResponseHeaders => Client.ResponseHeaders;
+      internal WebHeaderCollection ResponseHeaders => Client?.ResponseHeaders;
 
       internal CancellationTokenSource CancellationTokenSource { get; }
 
-      private WebClient Client { get; }
+      private WebClient Client;
    }
 }
 
