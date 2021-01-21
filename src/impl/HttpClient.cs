@@ -21,9 +21,9 @@ namespace GitLabSharp
             BaseAddress = host,
             Encoding = Encoding.UTF8
          };
-         Client?.Headers.Add("Content-Type", "application/json");
-         Client?.Headers.Add("Accept", "application/json");
-         Client?.Headers.Add("Private-Token", token);
+         Client.Headers.Add("Content-Type", "application/json");
+         Client.Headers.Add("Accept", "application/json");
+         Client.Headers.Add("Private-Token", token);
 
          CancellationTokenSource = cts;
          CancellationTokenSource.Token.Register(() => Client?.CancelAsync());
