@@ -21,14 +21,6 @@ namespace GitLabSharp.Utils
             return String.Format("{0} {1}", base.Message, innerExceptionMessage);
          }
       }
-
-      public string OriginalMessage
-      {
-         get
-         {
-            return base.Message;
-         }
-      }
    }
 }
 
