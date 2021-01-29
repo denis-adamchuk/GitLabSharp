@@ -102,7 +102,11 @@ namespace GitLabSharp.Accessors
 
          try
          {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r,
+               new Newtonsoft.Json.JsonSerializerSettings
+               {
+                  NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+               });
          }
          catch (Exception ex) // whatever deserialization Exception
          {
@@ -117,7 +121,11 @@ namespace GitLabSharp.Accessors
 
          try
          {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r);
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r,
+               new Newtonsoft.Json.JsonSerializerSettings
+               {
+                  NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
+               });
          }
          catch (Exception ex) // whatever deserialization Exception
          {
