@@ -74,7 +74,7 @@ namespace GitLabSharp
 
       private static bool ifMatchSucceeded(Match m)
       {
-         return m.Success && m.Groups.Count == 6 && int.TryParse(m.Groups[5].Value, out int iid);
+         return m.Success && m.Groups.Count == 6 && int.TryParse(m.Groups[5].Value, out _);
       }
    }
 }

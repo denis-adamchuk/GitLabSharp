@@ -105,6 +105,30 @@ namespace GitLabSharp.Accessors
       {
          return PutTaskAsync<MergeRequest>(BaseUrl + "/merge" + parameters.ToQueryString());
       }
+
+      /// <summary>
+      /// Load merge request approval configuration
+      /// </summary>
+      public Task<MergeRequestApprovalConfiguration> GetApprovalConfigurationTaskAsync()
+      {
+         return GetTaskAsync<MergeRequestApprovalConfiguration>(BaseUrl + "/approvals");
+      }
+
+      /// <summary>
+      /// Approve merge request
+      /// </summary>
+      public Task<MergeRequestApprovalConfiguration> ApproveTaskAsync()
+      {
+         return PostTaskAsync<MergeRequestApprovalConfiguration>(BaseUrl + "/approve");
+      }
+
+      /// <summary>
+      /// Unapprove merge request
+      /// </summary>
+      public Task<MergeRequestApprovalConfiguration> UnapproveTaskAsync()
+      {
+         return PostTaskAsync<MergeRequestApprovalConfiguration>(BaseUrl + "/unapprove");
+      }
    }
 }
 

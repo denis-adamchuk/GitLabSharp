@@ -14,7 +14,7 @@ namespace GitLabSharp.Accessors
    public class SingleUserAccessor : BaseAccessor
    {
       /// <summary>
-      /// baseUrl example: https://gitlab.example.com/api/v4/users/1
+      /// baseUrl example: https://gitlab.example.com/api/v4/users/1 or https://gitlab.example.com/api/v4/user
       /// </summary>
       internal SingleUserAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
