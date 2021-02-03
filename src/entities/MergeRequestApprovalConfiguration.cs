@@ -5,6 +5,12 @@ using System.Linq;
 
 namespace GitLabSharp.Entities
 {
+   public class UserItem
+   {
+      [JsonProperty]
+      public User User { get; protected set; }
+   }
+
    /// <summary>
    /// https://docs.gitlab.com/ce/api/merge_request_approvals.html#get-configuration-1
    /// </summary>
@@ -44,7 +50,7 @@ namespace GitLabSharp.Entities
       public int Approvals_Left { get; protected set; }
 
       [JsonProperty]
-      public IEnumerable<User> Approved_By { get; protected set; }
+      public IEnumerable<UserItem> Approved_By { get; protected set; }
    }
 }
 
