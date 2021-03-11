@@ -253,7 +253,7 @@ namespace GitLabSharp.Accessors
    public struct CreateNewMergeRequestParameters
    {
       public CreateNewMergeRequestParameters(string sourceBranch, string targetBranch, string title,
-         int? assigneeId, string description, bool? removeSourceBranch, bool? squash)
+         int? assigneeId, string description, bool? removeSourceBranch, bool? squash, string[] labels)
       {
          SourceBranch = sourceBranch;
          TargetBranch = targetBranch;
@@ -262,6 +262,7 @@ namespace GitLabSharp.Accessors
          Description = description;
          RemoveSourceBranch = removeSourceBranch;
          Squash = squash;
+         Labels = labels;
       }
 
       // required
@@ -274,6 +275,7 @@ namespace GitLabSharp.Accessors
       public string Description { get; }
       public bool? RemoveSourceBranch { get; }
       public bool? Squash { get; }
+      public string[] Labels { get; }
 
       public string ToQueryString()
       {
@@ -301,6 +303,11 @@ namespace GitLabSharp.Accessors
             result = QueryStringHelper.AddQueryParameter(result,
                "squash", Squash.ToString().ToLower());
          }
+         if (Labels != null)
+         {
+            result = QueryStringHelper.AddQueryParameter(result,
+               "labels", String.Join(",", Labels).ToLower());
+         }
          return result;
       }
    }
@@ -312,7 +319,8 @@ namespace GitLabSharp.Accessors
    public struct UpdateMergeRequestParameters
    {
       public UpdateMergeRequestParameters(string targetBranch, string title,
-         int? assigneeId, string description, string stateEvent, bool? removeSourceBranch, bool? squash)
+         int? assigneeId, string description, string stateEvent, bool? removeSourceBranch, bool? squash,
+         string[] labels)
       {
          TargetBranch = targetBranch;
          Title = title;
@@ -321,6 +329,7 @@ namespace GitLabSharp.Accessors
          StateEvent = stateEvent;
          RemoveSourceBranch = removeSourceBranch;
          Squash = squash;
+         Labels = labels;
       }
 
       public string TargetBranch { get; }
@@ -330,6 +339,7 @@ namespace GitLabSharp.Accessors
       public string StateEvent { get; } // "close" or "reopen"
       public bool? RemoveSourceBranch { get; }
       public bool? Squash { get; }
+      public string[] Labels { get; }
 
       public string ToQueryString()
       {
@@ -363,6 +373,10 @@ namespace GitLabSharp.Accessors
          if (Squash.HasValue)
          {
             result = QueryStringHelper.AddQueryParameter(result, "squash", Squash.ToString().ToLower());
+         }
+         if (Labels != null)
+         {
+            result = QueryStringHelper.AddQueryParameter(result, "labels", String.Join(",", Labels).ToLower());
          }
          return result;
       }
