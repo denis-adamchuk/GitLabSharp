@@ -15,6 +15,8 @@ namespace GitLabSharp
 
       private static readonly Regex url_re = new Regex(RegEx, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
+      static readonly int MaxUrlLength = 256;
+
       public struct ParsedMergeRequestUrl : IEquatable<ParsedMergeRequestUrl>
       {
          public ParsedMergeRequestUrl(string host, string project, int iid)
@@ -55,6 +57,11 @@ namespace GitLabSharp
       /// <summary>
       public static ParsedMergeRequestUrl ParseMergeRequestUrl(string url)
       {
+         if (url.Length > MaxUrlLength)
+         {
+            throw new UriFormatException("Too long URL");
+         }
+
          Match m = url_re.Match(url);
          if (!ifMatchSucceeded(m))
          {
@@ -63,11 +70,13 @@ namespace GitLabSharp
          return new ParsedMergeRequestUrl(m.Groups[2].Value, m.Groups[4].Value, int.Parse(m.Groups[5].Value));
       }
 
-      /// <summary>
-      /// Splits passed url in parts and stores in object properties
-      /// <summary>
-      public static bool Check(string url)
+      public static bool IsValidUrl(string url)
       {
+         if (url.Length > MaxUrlLength)
+         {
+            return false;
+         }
+
          Match m = url_re.Match(url);
          return ifMatchSucceeded(m);
       }
