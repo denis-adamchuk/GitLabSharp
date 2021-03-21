@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+﻿using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
 namespace GitLabSharp.Accessors
@@ -18,14 +13,6 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal SingleProjectAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
-      }
-
-      /// <summary>
-      /// Loads information about project from Server and de-serializes it
-      /// </summary>
-      public Project Load()
-      {
-         return Get<Project>(BaseUrl);
       }
 
       /// <summary>

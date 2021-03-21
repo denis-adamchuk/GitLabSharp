@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
+﻿using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
 namespace GitLabSharp.Accessors
@@ -26,25 +20,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load information about this discussion instance from Server and de-serialize it
       /// </summary>
-      public Discussion Load()
-      {
-         return Get<Discussion>(BaseUrl);
-      }
-
-      /// <summary>
-      /// Load information about this discussion instance from Server and de-serialize it
-      /// </summary>
       public Task<Discussion> LoadTaskAsync()
       {
          return GetTaskAsync<Discussion>(BaseUrl);
-      }
-
-      /// <summary>
-      /// Resolve/un-resolve a discussion thread
-      /// </summary>
-      public Discussion Resolve(ResolveThreadParameters parameters)
-      {
-         return Put<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
 
       /// <summary>
@@ -58,25 +36,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Create a new note within this discussion
       /// </summary>
-      public DiscussionNote CreateNewNote(CreateNewNoteParameters parameters)
-      {
-         return Post<DiscussionNote>(BaseUrl + "/notes?" + parameters.ToQueryString());
-      }
-
-      /// <summary>
-      /// Create a new note within this discussion
-      /// </summary>
       public Task<DiscussionNote> CreateNewNoteTaskAsync(CreateNewNoteParameters parameters)
       {
          return PostTaskAsync<DiscussionNote>(BaseUrl + "/notes?" + parameters.ToQueryString());
-      }
-
-      /// <summary>
-      /// Modify discussion note
-      /// </summary>
-      public DiscussionNote ModifyNote(int noteId, ModifyDiscussionNoteParameters parameters)
-      {
-         return Put<DiscussionNote>(BaseUrl + "/notes/" + noteId.ToString() + "?" + parameters.ToQueryString());
       }
 
       /// <summary>

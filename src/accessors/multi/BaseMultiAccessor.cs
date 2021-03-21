@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using GitLabSharp.Entities;
 
 namespace GitLabSharp.Accessors
 {
@@ -20,40 +17,11 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Execute Http GET request and return a value of X-Total response header
       /// </summary>
-      internal int Count(string url)
-      {
-         makeRequest(url, "GET");
-         return calculateCount(url);
-      }
-
-      /// <summary>
-      /// Execute Http GET request and return a value of X-Total response header
-      /// </summary>
       async internal Task<int> CountTaskAsync(string url)
       {
          await makeRequestAsync(url, "GET");
          Client.CancellationTokenSource.Token.ThrowIfCancellationRequested();
          return calculateCount(url);
-      }
-
-      /// <summary>
-      /// Execute multiple Http GET requests and merge results in a single list
-      /// </summary>
-      internal IEnumerable<TItem> GetAll<TItem>(string url)
-      {
-         List<TItem> result = new List<TItem>();
-
-         int total = Count(url);
-         int perPage = 100;
-         int pages = total / perPage + (total % perPage > 0 ? 1 : 0);
-         for (int iPage = 0; iPage < pages; ++iPage)
-         {
-            PageFilter pageFilter = new PageFilter(perPage, iPage + 1);
-            IEnumerable<TItem> chunk = Get<List<TItem>>(url + pageFilter.ToQueryString());
-            result.AddRange(chunk);
-         }
-
-         return result;
       }
 
       /// <summary>

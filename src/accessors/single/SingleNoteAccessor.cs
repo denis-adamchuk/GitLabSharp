@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Script.Serialization;
-using GitLabSharp.Entities;
+﻿using System.Threading.Tasks;
 
 namespace GitLabSharp.Accessors
 {
@@ -21,36 +15,12 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Loads information about note from Server and de-serializes it
-      /// </summary>
-      public Note Load()
-      {
-         return Get<Note>(BaseUrl);
-      }
-
-      /// <summary>
-      /// Delete note
-      /// </summary>
-      public void Delete()
-      {
-         Delete(BaseUrl);
-      }
-
-      /// <summary>
       /// Delete note
       /// </summary>
       async public Task<bool> DeleteTaskAsync()
       {
          await base.DeleteTaskAsync(BaseUrl);
          return true;
-      }
-
-      /// <summary>
-      /// Modify note
-      /// </summary>
-      public Note Modify(ModifyNoteParameters parameters)
-      {
-         return Put<Note>(BaseUrl + "?" + parameters.ToQueryString());
       }
    }
 }

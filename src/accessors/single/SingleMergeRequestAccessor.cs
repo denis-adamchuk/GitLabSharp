@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
@@ -18,14 +14,6 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal SingleMergeRequestAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
-      }
-
-      /// <summary>
-      /// Load information about this merge request from Server and de-serialize it
-      /// </summary>
-      public MergeRequest Load()
-      {
-         return Get<MergeRequest>(BaseUrl);
       }
 
       /// <summary>
@@ -60,14 +48,6 @@ namespace GitLabSharp.Accessors
       /// Get access to a list of notes of this merge request
       /// </summary>
       public NoteAccessor Notes => new NoteAccessor(Client, BaseUrl + "/notes");
-
-      /// <summary>
-      /// Add spent time to the merge request of this merge request
-      /// </summary>
-      public SpentTime AddSpentTime(AddSpentTimeParameters parameters)
-      {
-         return Post<SpentTime>(BaseUrl + "/add_spent_time?" + parameters.ToQueryString());
-      }
 
       /// <summary>
       /// Add spent time to the merge request of this merge request

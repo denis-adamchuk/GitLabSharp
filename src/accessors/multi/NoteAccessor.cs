@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using GitLabSharp.Entities;
 
 namespace GitLabSharp.Accessors
@@ -20,22 +15,6 @@ namespace GitLabSharp.Accessors
       /// </summary>
       internal NoteAccessor(HttpClient client, string baseUrl) : base(client, baseUrl)
       {
-      }
-
-      /// <summary>
-      /// Load a single page from a full list of notes from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Note> Load(PageFilter pageFilter)
-      {
-         return Get<IEnumerable<Note>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of notes from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Note> LoadAll()
-      {
-         return GetAll<Note>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -66,15 +45,6 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Get number of notes
-      /// Note: PageFilter is ignored
-      /// </summary>
-      public int Count()
-      {
-         return Count(BaseUrl);
-      }
-
-      /// <summary>
       /// Get number of notes (async)
       /// Note: PageFilter is ignored
       /// </summary>
@@ -93,14 +63,6 @@ namespace GitLabSharp.Accessors
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by zero note Id", null);
          }
          return new SingleNoteAccessor(Client, BaseUrl + "/" + noteId.ToString());
-      }
-
-      /// <summary>
-      /// Create a new note with given body
-      /// </summary>
-      public Note CreateNew(CreateNewNoteParameters parameters)
-      {
-         return Post<Note>(BaseUrl + "?" + parameters.ToQueryString());
       }
 
       /// <summary>

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using GitLabSharp.Entities;
 
 namespace GitLabSharp.Accessors
@@ -22,36 +17,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load a single page from a full list of discussions from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Discussion> Load(PageFilter pageFilter)
-      {
-         return Get<IEnumerable<Discussion>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of discussions from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Discussion> LoadAll()
-      {
-         return GetAll<Discussion>(BaseUrl + "?");
-      }
-
-      /// <summary>
       /// Load full list of discussions from Server and de-serialize it
       /// </summary>
       public Task<IEnumerable<Discussion>> LoadAllTaskAsync()
       {
          return GetAllTaskAsync<Discussion>(BaseUrl + "?");
-      }
-
-      /// <summary>
-      /// Get number of discussions
-      /// Note: PageFilter is ignored
-      /// </summary>
-      public int Count()
-      {
-         return Count(BaseUrl);
       }
 
       /// <summary>
@@ -64,14 +34,6 @@ namespace GitLabSharp.Accessors
             throw new GitLabSharpException(BaseUrl, "Cannot create an accessor by null discussion id", null);
          }
          return new SingleDiscussionAccessor(Client, BaseUrl + "/" + discussionId);
-      }
-
-      /// <summary>
-      /// Create a new discussion with given parameters
-      /// </summary>
-      public Discussion CreateNew(NewDiscussionParameters parameters)
-      {
-         return Post<Discussion>(BaseUrl + "?" + parameters.ToQueryString());
       }
 
       /// <summary>

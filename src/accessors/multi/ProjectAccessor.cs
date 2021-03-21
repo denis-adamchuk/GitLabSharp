@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
@@ -22,35 +18,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load a single page from a full list of projects from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Project> Load(ProjectsFilter filter, PageFilter pageFilter)
-      {
-         return Get<IEnumerable<Project>>(BaseUrl + "?" + filter.ToQueryString() + "&" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of projects from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Project> LoadAll(ProjectsFilter filter)
-      {
-         return GetAll<Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
-      }
-
-      /// <summary>
       /// Load full list of projects from Server and de-serialize it (async)
       /// </summary>
       public Task<IEnumerable<Project>> LoadAllTaskAsync(ProjectsFilter filter)
       {
          return GetAllTaskAsync<Project>(BaseUrl + "?" + filter.ToQueryString() + "&");
-      }
-
-      /// <summary>
-      /// Get number of projects taking into account the filter
-      /// </summary>
-      public int Count(ProjectsFilter filter)
-      {
-         return Count(BaseUrl + "?" + filter.ToQueryString());
       }
 
       /// <summary>

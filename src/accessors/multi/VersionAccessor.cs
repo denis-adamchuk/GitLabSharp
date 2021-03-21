@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using GitLabSharp.Entities;
 using Version = GitLabSharp.Entities.Version;
 
 namespace GitLabSharp.Accessors
@@ -24,25 +19,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of versions from Server and de-serialize it
       /// </summary>
-      public IEnumerable<Version> Load(PageFilter pageFilter)
-      {
-         return Get<IEnumerable<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load a single page from a full list of versions from Server and de-serialize it
-      /// </summary>
       public Task<IEnumerable<Version>> LoadTaskAsync(PageFilter pageFilter)
       {
          return GetTaskAsync<IEnumerable<Version>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of versions from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Version> LoadAll()
-      {
-         return GetAll<Version>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -51,14 +30,6 @@ namespace GitLabSharp.Accessors
       public Task<IEnumerable<Version>> LoadAllTaskAsync()
       {
          return GetAllTaskAsync<Version>(BaseUrl + "?");
-      }
-
-      /// <summary>
-      /// Get number of versions
-      /// </summary>
-      public int Count()
-      {
-         return Count(BaseUrl);
       }
 
       /// <summary>

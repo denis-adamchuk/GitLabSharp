@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using System.Web.Script.Serialization;
 using GitLabSharp.Utils;
 
 namespace GitLabSharp.Accessors
@@ -30,27 +29,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Execute Http GET request and de-serialize a response into a new T object instance
-      /// </summary>
-      internal T Get<T>(string url)
-      {
-         return makeRequestAndDeserializeResponse<T>(url, "GET");
-      }
-
-      /// <summary>
       /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
       /// </summary>
       async internal Task<T> GetTaskAsync<T>(string url)
       {
          return await makeRequestAndDeserializeResponseAsync<T>(url, "GET");
-      }
-
-      /// <summary>
-      /// Execute Http POST request and de-serialize a response into a new T object instance
-      /// </summary>
-      internal T Post<T>(string url)
-      {
-         return makeRequestAndDeserializeResponse<T>(url, "POST");
       }
 
       /// <summary>
@@ -62,14 +45,6 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Execute Http PUT request and de-serialize a response into a new T object instance
-      /// </summary>
-      internal T Put<T>(string url)
-      {
-         return makeRequestAndDeserializeResponse<T>(url, "PUT");
-      }
-
-      /// <summary>
       /// Execute Http PUT request asynchronously and de-serialize a response into a new T object instance
       /// </summary>
       async internal Task<T> PutTaskAsync<T>(string url)
@@ -78,41 +53,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Execute Http DELETE request
-      /// </summary>
-      internal void Delete(string url)
-      {
-         makeRequest(url, "DELETE");
-      }
-
-      /// <summary>
       /// Execute Http DELETE request asynchronously
       /// </summary>
       internal Task DeleteTaskAsync(string url)
       {
          return makeRequestAsync(url, "DELETE");
-      }
-
-      /// <summary>
-      /// Execute a request and de-serialize JSON response
-      /// </summary>
-      protected T makeRequestAndDeserializeResponse<T>(string url, string method)
-      {
-         string r = makeRequest(url, method);
-
-         try
-         {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r,
-               new Newtonsoft.Json.JsonSerializerSettings
-               {
-                  NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
-               });
-         }
-         catch (Exception ex) // whatever deserialization Exception
-         {
-            throw new GitLabSharpException(url,
-               String.Format("Cannot deserialize JSON response of {0} method", method), ex);
-         }
       }
 
       async protected Task<T> makeRequestAndDeserializeResponseAsync<T>(string url, string method)
@@ -132,42 +77,6 @@ namespace GitLabSharp.Accessors
             throw new GitLabSharpException(url,
                String.Format("Cannot deserialize JSON response of {0} method", method), ex);
          }
-      }
-
-      /// <summary>
-      /// Executes a request but converts System.Net.WebException into GitLabRequestException
-      /// </summary>
-      protected string makeRequest(string url, string method)
-      {
-         string response = String.Empty;
-         try
-         {
-            if (method == "GET")
-            {
-               response = Client.Get(url);
-            }
-            else if (method == "POST")
-            {
-               response = Client.Post(url);
-            }
-            else if (method == "PUT")
-            {
-               response = Client.Put(url);
-            }
-            else if (method == "DELETE")
-            {
-               response = Client.Delete(url);
-            }
-            else
-            {
-               Debug.Assert(false);
-            }
-         }
-         catch (System.Net.WebException ex)
-         {
-            throw new GitLabRequestException(url, method, ex);
-         }
-         return response;
       }
 
       /// <summary>

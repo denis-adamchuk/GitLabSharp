@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
@@ -24,25 +21,9 @@ namespace GitLabSharp.Accessors
       /// <summary>
       /// Load a single page from a full list of commits from Server and de-serialize it
       /// </summary>
-      public IEnumerable<Commit> Load(PageFilter pageFilter)
-      {
-         return Get<IEnumerable<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load a single page from a full list of commits from Server and de-serialize it
-      /// </summary>
       public Task<IEnumerable<Commit>> LoadTaskAsync(PageFilter pageFilter)
       {
          return GetTaskAsync<IEnumerable<Commit>>(BaseUrl + "?" + pageFilter.ToQueryString());
-      }
-
-      /// <summary>
-      /// Load full list of commits from Server and de-serialize it
-      /// </summary>
-      public IEnumerable<Commit> LoadAll()
-      {
-         return GetAll<Commit>(BaseUrl + "?");
       }
 
       /// <summary>
@@ -51,14 +32,6 @@ namespace GitLabSharp.Accessors
       public Task<IEnumerable<Commit>> LoadAllTaskAsync()
       {
          return GetAllTaskAsync<Commit>(BaseUrl + "?");
-      }
-
-      /// <summary>
-      /// Get number of commits
-      /// </summary>
-      public int Count()
-      {
-         return Count(BaseUrl);
       }
 
       /// <summary>
