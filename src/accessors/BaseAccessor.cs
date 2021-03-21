@@ -62,21 +62,35 @@ namespace GitLabSharp.Accessors
 
       async protected Task<T> makeRequestAndDeserializeResponseAsync<T>(string url, string method)
       {
-         string r = await makeRequestAsync(url, method);
+         string jsonResponse = await makeRequestAsync(url, method);
+         if (jsonResponse == null)
+         {
+            throw new GitLabSharpException(url,
+               String.Format("JSON response of {0} method is null", method), null);
+         }
 
+         T result;
          try
          {
-            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(r,
+            result = Newtonsoft.Json.JsonConvert.DeserializeObject<T>(jsonResponse,
                new Newtonsoft.Json.JsonSerializerSettings
                {
                   NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
                });
          }
-         catch (Exception ex) // whatever deserialization Exception
+         catch (Exception ex) // whatever de-serialization Exception
          {
             throw new GitLabSharpException(url,
                String.Format("Cannot deserialize JSON response of {0} method", method), ex);
          }
+
+         if (result == null)
+         {
+            throw new GitLabSharpException(url,
+               String.Format("Cannot deserialize JSON response of {0} method ({1}) into object of type {2}",
+               method, jsonResponse, typeof(T).FullName), null);
+         }
+         return result;
       }
 
       /// <summary>
