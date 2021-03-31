@@ -26,11 +26,11 @@ namespace GitLabSharp.Accessors
       }
 
       /// <summary>
-      /// Load full list of Branches from Server and de-serialize it (async)
+      /// Load list of Branches from Server and de-serialize it (async)
       /// </summary>
-      public Task<IEnumerable<Branch>> LoadAllTaskAsync(string search)
+      public Task<IEnumerable<Branch>> LoadTaskAsync(string search)
       {
-         return GetAllTaskAsync<Branch>(BaseUrl + "?search=" + Uri.EscapeDataString(search) + "&");
+         return GetTaskAsync<IEnumerable<Branch>>(BaseUrl + "?search=" + Uri.EscapeDataString(search));
       }
 
       /// <summary>

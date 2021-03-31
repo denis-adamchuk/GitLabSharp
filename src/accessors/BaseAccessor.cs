@@ -63,6 +63,12 @@ namespace GitLabSharp.Accessors
       async protected Task<T> makeRequestAndDeserializeResponseAsync<T>(string url, string method)
       {
          string jsonResponse = await makeRequestAsync(url, method);
+         if (jsonResponse == String.Empty)
+         {
+            // in very rare/exceptional cases JSON response is empty on first attempt
+            jsonResponse = await makeRequestAsync(url, method);
+         }
+
          if (jsonResponse == null)
          {
             throw new GitLabSharpException(url,
