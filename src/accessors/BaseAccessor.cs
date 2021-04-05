@@ -90,7 +90,7 @@ namespace GitLabSharp.Accessors
                String.Format("Cannot deserialize JSON response of {0} method", method), ex);
          }
 
-         if (result == null)
+         if (result == null) //-V3111
          {
             throw new GitLabSharpException(url,
                String.Format("Cannot deserialize JSON response of {0} method ({1}) into object of type {2}",
