@@ -84,7 +84,7 @@ namespace GitLabSharp.Accessors
                   NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore
                });
          }
-         catch (Exception ex) // whatever de-serialization Exception
+         catch (Exception ex) // Any exception from JsonConvert.DeserializeObject()
          {
             throw new GitLabSharpException(url,
                String.Format("Cannot deserialize JSON response of {0} method", method), ex);
