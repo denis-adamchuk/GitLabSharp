@@ -26,7 +26,13 @@ namespace GitLabSharp.Accessors
       {
          Client = client;
          BaseUrl = baseUrl;
+         TraceRequests = false;
       }
+
+      /// <summary>
+      /// Should Trace.TraceInformation() be called for each HTTP request
+      /// </summary>
+      public bool TraceRequests { get; set; }
 
       /// <summary>
       /// Execute Http GET request asynchronously and de-serialize a response into a new T object instance
@@ -107,6 +113,7 @@ namespace GitLabSharp.Accessors
          string response = String.Empty;
          try
          {
+            if (TraceRequests) Trace.TraceInformation("{0} {1}", method, url);
             if (method == "GET")
             {
                response = await Client.GetTaskAsync(url);
