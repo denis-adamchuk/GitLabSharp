@@ -83,8 +83,6 @@ namespace GitLabSharp
          throw new TimeoutException("HTTP async operation timed out.");
       }
 
-      private static readonly int AsyncOperationTimeOut = 60 * 1000; // 60 sec
-
       async private static Task<T> TimeoutAfter<T>(Task<T> task, int millisecondsDelay, Action OnTimeout)
       {
          await Task.WhenAny(task, Task.Delay(millisecondsDelay));
@@ -94,6 +92,8 @@ namespace GitLabSharp
          }
          return await task;
       }
+
+      private int AsyncOperationTimeOut => GitLabSharp.AsyncOperationTimeOut;
 
       /// <summary>
       /// Collection of Headers for a response on the most recent Http request
