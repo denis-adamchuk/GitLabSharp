@@ -53,5 +53,8 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public IEnumerable<Commit> Commits { get; set; }
+
+      [JsonProperty]
+      public string State { get; set; }
    }
 }
