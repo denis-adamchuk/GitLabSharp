@@ -11,7 +11,7 @@ namespace GitLabSharp
    public static class UrlParser
    {
       public static readonly string RegEx =
-         @"(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?([\w_-]+\/[\w_-]+)\/(?>-\/)?merge_requests\/(\d*)";
+         @"(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?([\.\w_-]+\/[\.\w_-]+)\/(?>-\/)?merge_requests\/(\d*)";
 
       private static readonly Regex url_re = new Regex(RegEx, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
