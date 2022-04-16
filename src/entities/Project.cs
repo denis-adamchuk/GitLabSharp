@@ -13,6 +13,16 @@ namespace GitLabSharp.Entities
    /// </summary>
    public class Project
    {
+      public Project(int id, string path_With_Namespace, string merge_Method)
+      {
+         Id = id;
+         Path_With_Namespace = path_With_Namespace;
+         Merge_Method = merge_Method;
+      }
+
+      [JsonProperty]
+      public int Id { get; protected set; }
+
       [JsonProperty]
       public string Path_With_Namespace { get; protected set; }
 
