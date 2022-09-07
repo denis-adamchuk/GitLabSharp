@@ -19,5 +19,8 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string EMail { get; protected set; }
+
+      [JsonProperty]
+      public string Avatar_Url { get; protected set; }
    }
 }
