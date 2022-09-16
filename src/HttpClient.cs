@@ -9,12 +9,12 @@ namespace GitLabSharp
    /// <summary>
    /// A wrapper for WebClient class with separate methods for each of request type (GET/PUT/POST/DELETE)
    /// </summary>
-   internal class HttpClient : IDisposable
+   public class HttpClient : IDisposable
    {
       /// <summary>
       /// Throws ArgumentException when host name is invalid
       /// </summary>
-      internal HttpClient(string host, string token, CancellationTokenSource cts)
+      public HttpClient(string host, CancellationTokenSource cts)
       {
          Client = new WebClient
          {
@@ -23,7 +23,6 @@ namespace GitLabSharp
          };
          Client.Headers.Add("Content-Type", "application/json");
          Client.Headers.Add("Accept", "application/json");
-         Client.Headers.Add("Private-Token", token);
 
          CancellationTokenSource = cts;
          CancellationTokenSource.Token.Register(() => Client?.CancelAsync());
@@ -37,42 +36,47 @@ namespace GitLabSharp
 
       public string Host => Client?.BaseAddress;
 
-      internal string Get(string url)
+      public string Get(string url)
       {
          return Client?.DownloadString(url);
       }
 
-      internal Task<string> GetTaskAsync(string url)
+      public Task<string> GetTaskAsync(string url)
       {
          return TimeoutAfter(Client?.DownloadStringTaskAsync(url), AsyncOperationTimeOut, onTimeout);
       }
 
-      internal string Post(string url)
+      public Task<byte[]> GetDataTaskAsync(string url)
+      {
+         return TimeoutAfter(Client?.DownloadDataTaskAsync(url), AsyncOperationTimeOut, onTimeout);
+      }
+
+      public string Post(string url)
       {
          return Client?.UploadString(url, "POST", "");
       }
 
-      internal Task<string> PostTaskAsync(string url)
+      public Task<string> PostTaskAsync(string url)
       {
          return TimeoutAfter(Client?.UploadStringTaskAsync(url, "POST", ""), AsyncOperationTimeOut, onTimeout);
       }
 
-      internal string Put(string url)
+      public string Put(string url)
       {
          return Client?.UploadString(url, "PUT", "");
       }
 
-      internal Task<string> PutTaskAsync(string url)
+      public Task<string> PutTaskAsync(string url)
       {
          return TimeoutAfter(Client?.UploadStringTaskAsync(url, "PUT", ""), AsyncOperationTimeOut, onTimeout);
       }
 
-      internal string Delete(string url)
+      public string Delete(string url)
       {
          return Client?.UploadString(url, "DELETE", "");
       }
 
-      internal Task<string> DeleteTaskAsync(string url)
+      public Task<string> DeleteTaskAsync(string url)
       {
          return TimeoutAfter(Client?.UploadStringTaskAsync(url, "DELETE", ""), AsyncOperationTimeOut, onTimeout);
       }
@@ -98,11 +102,11 @@ namespace GitLabSharp
       /// <summary>
       /// Collection of Headers for a response on the most recent Http request
       /// </summary>
-      internal WebHeaderCollection ResponseHeaders => Client?.ResponseHeaders;
+      public WebHeaderCollection ResponseHeaders => Client?.ResponseHeaders;
 
-      internal CancellationTokenSource CancellationTokenSource { get; }
+      public CancellationTokenSource CancellationTokenSource { get; }
 
-      private WebClient Client;
+      protected WebClient Client;
    }
 }
 

@@ -15,7 +15,7 @@ namespace GitLabSharp.Accessors
       internal GitLab(string host, string token)
       {
          CancellationTokenSource = new CancellationTokenSource();
-         Client = new HttpClient(host, token, CancellationTokenSource);
+         Client = new GitLabHttpClient(host, token, CancellationTokenSource);
          BaseUrl = host + "/api/" + "v4";
       }
 
