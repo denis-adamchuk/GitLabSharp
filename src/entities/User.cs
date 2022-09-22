@@ -22,5 +22,8 @@ namespace GitLabSharp.Entities
 
       [JsonProperty]
       public string Avatar_Url { get; protected set; }
+
+      [JsonProperty]
+      public string Web_Url { get; protected set; }
    }
 }
