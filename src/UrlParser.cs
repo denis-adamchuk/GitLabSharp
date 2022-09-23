@@ -10,10 +10,12 @@ namespace GitLabSharp
    /// <summary>
    public static class UrlParser
    {
-      public static readonly string RegEx =
+      private static readonly string mergeRequestUrlRegExText =
          @"(http[s]?:\/\/)?([^:\/\s]+)\/(api\/v4\/projects\/)?([\.\w_-]+\/[\.\w_-]+)\/(?>-\/)?merge_requests\/(\d*)";
+      private static readonly Regex mergeRequestUrlRegEx = new Regex(mergeRequestUrlRegExText, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-      private static readonly Regex url_re = new Regex(RegEx, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+      private static readonly string noteUrlRegExText = mergeRequestUrlRegExText + @"#(?'note_id'\d*)";
+      private static readonly Regex noteUrlRegEx = new Regex(noteUrlRegExText, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
       static readonly int MaxUrlLength = 256;
 
@@ -52,6 +54,24 @@ namespace GitLabSharp
          }
       }
 
+
+      public struct ParsedNoteUrl
+      {
+         public ParsedNoteUrl(string host, string project, int iid, int noteId)
+         {
+            _mergeRequestUrl = new ParsedMergeRequestUrl(host, project, iid);
+            _noteId = noteId;
+         }
+
+         public string Host => _mergeRequestUrl.Host;
+         public string Project => _mergeRequestUrl.Project;
+         public int IId => _mergeRequestUrl.IId;
+         public int NoteId => _noteId;
+
+         private ParsedMergeRequestUrl _mergeRequestUrl;
+         private int _noteId;
+      }
+
       /// <summary>
       /// Splits passed url in parts and stores in object properties
       /// <summary>
@@ -62,28 +82,66 @@ namespace GitLabSharp
             throw new UriFormatException("Too long URL");
          }
 
-         Match m = url_re.Match(url);
-         if (!ifMatchSucceeded(m))
+         Match m = mergeRequestUrlRegEx.Match(url);
+         if (!ifMergeRequestUrlMatchSucceeded(m))
          {
             throw new UriFormatException("Failed to parse URL");
          }
          return new ParsedMergeRequestUrl(m.Groups[2].Value, m.Groups[4].Value, int.Parse(m.Groups[5].Value));
       }
 
-      public static bool IsValidUrl(string url)
+      public static ParsedNoteUrl ParseNoteUrl(string url)
+      {
+         if (url.Length > MaxUrlLength)
+         {
+            throw new UriFormatException("Too long URL");
+         }
+
+         Match m = noteUrlRegEx.Match(url);
+         if (!ifNoteUrlMatchSucceeded(m))
+         {
+            throw new UriFormatException("Failed to parse URL");
+         }
+         return new ParsedNoteUrl(m.Groups[2].Value, m.Groups[4].Value, int.Parse(m.Groups[5].Value),
+            int.Parse(m.Groups[6].Value));
+      }
+
+      public static bool IsValidMergeRequestUrl(string url)
       {
          if (url.Length > MaxUrlLength)
          {
             return false;
          }
 
-         Match m = url_re.Match(url);
-         return ifMatchSucceeded(m);
+         Match m = mergeRequestUrlRegEx.Match(url);
+         return ifMergeRequestUrlMatchSucceeded(m);
       }
 
-      private static bool ifMatchSucceeded(Match m)
+      public static bool IsValidNoteUrl(string url)
       {
-         return m.Success && m.Groups.Count == 6 && int.TryParse(m.Groups[5].Value, out _);
+         if (url.Length > MaxUrlLength)
+         {
+            return false;
+         }
+
+         Match m = noteUrlRegEx.Match(url);
+         return ifNoteUrlMatchSucceeded(m);
+      }
+
+      private static bool ifMergeRequestUrlMatchSucceeded(Match m)
+      {
+         return m.Success
+             && m.Groups.Count == 6
+             && int.TryParse(m.Groups[5].Value, out _);
+      }
+
+      private static bool ifNoteUrlMatchSucceeded(Match m)
+      {
+         return m.Success
+             && m.Groups.Count == 7
+             && int.TryParse(m.Groups[5].Value, out _)
+             && m.Groups["note_id"] != null
+             && int.TryParse(m.Groups["note_id"].Value, out _);
       }
    }
 }
