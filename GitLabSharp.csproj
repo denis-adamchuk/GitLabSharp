@@ -89,7 +89,6 @@
     <Compile Include="src\impl\GitLabHttpClient.cs" />
     <Compile Include="src\impl\GitLabTask.cs" />
     <Compile Include="src\HttpClient.cs" />
-    <Compile Include="src\UrlParser.cs" />
     <Compile Include="src\ExceptionEx.cs" />
   </ItemGroup>
   <ItemGroup>
