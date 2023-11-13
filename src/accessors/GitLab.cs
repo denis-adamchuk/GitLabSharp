@@ -9,6 +9,8 @@ namespace GitLabSharp.Accessors
    /// </summary>
    public class GitLab : IDisposable
    {
+      internal static string NamespacePrefix = "/api/v4";
+
       /// <summary>
       /// Throws ArgumentException when host name is invalid
       /// </summary>
@@ -16,7 +18,7 @@ namespace GitLabSharp.Accessors
       {
          CancellationTokenSource = new CancellationTokenSource();
          Client = new GitLabHttpClient(host, token, CancellationTokenSource);
-         BaseUrl = host + "/api/" + "v4";
+         BaseUrl = host + NamespacePrefix;
       }
 
       /// <summary>

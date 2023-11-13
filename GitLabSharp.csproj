@@ -65,6 +65,7 @@
     <Compile Include="src\accessors\single\SingleRepositoryAccessor.cs" />
     <Compile Include="src\accessors\single\SingleCommitAccessor.cs" />
     <Compile Include="src\accessors\single\SingleVersionAccessor.cs" />
+    <Compile Include="src\entities\EnvironmentStatus.cs" />
     <Compile Include="src\entities\MergeRequestApprovalConfiguration.cs" />
     <Compile Include="src\entities\CommitRef.cs" />
     <Compile Include="src\entities\Repository.cs" />

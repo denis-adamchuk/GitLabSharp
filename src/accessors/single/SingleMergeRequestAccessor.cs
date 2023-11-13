@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using GitLabSharp.Entities;
 
@@ -92,6 +93,19 @@ namespace GitLabSharp.Accessors
       public Task<MergeRequestApprovalConfiguration> GetApprovalConfigurationTaskAsync()
       {
          return GetTaskAsync<MergeRequestApprovalConfiguration>(BaseUrl + "/approvals");
+      }
+
+      /// <summary>
+      /// Load merge request CI environment status
+      /// </summary>
+      public Task<IEnumerable<EnvironmentStatus>> GetCIEnvironmentStatusTaskAsync()
+      {
+         // Environment Status request is a special one.
+         // It is not a part of REST API but an ordinary Web request to a page like
+         // https://gitlab.example.com/project-group/project-name/merge_requests/1/ci_environments_status
+         string baseUrl = BaseUrl.Replace(GitLab.NamespacePrefix, String.Empty).Replace("/projects", String.Empty);
+         baseUrl = Uri.UnescapeDataString(baseUrl);
+         return GetTaskAsync<IEnumerable<EnvironmentStatus>>(baseUrl + "/ci_environments_status");
       }
 
       /// <summary>
