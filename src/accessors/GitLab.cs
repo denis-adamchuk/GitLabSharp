@@ -43,6 +43,9 @@ namespace GitLabSharp.Accessors
       /// </summary>
       public string Host => Client?.Host;
 
+      public SinglePersonalAccessTokenAccessor PersonalAccessToken =>
+         new SinglePersonalAccessTokenAccessor(Client, BaseUrl + "/personal_access_tokens/self");
+
       /// <summary>
       /// Get access to information about GitLab version
       /// </summary>

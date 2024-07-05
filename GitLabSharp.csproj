@@ -58,6 +58,7 @@
     <Compile Include="src\accessors\single\SingleBranchAccessor.cs" />
     <Compile Include="src\accessors\single\SingleMergeRequestAccessor.cs" />
     <Compile Include="src\accessors\single\SingleNoteAccessor.cs" />
+    <Compile Include="src\accessors\single\SinglePersonalAccessTokenAccessor.cs" />
     <Compile Include="src\accessors\single\SingleRepositoryFileAccessor.cs" />
     <Compile Include="src\accessors\single\SingleGitLabVersionAccessor.cs" />
     <Compile Include="src\accessors\single\SingleUserAccessor.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="src\entities\EnvironmentStatus.cs" />
     <Compile Include="src\entities\MergeRequestApprovalConfiguration.cs" />
     <Compile Include="src\entities\CommitRef.cs" />
+    <Compile Include="src\entities\PersonalAccessToken.cs" />
     <Compile Include="src\entities\Repository.cs" />
     <Compile Include="src\entities\Discussion.cs" />
     <Compile Include="src\entities\Note.cs" />
